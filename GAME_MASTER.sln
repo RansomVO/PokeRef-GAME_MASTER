@@ -1,18 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2000
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GM_DataGenerator", "GM_DataGenerator\GM_DataGenerator.csproj", "{6CDB5492-83CA-4613-876D-4436D3278E66}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GM_Parser", "GM_Parser\GM_Parser.csproj", "{D82D76D1-AB3E-44EF-922A-AE70FDB8447B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils", "..\..\Projects\Utils\Utils.csproj", "{6B808C0F-6E4A-4F0D-9200-B6807F1196B6}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_datafiles.manual", "_datafiles.manual", "{E1E2B8AD-800A-478A-A52E-C0AC01EF4C5B}"
 	ProjectSection(SolutionItems) = preProject
 		..\www\_datafiles.manual\eggs.xml = ..\www\_datafiles.manual\eggs.xml
-		..\www\_datafiles.manual\fieldresearch.current.xml = ..\www\_datafiles.manual\fieldresearch.current.xml
+		..\www\_datafiles.manual\fieldresearch.xml = ..\www\_datafiles.manual\fieldresearch.xml
+		..\www\_datafiles.manual\images.xml = ..\www\_datafiles.manual\images.xml
 		..\www\_datafiles.manual\pokemon.availability.xml = ..\www\_datafiles.manual\pokemon.availability.xml
 		..\www\_datafiles.manual\pokemon.unreleased.xml = ..\www\_datafiles.manual\pokemon.unreleased.xml
 		..\www\_datafiles.manual\raidbosses.xml = ..\www\_datafiles.manual\raidbosses.xml
@@ -106,6 +101,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GAME_MASTER", "GAME_MASTER"
 		..\www\tech\GAME_MASTER\archive\000001625B22CC2B_GAME_MASTER.json = ..\www\tech\GAME_MASTER\archive\000001625B22CC2B_GAME_MASTER.json
 		..\www\tech\GAME_MASTER\archive\000001627CA8D939_GAME_MASTER = ..\www\tech\GAME_MASTER\archive\000001627CA8D939_GAME_MASTER
 		..\www\tech\GAME_MASTER\archive\000001627CA8D939_GAME_MASTER.json = ..\www\tech\GAME_MASTER\archive\000001627CA8D939_GAME_MASTER.json
+		..\www\tech\GAME_MASTER\archive\00000162879B7C8E_GAME_MASTER = ..\www\tech\GAME_MASTER\archive\00000162879B7C8E_GAME_MASTER
+		..\www\tech\GAME_MASTER\archive\00000162879B7C8E_GAME_MASTER.json = ..\www\tech\GAME_MASTER\archive\00000162879B7C8E_GAME_MASTER.json
+		..\www\tech\GAME_MASTER\archive\0000016322DEEA14_GAME_MASTER = ..\www\tech\GAME_MASTER\archive\0000016322DEEA14_GAME_MASTER
+		..\www\tech\GAME_MASTER\archive\0000016322DEEA14_GAME_MASTER.json = ..\www\tech\GAME_MASTER\archive\0000016322DEEA14_GAME_MASTER.json
+		..\www\tech\GAME_MASTER\archive\00000163A26D83E5_GAME_MASTER = ..\www\tech\GAME_MASTER\archive\00000163A26D83E5_GAME_MASTER
+		..\www\tech\GAME_MASTER\archive\00000163A26D83E5_GAME_MASTER.json = ..\www\tech\GAME_MASTER\archive\00000163A26D83E5_GAME_MASTER.json
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "raidboss", "raidboss", "{18DF124E-ABD6-41CD-BF0C-C90D237A5805}"
@@ -247,30 +248,52 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "encounter", "encounter", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External Files", "External Files", "{DFEB90EA-66BA-4B13-B9C3-72521C8792F8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GM_DataGenerator", "GM_DataGenerator\GM_DataGenerator.csproj", "{6CDB5492-83CA-4613-876D-4436D3278E66}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GM_Decoder", "GM_Decoder\GM_Decoder.csproj", "{6E4EC8D8-5448-4117-9FA3-4EB6221DEB10}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils", "..\..\Projects\Utils\Utils.csproj", "{6B808C0F-6E4A-4F0D-9200-B6807F1196B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GM_protogen", "GM_protogen\GM_protogen.csproj", "{36903DA1-3191-4C43-A5AE-9537D87FDBCC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".proj", ".proj", "{C3C36E44-FE5E-4BA7-9C62-DC4C6866D21B}"
+	ProjectSection(SolutionItems) = preProject
+		..\www\encounters.proj = ..\www\encounters.proj
+		..\www\GAME_MASTER.proj = ..\www\GAME_MASTER.proj
+		..\www\raidbosses.proj = ..\www\raidbosses.proj
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+		VS|Any CPU = VS|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{6CDB5492-83CA-4613-876D-4436D3278E66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6CDB5492-83CA-4613-876D-4436D3278E66}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6CDB5492-83CA-4613-876D-4436D3278E66}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6CDB5492-83CA-4613-876D-4436D3278E66}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D82D76D1-AB3E-44EF-922A-AE70FDB8447B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D82D76D1-AB3E-44EF-922A-AE70FDB8447B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D82D76D1-AB3E-44EF-922A-AE70FDB8447B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D82D76D1-AB3E-44EF-922A-AE70FDB8447B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6B808C0F-6E4A-4F0D-9200-B6807F1196B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6B808C0F-6E4A-4F0D-9200-B6807F1196B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6B808C0F-6E4A-4F0D-9200-B6807F1196B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6B808C0F-6E4A-4F0D-9200-B6807F1196B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CDB5492-83CA-4613-876D-4436D3278E66}.VS|Any CPU.ActiveCfg = Release|Any CPU
+		{6CDB5492-83CA-4613-876D-4436D3278E66}.VS|Any CPU.Build.0 = Release|Any CPU
 		{6E4EC8D8-5448-4117-9FA3-4EB6221DEB10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6E4EC8D8-5448-4117-9FA3-4EB6221DEB10}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E4EC8D8-5448-4117-9FA3-4EB6221DEB10}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E4EC8D8-5448-4117-9FA3-4EB6221DEB10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E4EC8D8-5448-4117-9FA3-4EB6221DEB10}.VS|Any CPU.ActiveCfg = Release|Any CPU
+		{6E4EC8D8-5448-4117-9FA3-4EB6221DEB10}.VS|Any CPU.Build.0 = Release|Any CPU
+		{6B808C0F-6E4A-4F0D-9200-B6807F1196B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B808C0F-6E4A-4F0D-9200-B6807F1196B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B808C0F-6E4A-4F0D-9200-B6807F1196B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B808C0F-6E4A-4F0D-9200-B6807F1196B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B808C0F-6E4A-4F0D-9200-B6807F1196B6}.VS|Any CPU.ActiveCfg = Release|Any CPU
+		{6B808C0F-6E4A-4F0D-9200-B6807F1196B6}.VS|Any CPU.Build.0 = Release|Any CPU
+		{36903DA1-3191-4C43-A5AE-9537D87FDBCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36903DA1-3191-4C43-A5AE-9537D87FDBCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36903DA1-3191-4C43-A5AE-9537D87FDBCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36903DA1-3191-4C43-A5AE-9537D87FDBCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36903DA1-3191-4C43-A5AE-9537D87FDBCC}.VS|Any CPU.ActiveCfg = Release|Any CPU
+		{36903DA1-3191-4C43-A5AE-9537D87FDBCC}.VS|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -281,6 +304,7 @@ Global
 		{1961D0E4-395F-4ECA-A2AB-3822862C9244} = {DFEB90EA-66BA-4B13-B9C3-72521C8792F8}
 		{18DF124E-ABD6-41CD-BF0C-C90D237A5805} = {4B403EE7-11D2-4ACC-8FA1-6580E030B295}
 		{3A03E38F-EC57-4767-82C6-D554866131C9} = {4B403EE7-11D2-4ACC-8FA1-6580E030B295}
+		{C3C36E44-FE5E-4BA7-9C62-DC4C6866D21B} = {DFEB90EA-66BA-4B13-B9C3-72521C8792F8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D4815CDF-AFF0-4B51-BAA0-31B2FA8CE570}

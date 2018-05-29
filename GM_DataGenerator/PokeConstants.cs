@@ -13,7 +13,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
         public const int MaxPokemonLevel = 40;
         public const int MinRaidBossIV = 10;
 
-        public const string DateFormat = "dd MMM yyyy";
+        public const string DateFormat = "dd-MMM-yyyy";
         public const string DateTimeFormat = DateFormat + " HH:mm:ss.fff";
 
         #endregion const Values
@@ -145,11 +145,18 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
                 public static readonly EvaluationValue Excellent = new EvaluationValue(13, 14);
                 public static readonly EvaluationValue Wow = new EvaluationValue(15, 15);
             }
-        }
+		}
 
-        #endregion constants.xml
+		public static class Gender
+		{
+			public const string Male = "♂";
+			public const string Female = "♀";
+			public const string Neutral = "⚲";
+		}
 
-        public enum PokeType
+		#endregion constants.xml
+
+		public enum PokeType
         {
             Bug = 0,
             Dark,

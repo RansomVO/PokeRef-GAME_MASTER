@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Xml.Serialization;
 
-using PokemonGO.GAME_MASTER.Templates;
+using POGOProtos.Settings.Master.Pokemon;
 
 namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
 {
@@ -29,11 +29,11 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
                 stamina = _stamina;
             }
 
-            public IVScore(Stats stats)
+            public IVScore(StatsAttributes stats)
             {
-                attack = stats.baseAttack;
-                defense = stats.baseDefense;
-                stamina = stats.baseStamina;
+                attack = stats.base_attack;
+                defense = stats.base_defense;
+                stamina = stats.base_stamina;
             }
         }
 

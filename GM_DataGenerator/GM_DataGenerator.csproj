@@ -37,6 +37,10 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web.Extensions" />
@@ -51,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameMasterReader.cs" />
     <Compile Include="GameMasterStatsCalculator.cs" />
     <Compile Include="Legacy.cs" />
     <Compile Include="PokeFormulas.cs" />
@@ -63,6 +68,7 @@
     <Compile Include="Templates\DataFiles\Effectiveness.cs" />
     <Compile Include="Templates\DataFiles\Encounter.cs" />
     <Compile Include="Templates\DataFiles\Settings.cs" />
+    <Compile Include="Templates\GameMasterTemplate.cs" />
     <Compile Include="Templates\ManualData\pokemon.unreleased.cs" />
     <Compile Include="Templates\CommonTypes.cs" />
     <Compile Include="Templates\ManualData\ManualDataSettings.cs" />
@@ -77,6 +83,13 @@
     <Compile Include="Templates\DataFiles\RaidBoss.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Templates\Translation\FormSettingsTranslator.cs" />
+    <Compile Include="Templates\Translation\GenderRatioTranslator.cs" />
+    <Compile Include="Templates\Translation\MoveTranslator.cs" />
+    <Compile Include="Templates\Translation\PlayerLevelTranslator.cs" />
+    <Compile Include="Templates\Translation\PokemonTranslator.cs" />
+    <Compile Include="Templates\Translation\TemplateTranslator.cs" />
+    <Compile Include="Utils.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -90,8 +103,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -110,11 +121,12 @@
       <Project>{6b808c0f-6e4a-4f0d-9200-b6807f1196b6}</Project>
       <Name>Utils</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GM_Parser\GM_Parser.csproj">
-      <Project>{d82d76d1-ab3e-44ef-922a-ae70fdb8447b}</Project>
-      <Name>GM_Parser</Name>
+    <ProjectReference Include="..\GM_Decoder\GM_Decoder.csproj">
+      <Project>{6e4ec8d8-5448-4117-9fa3-4eb6221deb10}</Project>
+      <Name>GM_Decoder</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

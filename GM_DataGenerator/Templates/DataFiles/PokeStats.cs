@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Xml.Serialization;
+
 using VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData;
-using VanOrman.PokemonGO.GAME_MASTER.Parser.Templates;
-using static VanOrman.PokemonGO.GAME_MASTER.DataGenerator.PokeConstants;
 
 namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
 {
@@ -211,9 +212,9 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
             {
                 id = pokemonTranslator.Id;
                 name = pokemonTranslator.Name;
-                form = pokemonTranslator.Form;
+                form = pokemonTranslator.FormName;
                 family = pokemonTranslator.CandyType;
-                buddy_km = (int)pokemonTranslator.PokemonSettings.kmBuddyDistance;
+                buddy_km = (int)pokemonTranslator.PokemonSettings.km_buddy_distance;
                 gender_ratio = pokemonTranslator.GenderRatio;
                 rarity = pokemonTranslator.Rarity;
                 shiny = _shiny;
@@ -225,10 +226,10 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
                     EvolvesFrom = new EvolvesFrom(pokemonTranslator.EvolvesFromId, pokemonTranslator.EvolvesFrom, pokemonTranslator.CandiesToEvolve, pokemonTranslator.EvolveSpecialItem);
 
                 Stats = new _Stats(
-                    new _Stats.IVScore(pokemonTranslator.PokemonSettings.stats.baseAttack, pokemonTranslator.PokemonSettings.stats.baseDefense, pokemonTranslator.PokemonSettings.stats.baseStamina),
-                    new _Stats.Variation(pokemonTranslator.PokemonSettings.pokedexHeightM, pokemonTranslator.PokemonSettings.heightStdDev),
-                    new _Stats.Variation(pokemonTranslator.PokemonSettings.pokedexWeightKg, pokemonTranslator.PokemonSettings.weightStdDev),
-                    new _Stats._Rates(pokemonTranslator.PokemonSettings.encounter.baseCaptureRate, pokemonTranslator.PokemonSettings.encounter.baseFleeRate, pokemonTranslator.PokemonSettings.encounter.attackProbability, pokemonTranslator.PokemonSettings.encounter.dodgeProbability),
+                    new _Stats.IVScore(pokemonTranslator.PokemonSettings.stats.base_attack, pokemonTranslator.PokemonSettings.stats.base_defense, pokemonTranslator.PokemonSettings.stats.base_stamina),
+                    new _Stats.Variation(pokemonTranslator.PokemonSettings.pokedex_height_m, pokemonTranslator.PokemonSettings.pokedex_height_m),
+                    new _Stats.Variation(pokemonTranslator.PokemonSettings.pokedex_weight_kg, pokemonTranslator.PokemonSettings.pokedex_weight_kg),
+                    new _Stats._Rates(pokemonTranslator.PokemonSettings.encounter.base_capture_rate, pokemonTranslator.PokemonSettings.encounter.base_flee_rate, pokemonTranslator.PokemonSettings.encounter.attack_probability, pokemonTranslator.PokemonSettings.encounter.dodge_probability),
                     maxStats);
             }
         }
@@ -248,5 +249,64 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
         }
 
         #endregion ctor
+
+        #region Writers
+
+        /// <summary>
+        /// Write out the stats for each generation of Pokemon
+        /// </summary>
+        public static  void Write(IEnumerable<PokemonTranslator> pokemonTranslators, PokemonAvailability pokemonAvailability, PokemonUnreleased pokemonUnreleased, GameMasterStatsCalculator gameMasterStatsCalculator)
+        {
+            // Create an array of lists to hold each generation.
+            bool update = false;
+            List<PokeStats._Pokemon>[] pokemonList = new List<PokeStats._Pokemon>[PokeConstants.Regions.Length + 1];
+            for (int i = 1; i < PokeConstants.Regions.Length; i++)
+            {
+                string filePath = Path.Combine(Utils.OutputDataFileFolder, "pokestats.gen" + i + ".xml");
+                if (!File.Exists(filePath) || Utils.GetLastUpdated(filePath) < gameMasterStatsCalculator.GameMasterStats.last_updated.Date)
+                {
+                    update = true;
+                    pokemonList[i] = new List<PokeStats._Pokemon>();
+                }
+            }
+
+            if (update)
+            {
+                // Need to provide basic info for Unreleased Pokemon.
+                foreach (var pokemon in pokemonUnreleased.Pokemon)
+                {
+                    if (pokemonList[PokeFormulas.GetGeneration(pokemon)] != null)
+                        pokemonList[PokeFormulas.GetGeneration(pokemon)].Add(new PokeStats._Pokemon(pokemon,
+                            pokemonAvailability.Pokemon[pokemon.id].rarity));
+
+                    gameMasterStatsCalculator.Update(pokemon);
+                }
+
+                // Now gather the data for the Pokemon in the GAME_MASTER.
+                foreach (var pokemonTranslator in pokemonTranslators)
+                {
+                    PokemonAvailability._Pokemon availability = pokemonAvailability.GetPokemon(pokemonTranslator.Name);
+                    PokeStats._Pokemon pokemon = new PokeStats._Pokemon(pokemonTranslator,
+                        availability.availability, availability.rarity, availability.shiny,
+                        GetMaxStats(pokemonTranslator));
+                    if (pokemonList[PokeFormulas.GetGeneration(pokemonTranslator.Id)] != null)
+                        pokemonList[PokeFormulas.GetGeneration(pokemonTranslator.Id)].Add(pokemon);
+
+                    gameMasterStatsCalculator.Update(pokemon);
+                }
+
+                for (int i = 1; i < PokeConstants.Regions.Length; i++)
+                    if (pokemonList[i] != null)
+                        Utils.WriteXML(new PokeStats(i, pokemonList[i].ToArray()), Path.Combine(Utils.OutputDataFileFolder, "pokestats.gen" + i + ".xml"));
+            }
+        }
+
+        private static PokeStats._Pokemon._Stats._MaxStats GetMaxStats(PokemonTranslator pokemonTranslator)
+        {
+            return new PokeStats._Pokemon._Stats._MaxStats(PokeFormulas.GetMaxCP(pokemonTranslator), PokeFormulas.GetMaxHP(pokemonTranslator));
+        }
+
+
+        #endregion Writers
     }
 }

@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-using VanOrman.PokemonGO.GAME_MASTER.Parser;
 using VanOrman.Utils;
 
 namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
@@ -38,10 +37,12 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
                     return;
                 }
 
-                GameMasterReader gameMasterReader = new GameMasterReader();
-                gameMasterReader.Read(Path.Combine(args[0], @"tech\GAME_MASTER\archive\"));
+                Utils.Init(args[0]);
 
-                GameMasterDataWriter gameMasterDataWriter = new GameMasterDataWriter(gameMasterReader.GameMasterTemplate, gameMasterReader.LegacyGameMasterTemplates, args[0]);
+                GameMasterReader gameMasterReader = new GameMasterReader();
+                gameMasterReader.Read(Path.Combine(Utils.RootFolder, @"tech\GAME_MASTER\archive\"));
+
+                GameMasterDataWriter gameMasterDataWriter = new GameMasterDataWriter(gameMasterReader.GameMasterTemplate, gameMasterReader.LegacyGameMasterTemplates);
                 gameMasterDataWriter.Write();
             }
             catch (Exception ex)

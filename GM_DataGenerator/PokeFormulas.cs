@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
+
 using VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates;
 using VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles;
-using VanOrman.PokemonGO.GAME_MASTER.Parser.Templates;
 
 namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
 {
@@ -10,7 +9,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
     {
         #region Properties
 
-        private static List<double> CPMultiplier { get; set; }
+        private static float[] CPMultiplier { get; set; }
 
         #endregion Properties
 
@@ -57,12 +56,17 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
 
         public static int GetMaxHP(PokemonTranslator pokemonTranslator)
         {
-            return GetPokemonHP(pokemonTranslator.PokemonSettings.stats.baseStamina, PokeConstants.Evaluation.Attribute.Max, PokeConstants.MaxPokemonLevel);
+            return GetPokemonHP(pokemonTranslator.PokemonSettings.stats.base_stamina, PokeConstants.Evaluation.Attribute.Max, PokeConstants.MaxPokemonLevel);
         }
 
         public static int GetPokemonCP(Common.IVScore baseIV, Common.IVScore pokemonIV, float level)
         {
-            return (int)((baseIV.attack + pokemonIV.attack) * Math.Sqrt((baseIV.defense + pokemonIV.defense) * (baseIV.stamina + pokemonIV.stamina)) * Math.Pow(GetCMP(level), 2) / 10);
+            return GetPokemonCP(baseIV.attack, baseIV.defense, baseIV.stamina, pokemonIV, level);
+        }
+
+        public static int GetPokemonCP(int baseAttack, int baseDefense, int baseStamina, Common.IVScore pokemonIV, float level)
+        {
+            return (int)((baseAttack + pokemonIV.attack) * Math.Sqrt((baseDefense + pokemonIV.defense) * (baseStamina + pokemonIV.stamina)) * Math.Pow(GetCMP(level), 2) / 10);
         }
 
         public static int GetPokemonHP(int baseStamina, int pokemonStamina, float level)
@@ -102,8 +106,8 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
             double fastSTAB = HasStab(pokemonTranslator, fastMove) ? STAB_BONUS : 1;
             double chargedSTAB = HasStab(pokemonTranslator, chargedMove) ? STAB_BONUS : 1;
             double fastMovesToCharge = Math.Ceiling((double)-chargedMove.Energy / (double)fastMove.Energy);
-            double fastPower = (Math.Floor((pokemonTranslator.PokemonSettings.stats.baseAttack + PokeConstants.Evaluation.Attribute.Max) * fastMove.Power * fastSTAB / 200) + 1) * fastMovesToCharge;
-            double chargedPower = (Math.Floor((pokemonTranslator.PokemonSettings.stats.baseAttack + PokeConstants.Evaluation.Attribute.Max) * chargedMove.Power * chargedSTAB / 200) + 1);
+            double fastPower = (Math.Floor((pokemonTranslator.PokemonSettings.stats.base_attack + PokeConstants.Evaluation.Attribute.Max) * fastMove.Power * fastSTAB / 200) + 1) * fastMovesToCharge;
+            double chargedPower = (Math.Floor((pokemonTranslator.PokemonSettings.stats.base_attack + PokeConstants.Evaluation.Attribute.Max) * chargedMove.Power * chargedSTAB / 200) + 1);
             double time = (fastMove.Duration * fastMovesToCharge) + chargedMove.Duration;
 
             return (fastPower + chargedPower) / time;

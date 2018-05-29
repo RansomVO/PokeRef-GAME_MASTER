@@ -91,7 +91,11 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData
         public _Pokemon GetPokemon(string name)
         {
             if (!_pokemonLookup.ContainsKey(name))
+            {
                 Console.Error.WriteLine("_datafiles.manual\\pokemon.availability.xml missing: " + name);
+                return null;
+            }
+
             return _pokemonLookup[name];
         }
     }

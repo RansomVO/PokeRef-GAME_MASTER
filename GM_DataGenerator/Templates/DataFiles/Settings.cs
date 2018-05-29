@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Xml.Serialization;
 using VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData;
 
@@ -223,7 +224,43 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
             }
         }
 
-        #endregion Internal classes
-    }
+		#endregion Internal classes
+
+		#region Writers
+
+		private static string XmlFilePath { get { return Path.Combine(Utils.OutputDataFileFolder, "settings.xml"); } }
+
+		/// <summary>
+		/// Write the rarely-changed files that are referenced globally.
+		/// </summary>
+		public static void Write(Ranges ranges, GameMasterStatsCalculator gameMasterStatsCalculator)
+		{
+			DateTime lastUpdated = Utils.GetLastUpdated(XmlFilePath);
+
+			if (!File.Exists(XmlFilePath) ||
+				lastUpdated < gameMasterStatsCalculator.GameMasterStats.last_updated.Date ||
+				lastUpdated < ranges.last_updated)
+			{
+				Settings settings = new Settings()
+				{
+					last_updated = DateTime.Today,
+					GameMasterStats = gameMasterStatsCalculator.GameMasterStats,
+					Desirable = new Settings._Desirable(ranges.Desirability),
+					MaxCP = new Settings.Range(ranges.MaxCP),
+					MaxHP = new Settings.Range(ranges.MaxHP),
+					DPSPercent = new Settings.Range(ranges.DPSPercent),
+					DPS = new Settings.Range(ranges.DPS),
+					Capture = new Settings.Difficulty(ranges.CaptureRate),
+					Flee = new Settings.Rate(ranges.FleeRate),
+					Attack = new Settings.Rate(ranges.AttackRate),
+					Dodge = new Settings.Rate(ranges.DodgeRate),
+				};
+
+				Utils.WriteXML(settings, XmlFilePath);
+			}
+		}
+
+		#endregion Writers
+	}
 }
 

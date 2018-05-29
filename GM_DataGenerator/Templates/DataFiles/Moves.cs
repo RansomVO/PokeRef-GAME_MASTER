@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Xml.Serialization;
 
 namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
@@ -57,5 +59,46 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
         }
 
         #endregion Internal classes
+
+        #region Writers
+
+        private static string FastFilePath { get { return Path.Combine(Utils.OutputDataFileFolder, "moves.fast.xml"); } }
+        private static string ChargedFilePath { get { return Path.Combine(Utils.OutputDataFileFolder, "moves.charged.xml"); } }
+
+        /// <summary>
+        /// Write out the Moves that are available in the game.
+        /// </summary>
+        public static void Write(IEnumerable<MoveTranslator> moves, GameMasterStatsCalculator gameMasterStatsCalculator)
+        {
+            if (!File.Exists(FastFilePath) || Utils.GetLastUpdated(FastFilePath) < gameMasterStatsCalculator.GameMasterStats.last_updated.Date ||
+                !File.Exists(ChargedFilePath) || Utils.GetLastUpdated(ChargedFilePath) < gameMasterStatsCalculator.GameMasterStats.last_updated.Date)
+            {
+                List<Moves._Move> movesFast = new List<Moves._Move>();
+                List<Moves._Move> movesCharged = new List<Moves._Move>();
+                foreach (var move in moves)
+                {
+                    (move.IsFast ? movesFast : movesCharged).Add(
+                        new Moves._Move(move.Name, move.Type, move.Energy, move.Power, move.Duration, move.DamageWindowStart, move.DamageWindowEnd));
+                }
+
+                if (!File.Exists(FastFilePath) || Utils.GetLastUpdated(FastFilePath) < gameMasterStatsCalculator.GameMasterStats.last_updated.Date)
+                    Utils.WriteXML(new Moves()
+                    {
+                        last_updated = DateTime.Today,
+                        category = "Fast",
+                        Move = movesFast.ToArray(),
+                    }, FastFilePath);
+
+                if (!File.Exists(ChargedFilePath) || Utils.GetLastUpdated(ChargedFilePath) < gameMasterStatsCalculator.GameMasterStats.last_updated.Date)
+                    Utils.WriteXML(new Moves()
+                    {
+                        last_updated = DateTime.Today,
+                        category = "Charged",
+                        Move = movesCharged.ToArray(),
+                    }, ChargedFilePath);
+            }
+        }
+
+        #endregion Writers
     }
 }

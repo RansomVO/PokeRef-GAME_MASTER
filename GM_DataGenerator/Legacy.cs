@@ -1,25 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using PokemonGO.GAME_MASTER.Templates;
+using static POGOProtos.Networking.Responses.DownloadItemTemplatesResponse;
+using POGOProtos.Enums;
+
+using VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates;
 using VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData;
 using VanOrman.Utils;
-using VanOrman.PokemonGO.GAME_MASTER.Parser.Templates;
 
 namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
 {
     static class Legacy
     {
-        public static Dictionary<string, List<string>> FastMoves { get; private set; }
+        public static Dictionary<string, List<PokemonMove>> FastMoves { get; private set; }
 
-        public static Dictionary<string, List<string>> ChargedMoves { get; private set; }
+        public static Dictionary<string, List<PokemonMove>> ChargedMoves { get; private set; }
 
         private static PokemonAvailability PokemonReleases { get; set; }
 
         static Legacy()
         {
-            FastMoves = new Dictionary<string, List<string>>();
-            ChargedMoves = new Dictionary<string, List<string>>();
+            FastMoves = new Dictionary<string, List<PokemonMove>>();
+            ChargedMoves = new Dictionary<string, List<PokemonMove>>();
         }
 
         /// <summary>
@@ -32,49 +34,45 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
 
             foreach (var legacyGameMasterTemplate in legacyGameMasterTemplates)
             {
-                foreach (var itemTemplate in legacyGameMasterTemplate.GameMaster.itemTemplates)
+                foreach (var itemTemplate in legacyGameMasterTemplate.GameMaster.item_templates)
                 {
-                    if (IsValidItemTemplate(itemTemplate, legacyGameMasterTemplate.GameMaster.timestampMs))
+                    if (IsValidItemTemplate(itemTemplate, legacyGameMasterTemplate.GameMaster.timestamp_ms))
                     {
                         // Get the Legacy Moves.
-                        if (!FastMoves.ContainsKey(itemTemplate.templateId))
-                            FastMoves.Add(itemTemplate.templateId, new List<string>());
-                        List<string> fastMoves = FastMoves[itemTemplate.templateId];
+                        if (!FastMoves.ContainsKey(itemTemplate.template_id))
+                            FastMoves.Add(itemTemplate.template_id, new List<PokemonMove>());
+                        List<PokemonMove> fastMoves = FastMoves[itemTemplate.template_id];
 
-                        foreach (var move in itemTemplate.pokemonSettings.quickMoves)
-                        {
+                        foreach (var move in itemTemplate.pokemon_settings.quick_moves)
                             if (!fastMoves.Contains(move))
                                 fastMoves.Add(move);
-                        }
 
-                        if (!ChargedMoves.ContainsKey(itemTemplate.templateId))
-                            ChargedMoves.Add(itemTemplate.templateId, new List<string>());
-                        List<string> chargedMoves = ChargedMoves[itemTemplate.templateId];
+                        if (!ChargedMoves.ContainsKey(itemTemplate.template_id))
+                            ChargedMoves.Add(itemTemplate.template_id, new List<PokemonMove>());
+                        List<PokemonMove> chargedMoves = ChargedMoves[itemTemplate.template_id];
 
-                        foreach (var move in itemTemplate.pokemonSettings.cinematicMoves)
-                        {
+                        foreach (var move in itemTemplate.pokemon_settings.cinematic_moves)
                             if (!chargedMoves.Contains(move))
                                 chargedMoves.Add(move);
-                        }
                     }
                 }
             }
 
             foreach (var specialMove in specialMoves.Move)
             {
-                if (specialMove.movementId.EndsWith("_FAST"))
+                if (specialMove.IsFast)
                 {
                     if (!FastMoves.ContainsKey(specialMove.pokemonTemplateId))
-                        FastMoves.Add(specialMove.pokemonTemplateId, new List<string>());
-                    List<string> fastMoves = FastMoves[specialMove.pokemonTemplateId];
+                        FastMoves.Add(specialMove.pokemonTemplateId, new List<PokemonMove>());
+                    List<PokemonMove> fastMoves = FastMoves[specialMove.pokemonTemplateId];
                     if (!fastMoves.Contains(specialMove.movementId))
                         fastMoves.Add(specialMove.movementId);
                 }
                 else
                 {
                     if (!ChargedMoves.ContainsKey(specialMove.pokemonTemplateId))
-                        ChargedMoves.Add(specialMove.pokemonTemplateId, new List<string>());
-                    List<string> chargedMoves = ChargedMoves[specialMove.pokemonTemplateId];
+                        ChargedMoves.Add(specialMove.pokemonTemplateId, new List<PokemonMove>());
+                    List<PokemonMove> chargedMoves = ChargedMoves[specialMove.pokemonTemplateId];
                     if (!chargedMoves.Contains(specialMove.movementId))
                         chargedMoves.Add(specialMove.movementId);
                 }
@@ -88,18 +86,18 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
         /// <param name="itemTemplate"></param>
         /// <param name="timestamp"></param>
         /// <returns></returns>
-        private static bool IsValidItemTemplate(ItemTemplate itemTemplate, string timestamp)
+        private static bool IsValidItemTemplate(ItemTemplate itemTemplate, ulong timestamp)
         {
             // If there is no pokemonSettings, the it doesn't contain MoveSets.
-            if (itemTemplate.pokemonSettings == null)
+            if (itemTemplate.pokemon_settings == null)
                 return false;
 
             // If baseCaptureRate isn't positive, then it cannot be caught. (Not released)
-            if (itemTemplate.pokemonSettings.encounter.baseCaptureRate <= 0)
+            if (itemTemplate.pokemon_settings.encounter.base_capture_rate <= 0)
                 return false;
 
             // If is a GAME_MASTER before the one used during the Pokemon's release, just ignore it.
-            if (GetReleaseDate(int.Parse(itemTemplate.templateId.Substring(1, 4))) > TimeStampUtils.TimestampToDateTime(timestamp))
+            if (GetReleaseDate(int.Parse(itemTemplate.template_id.Substring(1, 4))) > TimeStampUtils.TimestampToDateTime(timestamp))
                 return false;
 
             // If we made it here, then it should be used.

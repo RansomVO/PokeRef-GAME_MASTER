@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Xml.Serialization;
 
 namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
@@ -47,13 +48,13 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
         public class _Gender
         {
             [XmlAttribute]
-            public string male { get { return Parser.Constants.Gender.Male; } set { } }
+            public string male { get { return PokeConstants.Gender.Male; } set { } }
 
             [XmlAttribute]
-            public string female { get { return Parser.Constants.Gender.Female; } set { } }
+            public string female { get { return PokeConstants.Gender.Female; } set { } }
 
             [XmlAttribute]
-            public string neutral { get { return Parser.Constants.Gender.Neutral; } set { } }
+            public string neutral { get { return PokeConstants.Gender.Neutral; } set { } }
         }
 
         [Serializable]
@@ -404,5 +405,24 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
             NumericChars = new _NumericChars();
             CPMultipliers = new _CPMultipliers();
         }
-    }
+
+		#region Writers
+
+		private static string ConstantsXmlFilePath { get { return Path.Combine(Utils.OutputDataFileFolder, "constants.xml"); } }
+		private static string EffectivenessXmlFilePath { get { return Path.Combine(Utils.OutputDataFileFolder, "effectiveness.xml"); } }
+
+		/// <summary>
+		/// Write the files that don't usually change.
+		/// </summary>
+		public static void Write()
+		{
+			if (!File.Exists(ConstantsXmlFilePath) || Utils.GetLastUpdated(ConstantsXmlFilePath) < PokeConstants.LastModified)
+				Utils.WriteXML(new Constants(), ConstantsXmlFilePath);
+
+			if (!File.Exists(EffectivenessXmlFilePath) || Utils.GetLastUpdated(EffectivenessXmlFilePath) < MoveEffectiveness.LastModified)
+				Utils.WriteXML(new MoveEffectiveness(), EffectivenessXmlFilePath);
+		}
+
+		#endregion Writers
+	}
 }
