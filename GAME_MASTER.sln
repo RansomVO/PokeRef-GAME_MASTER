@@ -6,13 +6,11 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_datafiles.manual", "_datafiles.manual", "{E1E2B8AD-800A-478A-A52E-C0AC01EF4C5B}"
 	ProjectSection(SolutionItems) = preProject
 		..\www\_datafiles.manual\eggs.xml = ..\www\_datafiles.manual\eggs.xml
+		..\www\_datafiles.manual\fieldresearch.hold.xml = ..\www\_datafiles.manual\fieldresearch.hold.xml
 		..\www\_datafiles.manual\fieldresearch.xml = ..\www\_datafiles.manual\fieldresearch.xml
-		..\www\_datafiles.manual\images.xml = ..\www\_datafiles.manual\images.xml
-		..\www\_datafiles.manual\pokemon.availability.xml = ..\www\_datafiles.manual\pokemon.availability.xml
-		..\www\_datafiles.manual\pokemon.unreleased.xml = ..\www\_datafiles.manual\pokemon.unreleased.xml
+		..\www\_datafiles.manual\news.xml = ..\www\_datafiles.manual\news.xml
 		..\www\_datafiles.manual\raidbosses.xml = ..\www\_datafiles.manual\raidbosses.xml
-		..\www\_datafiles.manual\ranges.xml = ..\www\_datafiles.manual\ranges.xml
-		..\www\_datafiles.manual\special.moves.xml = ..\www\_datafiles.manual\special.moves.xml
+		..\www\_datafiles.manual\shoppingboxes.xml = ..\www\_datafiles.manual\shoppingboxes.xml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_datafiles", "_datafiles", "{4B403EE7-11D2-4ACC-8FA1-6580E030B295}"
@@ -267,8 +265,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_GAME_MASTER", "_GAME_MASTE
 		..\www\_GAME_MASTER\00000163A26D83E5_GAME_MASTER.json = ..\www\_GAME_MASTER\00000163A26D83E5_GAME_MASTER.json
 		..\www\_GAME_MASTER\00000163BCC54DEE_GAME_MASTER = ..\www\_GAME_MASTER\00000163BCC54DEE_GAME_MASTER
 		..\www\_GAME_MASTER\00000163BCC54DEE_GAME_MASTER.json = ..\www\_GAME_MASTER\00000163BCC54DEE_GAME_MASTER.json
-		..\www\_GAME_MASTER\00000163E0623F8F_GAME_MASTER = ..\www\_GAME_MASTER\00000163E0623F8F_GAME_MASTER
-		..\www\_GAME_MASTER\00000163E0623F8F_GAME_MASTER.json = ..\www\_GAME_MASTER\00000163E0623F8F_GAME_MASTER.json
+		..\www\_GAME_MASTER\00000164159FEF31_GAME_MASTER = ..\www\_GAME_MASTER\00000164159FEF31_GAME_MASTER
+		..\www\_GAME_MASTER\00000164159FEF31_GAME_MASTER.json = ..\www\_GAME_MASTER\00000164159FEF31_GAME_MASTER.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "infrequent", "infrequent", "{E206F9F6-262B-4D02-BCE4-32839D4CB976}"
+	ProjectSection(SolutionItems) = preProject
+		..\www\_datafiles.manual\infrequent\images.xml = ..\www\_datafiles.manual\infrequent\images.xml
+		..\www\_datafiles.manual\infrequent\pokemon.availability.xml = ..\www\_datafiles.manual\infrequent\pokemon.availability.xml
+		..\www\_datafiles.manual\infrequent\pokemon.unreleased_gens.xml = ..\www\_datafiles.manual\infrequent\pokemon.unreleased_gens.xml
+		..\www\_datafiles.manual\infrequent\ranges.xml = ..\www\_datafiles.manual\infrequent\ranges.xml
+		..\www\_datafiles.manual\infrequent\special.moves.xml = ..\www\_datafiles.manual\infrequent\special.moves.xml
 	EndProjectSection
 EndProject
 Global
@@ -325,6 +332,7 @@ Global
 		{3A03E38F-EC57-4767-82C6-D554866131C9} = {4B403EE7-11D2-4ACC-8FA1-6580E030B295}
 		{C3C36E44-FE5E-4BA7-9C62-DC4C6866D21B} = {DFEB90EA-66BA-4B13-B9C3-72521C8792F8}
 		{4F542B29-F5CD-42EA-A2B0-453C1E2AD117} = {DFEB90EA-66BA-4B13-B9C3-72521C8792F8}
+		{E206F9F6-262B-4D02-BCE4-32839D4CB976} = {E1E2B8AD-800A-478A-A52E-C0AC01EF4C5B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D4815CDF-AFF0-4B51-BAA0-31B2FA8CE570}

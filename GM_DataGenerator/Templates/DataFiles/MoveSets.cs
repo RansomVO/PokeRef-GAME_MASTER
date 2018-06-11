@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
+using VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData;
 
 namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
 {
@@ -119,14 +120,17 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
         /// <summary>
         /// Write out the Move Sets for each generation of Pokemon;
         /// </summary>
-        public static void Write(IEnumerable<PokemonTranslator> pokemonTranslators, Dictionary<PokemonId, FormSettingsTranslator> forms, Dictionary<PokemonMove, MoveTranslator> moves, GameMasterStatsCalculator gameMasterStatsCalculator)
+        public static void Write(IEnumerable<PokemonTranslator> pokemonTranslators, Dictionary<PokemonId, FormSettingsTranslator> forms, Dictionary<PokemonMove, MoveTranslator> moves, GameMasterStatsCalculator gameMasterStatsCalculator, SpecialMoves specialMoves)
         {
             bool update = false;
             List<MoveSets._MoveSet>[] moveSetList = new List<MoveSets._MoveSet>[PokeConstants.Regions.Length + 1];
             for (int gen = 1; gen < PokeConstants.Regions.Length; gen++)
             {
                 string filePath = Path.Combine(Utils.OutputDataFileFolder, "movesets.gen" + gen + ".xml");
-                if (!File.Exists(filePath) || Utils.GetLastUpdated(filePath) < gameMasterStatsCalculator.GameMasterStats.last_updated.Date)
+                DateTime lastUpdated = Utils.GetLastUpdated(filePath);
+                if (!File.Exists(filePath) ||
+                    lastUpdated  < gameMasterStatsCalculator.GameMasterStats.last_updated.Date ||
+                    lastUpdated < specialMoves.last_updated.Date)
                 {
                     update = true;
                     moveSetList[gen] = new List<MoveSets._MoveSet>();

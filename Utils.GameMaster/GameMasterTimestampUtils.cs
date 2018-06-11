@@ -52,7 +52,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER
                 // Decode hex time stamp in the name of the file.
                 string timeStampCode = Path.GetFileName(filePath).Split('_', '.')[0];
                 ulong timeStampValue = ulong.Parse(timeStampCode, System.Globalization.NumberStyles.HexNumber);
-                DateTime timeStamp = TimestampUtils.TimestampToDateTime(timeStampValue);
+                DateTime timeStamp = TimestampToDateTime(timeStampValue);
 
                 // Set the timestamps on the file.
                 if (Directory.Exists(filePath))

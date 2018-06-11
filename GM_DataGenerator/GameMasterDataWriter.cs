@@ -118,10 +118,12 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
             if (!Directory.Exists(Utils.OutputDataFileFolder))
                 Directory.CreateDirectory(Utils.OutputDataFileFolder);
 
-			Constants.Write();
-			GAME_MASTERS.Write(GameMasters, GameMasterStatsCalculator);
+            // Must be written first so other Write() methods can update.
+            Constants.Write();
+            GAME_MASTERS.Write(GameMasters, GameMasterStatsCalculator);
+
             Moves.Write(PokeMoves.Values, GameMasterStatsCalculator);
-            MoveSets.Write(Pokemon.Values, Forms, PokeMoves, GameMasterStatsCalculator);
+            MoveSets.Write(Pokemon.Values, Forms, PokeMoves, GameMasterStatsCalculator, ManualDataSettings.SpecialMoves);
             PokeStats.Write(Pokemon.Values, ManualDataSettings.PokemonAvailability, ManualDataSettings.PokemonUnreleased, GameMasterStatsCalculator);
             RaidBoss.Write(ManualDataSettings.RaidBosses, GameMasterStatsCalculator);
             Encounter.Write(ManualDataSettings.FieldResearch, GameMasterStatsCalculator);
