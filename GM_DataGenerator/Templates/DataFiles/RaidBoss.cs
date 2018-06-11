@@ -81,9 +81,13 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
             bool upToDate = true;
             foreach (var raidboss in raidBosses.RaidBoss)
                 if (raidboss.id > 0)
-                    upToDate = WriteRaidBoss(raidboss, raidBosses.last_updated, gameMasterStatsCalculator.GameMasterStats.last_updated.Date) && upToDate;
+                    upToDate = WriteRaidBoss(raidboss, raidBosses.last_updated.Date, gameMasterStatsCalculator.GameMasterStats.last_updated.Date) && upToDate;
 
-            if (!upToDate)
+            DateTime projLastUpdated = Utils.GetLastUpdated(ProjFilePath);
+
+            if (!upToDate ||
+                projLastUpdated < raidBosses.last_updated.Date ||
+                projLastUpdated < gameMasterStatsCalculator.GameMasterStats.last_updated.Date)
             {
                 using (TextWriter projWriter = new StreamWriter(ProjFilePath))
                 {

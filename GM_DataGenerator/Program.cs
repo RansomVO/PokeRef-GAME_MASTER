@@ -40,7 +40,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
                 Utils.Init(args[0]);
 
                 GameMasterReader gameMasterReader = new GameMasterReader();
-                gameMasterReader.Read(Path.Combine(Utils.RootFolder, @"tech\GAME_MASTER\archive\"));
+                gameMasterReader.Read(Path.Combine(Utils.RootFolder, @"_GAME_MASTER"));
 
                 GameMasterDataWriter gameMasterDataWriter = new GameMasterDataWriter(gameMasterReader.GameMasterTemplate, gameMasterReader.LegacyGameMasterTemplates);
                 gameMasterDataWriter.Write();

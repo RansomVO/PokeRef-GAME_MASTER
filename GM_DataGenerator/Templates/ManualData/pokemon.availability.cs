@@ -70,6 +70,10 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData
             [XmlAttribute]
             [DefaultValue(false)]
             public bool shiny { get; set; }
+
+            [XmlAttribute]
+            [DefaultValue(false)]
+            public bool ditto { get; set; }
         }
 
         #endregion Internal classes

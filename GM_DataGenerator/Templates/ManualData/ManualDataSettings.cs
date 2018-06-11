@@ -62,13 +62,13 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData
 
         public ManualDataSettings(string inputFolder)
         {
-            PokemonAvailability = (PokemonAvailability)ReadXmlConfig(Path.Combine(inputFolder, "pokemon.availability.xml"), typeof(PokemonAvailability));
-            PokemonUnreleased = (PokemonUnreleased)ReadXmlConfig(Path.Combine(inputFolder, "pokemon.unreleased.xml"), typeof(PokemonUnreleased));
+            PokemonAvailability = (PokemonAvailability)ReadXmlConfig(Path.Combine(inputFolder, @"infrequent\pokemon.availability.xml"), typeof(PokemonAvailability));
+            PokemonUnreleased = (PokemonUnreleased)ReadXmlConfig(Path.Combine(inputFolder, @"infrequent\pokemon.unreleased_gens.xml"), typeof(PokemonUnreleased));
             Eggs = (Eggs)ReadXmlConfig(Path.Combine(inputFolder, "eggs.xml"), typeof(Eggs));
             RaidBosses = (RaidBosses)ReadXmlConfig(Path.Combine(inputFolder, "raidbosses.xml"), typeof(RaidBosses));
             FieldResearch = (FieldResearch)ReadXmlConfig(Path.Combine(inputFolder, "fieldresearch.xml"), typeof(FieldResearch));
-            Ranges = (Ranges)ReadXmlConfig(Path.Combine(inputFolder, "ranges.xml"), typeof(Ranges));
-            SpecialMoves = (SpecialMoves)ReadXmlConfig(Path.Combine(inputFolder, "special.moves.xml"), typeof(SpecialMoves));
+            Ranges = (Ranges)ReadXmlConfig(Path.Combine(inputFolder, @"infrequent\ranges.xml"), typeof(Ranges));
+            SpecialMoves = (SpecialMoves)ReadXmlConfig(Path.Combine(inputFolder, @"infrequent\special.moves.xml"), typeof(SpecialMoves));
 
             // Perform checks.
             StringBuilder stringBuilder = new StringBuilder();

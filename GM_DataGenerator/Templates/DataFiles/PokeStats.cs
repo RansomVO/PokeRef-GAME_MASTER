@@ -39,6 +39,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
             public string name { get; set; }
 
             [XmlAttribute]
+            [DefaultValue("")]
             public string form { get; set; }
 
             [XmlAttribute]
@@ -61,6 +62,10 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
             [XmlAttribute]
             [DefaultValue(false)]
             public bool shiny { get; set; }
+
+            [XmlAttribute]
+            [DefaultValue(false)]
+            public bool ditto { get; set; }
 
             [XmlElement]
             public PokeTypes Type { get; set; }
@@ -208,7 +213,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
                 EvolvesFrom = pokemon.EvolvesFrom;
             }
 
-            public _Pokemon(PokemonTranslator pokemonTranslator, string _availability, string _rarity, bool _shiny, _Stats._MaxStats maxStats)
+            public _Pokemon(PokemonTranslator pokemonTranslator, PokemonAvailability._Pokemon _availability, _Stats._MaxStats maxStats)
             {
                 id = pokemonTranslator.Id;
                 name = pokemonTranslator.Name;
@@ -217,8 +222,9 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
                 buddy_km = (int)pokemonTranslator.PokemonSettings.km_buddy_distance;
                 gender_ratio = pokemonTranslator.GenderRatio;
                 rarity = pokemonTranslator.Rarity;
-                shiny = _shiny;
-                availability = _availability;
+                shiny = _availability.shiny;
+                ditto = _availability.ditto;
+                availability = _availability.availability;
 
                 Type = new PokeTypes(pokemonTranslator.Type1, pokemonTranslator.Type2);
 
@@ -255,7 +261,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
         /// <summary>
         /// Write out the stats for each generation of Pokemon
         /// </summary>
-        public static  void Write(IEnumerable<PokemonTranslator> pokemonTranslators, PokemonAvailability pokemonAvailability, PokemonUnreleased pokemonUnreleased, GameMasterStatsCalculator gameMasterStatsCalculator)
+        public static void Write(IEnumerable<PokemonTranslator> pokemonTranslators, PokemonAvailability pokemonAvailability, PokemonUnreleased pokemonUnreleased, GameMasterStatsCalculator gameMasterStatsCalculator)
         {
             // Create an array of lists to hold each generation.
             bool update = false;
@@ -263,7 +269,11 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
             for (int i = 1; i < PokeConstants.Regions.Length; i++)
             {
                 string filePath = Path.Combine(Utils.OutputDataFileFolder, "pokestats.gen" + i + ".xml");
-                if (!File.Exists(filePath) || Utils.GetLastUpdated(filePath) < gameMasterStatsCalculator.GameMasterStats.last_updated.Date)
+                DateTime lastUpdated = Utils.GetLastUpdated(filePath);
+                if (!File.Exists(filePath) ||
+                    lastUpdated < pokemonAvailability.last_updated.Date ||
+                    lastUpdated < pokemonUnreleased.last_updated ||
+                    lastUpdated < gameMasterStatsCalculator.GameMasterStats.last_updated.Date)
                 {
                     update = true;
                     pokemonList[i] = new List<PokeStats._Pokemon>();
@@ -286,9 +296,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
                 foreach (var pokemonTranslator in pokemonTranslators)
                 {
                     PokemonAvailability._Pokemon availability = pokemonAvailability.GetPokemon(pokemonTranslator.Name);
-                    PokeStats._Pokemon pokemon = new PokeStats._Pokemon(pokemonTranslator,
-                        availability.availability, availability.rarity, availability.shiny,
-                        GetMaxStats(pokemonTranslator));
+                    PokeStats._Pokemon pokemon = new PokeStats._Pokemon(pokemonTranslator, availability, GetMaxStats(pokemonTranslator));
                     if (pokemonList[PokeFormulas.GetGeneration(pokemonTranslator.Id)] != null)
                         pokemonList[PokeFormulas.GetGeneration(pokemonTranslator.Id)].Add(pokemon);
 

@@ -2,6 +2,7 @@
 
 using VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles;
 using VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData;
+
 using VanOrman.Utils;
 
 namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
@@ -18,7 +19,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
 
         public GameMasterStatsCalculator(string currentGameMasterFileName)
         {
-            GameMasterStats = new Settings._GameMasterStats(TimeStampUtils.FileNameToDateTime(currentGameMasterFileName), PokeConstants.Regions.Length - 1);
+            GameMasterStats = new Settings._GameMasterStats(GameMasterTimestampUtils.FileNameToDateTime(currentGameMasterFileName), PokeConstants.Regions.Length - 1);
 
             for (int i = 0; i < PokeConstants.Regions.Length; i++)
                 _moveSetsStats[i] = new _MoveSetStats();

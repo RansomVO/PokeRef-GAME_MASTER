@@ -6,7 +6,6 @@ using POGOProtos.Enums;
 
 using VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates;
 using VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData;
-using VanOrman.Utils;
 
 namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
 {
@@ -97,7 +96,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
                 return false;
 
             // If is a GAME_MASTER before the one used during the Pokemon's release, just ignore it.
-            if (GetReleaseDate(int.Parse(itemTemplate.template_id.Substring(1, 4))) > TimeStampUtils.TimestampToDateTime(timestamp))
+            if (GetReleaseDate(int.Parse(itemTemplate.template_id.Substring(1, 4))) > GameMasterTimestampUtils.TimestampToDateTime(timestamp))
                 return false;
 
             // If we made it here, then it should be used.

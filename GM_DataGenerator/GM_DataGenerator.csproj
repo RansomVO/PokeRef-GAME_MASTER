@@ -125,6 +125,10 @@
       <Project>{6e4ec8d8-5448-4117-9fa3-4eb6221deb10}</Project>
       <Name>GM_Decoder</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Utils.GameMaster\Utils.GameMaster.csproj">
+      <Project>{52eae237-ff48-4330-8e85-7577f4731bd5}</Project>
+      <Name>Utils.GameMaster</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

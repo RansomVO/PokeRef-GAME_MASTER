@@ -3,6 +3,7 @@ using System.IO;
 
 using ProtoBuf;
 using Newtonsoft.Json;
+
 using VanOrman.Utils;
 
 using GameMaster = POGOProtos.Networking.Responses.DownloadItemTemplatesResponse;
@@ -30,7 +31,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.Decoder
             else
             {
                 GameMaster gameMaster = ReadGameMaster(filePathGameMaster);
-                TimeStampUtils.FixFileTime(filePathGameMaster);
+                GameMasterTimestampUtils.FixGameMasterFileTime(filePathGameMaster);
                 WriteGameMasterJson(gameMaster, filePathJson);
 
                 return gameMaster;
@@ -86,7 +87,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.Decoder
             using (StreamWriter writer = new StreamWriter(filePathJson))
                 writer.Write(JsonConvert.SerializeObject(gameMaster, Formatting.Indented));
 
-            TimeStampUtils.FixFileTime(filePathJson);
+            GameMasterTimestampUtils.FixGameMasterFileTime(filePathJson);
         }
     }
 }
