@@ -118,7 +118,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
         #region Writers
 
         /// <summary>
-        /// Write out the Move Sets for each generation of Pokemon;
+        /// Write out the Move Sets for each generation of Pokemon.
         /// </summary>
         public static void Write(IEnumerable<PokemonTranslator> pokemonTranslators, Dictionary<PokemonId, FormSettingsTranslator> forms, Dictionary<PokemonMove, MoveTranslator> moves, GameMasterStatsCalculator gameMasterStatsCalculator, SpecialMoves specialMoves)
         {
@@ -206,7 +206,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
 
                         foreach (var moveSet in pokemonMoveSets)
                         {
-                            moveSet.comparison = (int)Math.Ceiling(moveSet.true_dps * 100 / maxDPS);
+                            moveSet.comparison = (int)Math.Ceiling(moveSet.true_dps / maxDPS * 100);
                             gameMasterStatsCalculator.Update(moveSet);
                             moveSetList[gen].Add(moveSet);
                         }
