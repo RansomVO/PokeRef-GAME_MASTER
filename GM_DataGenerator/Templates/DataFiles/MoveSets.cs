@@ -145,17 +145,13 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
                     //  - Unown has multiple forms, but only a single record.
                     //  - Castform has multiple forms and multiple records, but each record has unique movesets.
                     //  - Deoxys has multiple forms and multiple records, but all records have the same movesets.
-                    if (forms.ContainsKey(pokemonTranslator.PokemonSettings.pokemon_id))
+                    if (forms.ContainsKey(pokemonTranslator.PokemonSettings.pokemon_id) &&
+                        forms[pokemonTranslator.PokemonSettings.pokemon_id].FormSettings.forms.Count > 0)
                     {
-                        PokemonTranslator baseRecord = null;
                         List<PokemonTranslator> records = new List<PokemonTranslator>();
                         foreach (var pokemon in pokemonTranslators)
                             if (pokemon.Id == pokemonTranslator.Id)
-                            {
                                 records.Add(pokemon);
-                                if (pokemon.Form == Form.FORM_UNSET)
-                                    baseRecord = pokemon;
-                            }
 
                         // If there are more that 1 match, then we need to deal with pokemon with multiple forms. (E.G. Unown)
                         if (records.Count > 1)
@@ -166,14 +162,14 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
                                 if (IsMoveSetMatch(pokemonTranslator, record))
                                     matches++;
 
-                            // If every record matches the moveset, skip all but the baseRecord.
+                            // If every record matches the moveset, skip all but the base form.
                             if (matches == records.Count)
                             {
-                                if (baseRecord != null)
+                                if (pokemonTranslator.Form != Form.FORM_UNSET)
                                     continue;
                             }
-                            // If only a sub-set of records match the moveset, skip the baseRecord.
-                            else if (baseRecord == null)
+                            // If only a sub-set of records match the moveset, skip the base form.
+                            else if (pokemonTranslator.Form == Form.FORM_UNSET)
                                 continue;
                         }
                     }
