@@ -6,7 +6,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
 {
     static class PokeConstants
     {
-        public readonly static DateTime LastModified = DateTime.Parse("2018-04-26");
+        public readonly static DateTime LastModified = DateTime.Parse("2018-06-14");
 
         #region const Values
 
@@ -158,6 +158,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
 
 		public enum PokeType
         {
+            Other = -1,
             Bug = 0,
             Dark,
             Dragon,
@@ -180,6 +181,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
 
         public static class Weather
         {
+            public const string Unknown = "Unknown";
             public const string Rainy = "Rainy";
             public const string Fog = "Fog";
             public const string Windy = "Windy";
@@ -285,6 +287,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
             new KeyValuePair<PokeType, string>(PokeType.Rock, Weather.PartlyCloudy),
             new KeyValuePair<PokeType, string>(PokeType.Steel, Weather.Snow),
             new KeyValuePair<PokeType, string>(PokeType.Water, Weather.Rainy),
+            new KeyValuePair<PokeType, string>(PokeType.Other, Weather.Unknown),
         };
 
         #endregion Mappings

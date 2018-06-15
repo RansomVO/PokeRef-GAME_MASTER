@@ -100,11 +100,16 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
 
         public static double GetTrueDPS(PokemonTranslator pokemonTranslator, MoveTranslator fastMove, MoveTranslator chargedMove)
         {
+            return GetTrueDPS(pokemonTranslator, fastMove, HasStab(pokemonTranslator, fastMove), chargedMove, HasStab(pokemonTranslator, chargedMove));
+        }
+
+        public static double GetTrueDPS(PokemonTranslator pokemonTranslator, MoveTranslator fastMove, bool fastMoveStab, MoveTranslator chargedMove, bool chargedMoveStab)
+        {
             if (fastMove.Energy == 0)
                 return 0;
 
-            double fastSTAB = HasStab(pokemonTranslator, fastMove) ? STAB_BONUS : 1;
-            double chargedSTAB = HasStab(pokemonTranslator, chargedMove) ? STAB_BONUS : 1;
+            double fastSTAB = fastMoveStab ? STAB_BONUS : 1;
+            double chargedSTAB = chargedMoveStab ? STAB_BONUS : 1;
             double fastMovesToCharge = Math.Ceiling((double)-chargedMove.Energy / (double)fastMove.Energy);
             double fastPower = (Math.Floor((pokemonTranslator.PokemonSettings.stats.base_attack + PokeConstants.Evaluation.Attribute.Max) * fastMove.Power * fastSTAB / 200) + 1) * fastMovesToCharge;
             double chargedPower = (Math.Floor((pokemonTranslator.PokemonSettings.stats.base_attack + PokeConstants.Evaluation.Attribute.Max) * chargedMove.Power * chargedSTAB / 200) + 1);
@@ -112,6 +117,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
 
             return (fastPower + chargedPower) / time;
         }
+
 
         #endregion DPS
 

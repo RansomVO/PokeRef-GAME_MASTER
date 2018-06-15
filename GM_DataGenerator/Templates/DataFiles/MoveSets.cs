@@ -88,13 +88,25 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
 
             public _MoveSet() { }
 
-            public _MoveSet(PokemonTranslator pokemonTranslator, MoveTranslator fastMove, bool fastMoveLegacy, MoveTranslator chargedMove, bool chargedMoveLegacy)
+            public _MoveSet(PokemonTranslator pokemonTranslator, MoveTranslator fastMove, bool fastMoveLegacy, MoveTranslator chargedMove, bool chargedMoveLegacy) :
+                this(pokemonTranslator, fastMove, fastMoveLegacy, PokeFormulas.HasStab(pokemonTranslator, fastMove), chargedMove, chargedMoveLegacy, PokeFormulas.HasStab(pokemonTranslator, chargedMove))
+            { }
+
+            public _MoveSet(PokemonTranslator pokemonTranslator, MoveTranslator fastMove, bool fastMoveLegacy, bool fastMoveStab, MoveTranslator chargedMove, bool chargedMoveLegacy) :
+                this(pokemonTranslator, fastMove, fastMoveLegacy, fastMoveStab, chargedMove, chargedMoveLegacy, PokeFormulas.HasStab(pokemonTranslator, chargedMove))
+            { }
+
+            public _MoveSet(PokemonTranslator pokemonTranslator, MoveTranslator fastMove, bool fastMoveLegacy, MoveTranslator chargedMove, bool chargedMoveLegacy, bool chargedMoveStab) :
+                this(pokemonTranslator, fastMove, fastMoveLegacy, PokeFormulas.HasStab(pokemonTranslator, fastMove), chargedMove, chargedMoveLegacy, chargedMoveStab)
+            { }
+
+            public _MoveSet(PokemonTranslator pokemonTranslator, MoveTranslator fastMove, bool fastMoveLegacy, bool fastMoveStab, MoveTranslator chargedMove, bool chargedMoveLegacy, bool chargedMoveStab)
             {
                 base_dps = PokeFormulas.GetMoveSetDPS(pokemonTranslator, fastMove, chargedMove);
-                true_dps = PokeFormulas.GetTrueDPS(pokemonTranslator, fastMove, chargedMove);
+                true_dps = PokeFormulas.GetTrueDPS(pokemonTranslator, fastMove, fastMoveStab, chargedMove, chargedMoveStab);
                 Pokemon = new Pokemon(pokemonTranslator.Id, pokemonTranslator.Name);
-                FastAttack = new Attack(fastMove.Name, PokeFormulas.HasStab(pokemonTranslator, fastMove), fastMoveLegacy);
-                ChargedAttack = new Attack(chargedMove.Name, PokeFormulas.HasStab(pokemonTranslator, chargedMove), chargedMoveLegacy);
+                FastAttack = new Attack(fastMove.Name, fastMoveStab, fastMoveLegacy);
+                ChargedAttack = new Attack(chargedMove.Name, chargedMoveStab, chargedMoveLegacy);
             }
 
             #endregion ctor
@@ -129,7 +141,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
                 string filePath = Path.Combine(Utils.OutputDataFileFolder, "movesets.gen" + gen + ".xml");
                 DateTime lastUpdated = Utils.GetLastUpdated(filePath);
                 if (!File.Exists(filePath) ||
-                    lastUpdated  < gameMasterStatsCalculator.GameMasterStats.last_updated.Date ||
+                    lastUpdated < gameMasterStatsCalculator.GameMasterStats.last_updated.Date ||
                     lastUpdated < specialMoves.last_updated.Date)
                 {
                     update = true;
@@ -179,21 +191,10 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
                     {
                         List<MoveSets._MoveSet> pokemonMoveSets = new List<MoveSets._MoveSet>();
 
-                        foreach (var fastMove in pokemonTranslator.PokemonSettings.quick_moves)
-                            foreach (var chargedMove in pokemonTranslator.PokemonSettings.cinematic_moves)
-                                pokemonMoveSets.Add(new MoveSets._MoveSet(pokemonTranslator, moves[fastMove], false, moves[chargedMove], false));
-
-                        foreach (var fastMove in pokemonTranslator.LegacyFastMoves)
-                            foreach (var chargedMove in pokemonTranslator.PokemonSettings.cinematic_moves)
-                                pokemonMoveSets.Add(new MoveSets._MoveSet(pokemonTranslator, moves[fastMove], true, moves[chargedMove], false));
-
-                        foreach (var fastMove in pokemonTranslator.PokemonSettings.quick_moves)
-                            foreach (var chargedMove in pokemonTranslator.LegacyChargedMoves)
-                                pokemonMoveSets.Add(new MoveSets._MoveSet(pokemonTranslator, moves[fastMove], false, moves[chargedMove], true));
-
-                        foreach (var fastMove in pokemonTranslator.LegacyFastMoves)
-                            foreach (var chargedMove in pokemonTranslator.LegacyChargedMoves)
-                                pokemonMoveSets.Add(new MoveSets._MoveSet(pokemonTranslator, moves[fastMove], true, moves[chargedMove], true));
+                        AddMoveSets(pokemonMoveSets, pokemonTranslator, moves, false, false);
+                        AddMoveSets(pokemonMoveSets, pokemonTranslator, moves, true, false);
+                        AddMoveSets(pokemonMoveSets, pokemonTranslator, moves, false, true);
+                        AddMoveSets(pokemonMoveSets, pokemonTranslator, moves, true, true);
 
                         double maxDPS = 0;
                         foreach (var moveSet in pokemonMoveSets)
@@ -213,6 +214,22 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
                     if (moveSetList[gen] != null && moveSetList[gen].Count > 1)
                         Utils.WriteXML(new MoveSets(gen, moveSetList[gen].ToArray()), Path.Combine(Utils.OutputDataFileFolder, "movesets.gen" + gen + ".xml"));
             }
+        }
+
+        private static void AddMoveSets(List<MoveSets._MoveSet> pokemonMoveSets, PokemonTranslator pokemonTranslator, Dictionary<PokemonMove, MoveTranslator> moves, bool fastMovesLegacy, bool chargedMovesLegacy)
+        {
+            List<PokemonMove> fastMoves = fastMovesLegacy ? pokemonTranslator.LegacyFastMoves : pokemonTranslator.PokemonSettings.quick_moves;
+            List<PokemonMove> chargedMoves = chargedMovesLegacy ? pokemonTranslator.LegacyChargedMoves : pokemonTranslator.PokemonSettings.cinematic_moves;
+
+            foreach (var fastMove in fastMoves)
+                foreach (var chargedMove in chargedMoves)
+                    if (fastMove == PokemonMove.HIDDEN_POWER_FAST)
+                    {
+                        pokemonMoveSets.Add(new MoveSets._MoveSet(pokemonTranslator, moves[fastMove], fastMovesLegacy, true, moves[chargedMove], chargedMovesLegacy));
+                        pokemonMoveSets.Add(new MoveSets._MoveSet(pokemonTranslator, moves[fastMove], fastMovesLegacy, false, moves[chargedMove], chargedMovesLegacy));
+                    }
+                    else
+                        pokemonMoveSets.Add(new MoveSets._MoveSet(pokemonTranslator, moves[fastMove], fastMovesLegacy, moves[chargedMove], chargedMovesLegacy));
         }
 
         private static bool IsMoveSetMatch(PokemonTranslator pokemonTranslator1, PokemonTranslator pokemonTranslator2)
