@@ -30,18 +30,8 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
         #region Internal classes
 
         [Serializable]
-        public class _Pokemon
+        public class _Pokemon : PokemonForm
         {
-            [XmlAttribute]
-            public int id { get; set; }
-
-            [XmlAttribute]
-            public string name { get; set; }
-
-            [XmlAttribute]
-            [DefaultValue("")]
-            public string form { get; set; }
-
             [XmlAttribute]
             public string family { get; set; }
 
@@ -200,11 +190,9 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
 
             public _Pokemon() { }
 
-            public _Pokemon(PokemonUnreleased._Pokemon pokemon, string _rarity)
+            public _Pokemon(PokemonUnreleased._Pokemon pokemon, string _rarity) :
+                base(pokemon)
             {
-                id = pokemon.id;
-                name = pokemon.name;
-                form = pokemon.form;
                 family = pokemon.family;
                 rarity = _rarity;
                 availability = PokeConstants.Availability.Unreleased;
@@ -213,11 +201,9 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
                 EvolvesFrom = pokemon.EvolvesFrom;
             }
 
-            public _Pokemon(PokemonTranslator pokemonTranslator, PokemonAvailability._Pokemon _availability, _Stats._MaxStats maxStats)
+            public _Pokemon(PokemonTranslator pokemonTranslator, PokemonAvailability._Pokemon _availability, _Stats._MaxStats maxStats) :
+                base(pokemonTranslator.Id, pokemonTranslator.Name, pokemonTranslator.Form)
             {
-                id = pokemonTranslator.Id;
-                name = pokemonTranslator.Name;
-                form = pokemonTranslator.FormName;
                 family = pokemonTranslator.CandyType;
                 buddy_km = (int)pokemonTranslator.PokemonSettings.km_buddy_distance;
                 gender_ratio = pokemonTranslator.GenderRatio;

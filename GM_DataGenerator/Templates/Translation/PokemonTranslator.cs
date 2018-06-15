@@ -36,20 +36,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates
 
         public Form Form { get { return PokemonSettings.form; } }
 
-        public string FormName
-        {
-            get
-            {
-                if (Form == Form.FORM_UNSET)
-                    return "";
-
-                return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(
-                    PokemonSettings.form.ToString()
-                    .Substring(PokemonSettings.pokemon_id.ToString().Length + 1)
-                    .Replace('_', ' ')
-                    .ToLower());
-            }
-        }
+        public string FormName { get { return PokemonForm.GetFormName(Form, PokemonSettings.pokemon_id.ToString()); } }
 
         public string Type1 { get { return TemplateTranslator.FixName(PokemonSettings.type.ToString().Substring(MARKER_TYPE.Length)); } }
 

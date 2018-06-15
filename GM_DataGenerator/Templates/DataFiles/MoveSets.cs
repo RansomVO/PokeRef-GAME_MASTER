@@ -1,6 +1,7 @@
 ﻿using POGOProtos.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Xml.Serialization;
 using VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData;
@@ -40,7 +41,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
             public int comparison { get; set; }
 
             [XmlElement]
-            public Pokemon Pokemon { get; set; }
+            public PokemonForm Pokemon { get; set; }
 
             [XmlElement]
             public Attack FastAttack { get; set; }
@@ -104,7 +105,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
             {
                 base_dps = PokeFormulas.GetMoveSetDPS(pokemonTranslator, fastMove, chargedMove);
                 true_dps = PokeFormulas.GetTrueDPS(pokemonTranslator, fastMove, fastMoveStab, chargedMove, chargedMoveStab);
-                Pokemon = new Pokemon(pokemonTranslator.Id, pokemonTranslator.Name);
+                Pokemon = new PokemonForm(pokemonTranslator.Id, pokemonTranslator.Name, pokemonTranslator.Form);
                 FastAttack = new Attack(fastMove.Name, fastMoveStab, fastMoveLegacy);
                 ChargedAttack = new Attack(chargedMove.Name, chargedMoveStab, chargedMoveLegacy);
             }

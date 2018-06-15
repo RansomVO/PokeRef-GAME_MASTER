@@ -118,7 +118,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
             if (!Directory.Exists(Utils.OutputDataFileFolder))
                 Directory.CreateDirectory(Utils.OutputDataFileFolder);
 
-            // Must be written first so other Write() methods can update.
+            // Must be written first so other Write() methods can leverage calculated values.
             Constants.Write();
             GAME_MASTERS.Write(GameMasters, GameMasterStatsCalculator);
 

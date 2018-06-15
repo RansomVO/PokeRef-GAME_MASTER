@@ -47,16 +47,23 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine("********** ERROR!!! **********");
-
+                StringBuilder message = new StringBuilder();
+                StringBuilder stack = new StringBuilder();
                 while (ex != null)
                 {
-                    Console.Error.WriteLine("-----" + ex.Message + "-----");
-                    Console.Error.WriteLine(ex.StackTrace);
-                    Console.Error.WriteLine();
+                    message.AppendLine("-------------------------------------------------------------------------------");
+                    message.AppendLine(ex.Message);
+                    stack.AppendLine("-------------------------------------------------------------------------------");
+                    stack.AppendLine("-----" + ex.Message + "-----");
+                    stack.AppendLine(ex.StackTrace);
 
                     ex = ex.InnerException;
                 }
+
+                Console.Error.WriteLine("********************************** ERROR!!! ***********************************");
+                Console.Error.WriteLine(message.ToString());
+                Console.Error.WriteLine("===============================================================================");
+                Console.Error.WriteLine(stack.ToString());
             }
         }
     }
