@@ -235,15 +235,16 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
 		/// </summary>
 		public static void Write(Ranges ranges, GameMasterStatsCalculator gameMasterStatsCalculator)
 		{
-			DateTime lastUpdated = Utils.GetLastUpdated(XmlFilePath);
+            DateTime updateDateTime = new DateTime(Math.Max(
+                gameMasterStatsCalculator.GameMasterStats.last_updated.Date.Ticks,
+                ranges.last_updated.Ticks));
 
-			if (!File.Exists(XmlFilePath) ||
-				lastUpdated < gameMasterStatsCalculator.GameMasterStats.last_updated.Date ||
-				lastUpdated < ranges.last_updated)
+            DateTime lastUpdated = Utils.GetLastUpdated(XmlFilePath);
+			if (!File.Exists(XmlFilePath) || lastUpdated < updateDateTime)
 			{
 				Settings settings = new Settings()
 				{
-					last_updated = DateTime.Today,
+					last_updated = updateDateTime,
 					GameMasterStats = gameMasterStatsCalculator.GameMasterStats,
 					Desirable = new Settings._Desirable(ranges.Desirability),
 					MaxCP = new Settings.Range(ranges.MaxCP),

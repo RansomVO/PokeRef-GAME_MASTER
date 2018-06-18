@@ -119,9 +119,9 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
 
         public MoveSets() { }
 
-        public MoveSets(int _gen, _MoveSet[] moveSets)
+        public MoveSets(int _gen, _MoveSet[] moveSets, DateTime updateDateTime)
         {
-            last_updated = DateTime.Today;
+            last_updated = updateDateTime;
             gen = _gen;
             MoveSet = moveSets;
         }
@@ -135,15 +135,17 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
         /// </summary>
         public static void Write(IEnumerable<PokemonTranslator> pokemonTranslators, Dictionary<PokemonId, FormSettingsTranslator> forms, Dictionary<PokemonMove, MoveTranslator> moves, GameMasterStatsCalculator gameMasterStatsCalculator, SpecialMoves specialMoves)
         {
+            DateTime updateDateTime = new DateTime(Math.Max(
+                gameMasterStatsCalculator.GameMasterStats.last_updated.Date.Ticks,
+                specialMoves.last_updated.Date.Ticks));
+
             bool update = false;
             List<MoveSets._MoveSet>[] moveSetList = new List<MoveSets._MoveSet>[PokeConstants.Regions.Length + 1];
             for (int gen = 1; gen < PokeConstants.Regions.Length; gen++)
             {
                 string filePath = Path.Combine(Utils.OutputDataFileFolder, "movesets.gen" + gen + ".xml");
                 DateTime lastUpdated = Utils.GetLastUpdated(filePath);
-                if (!File.Exists(filePath) ||
-                    lastUpdated < gameMasterStatsCalculator.GameMasterStats.last_updated.Date ||
-                    lastUpdated < specialMoves.last_updated.Date)
+                if (!File.Exists(filePath) || lastUpdated < updateDateTime)
                 {
                     update = true;
                     moveSetList[gen] = new List<MoveSets._MoveSet>();
@@ -213,7 +215,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
 
                 for (int gen = 1; gen < PokeConstants.Regions.Length; gen++)
                     if (moveSetList[gen] != null && moveSetList[gen].Count > 1)
-                        Utils.WriteXML(new MoveSets(gen, moveSetList[gen].ToArray()), Path.Combine(Utils.OutputDataFileFolder, "movesets.gen" + gen + ".xml"));
+                        Utils.WriteXML(new MoveSets(gen, moveSetList[gen].ToArray(), updateDateTime), Path.Combine(Utils.OutputDataFileFolder, "movesets.gen" + gen + ".xml"));
             }
         }
 

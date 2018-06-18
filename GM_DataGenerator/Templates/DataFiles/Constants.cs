@@ -79,6 +79,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
             {
                 Weather = new[]
                 {
+                    PokeConstants.Weather.Unknown,
                     PokeConstants.Weather.Rainy,
                     PokeConstants.Weather.Fog,
                     PokeConstants.Weather.Windy,

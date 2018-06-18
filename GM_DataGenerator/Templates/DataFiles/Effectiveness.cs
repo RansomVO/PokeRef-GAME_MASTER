@@ -139,18 +139,22 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
             #region Content
 
             List<MoveEffectiveness._Move> moves = new List<MoveEffectiveness._Move>();
-            foreach (var moveType in Enum.GetValues(typeof(PokeConstants.PokeType)))
+            foreach (PokeConstants.PokeType moveType in Enum.GetValues(typeof(PokeConstants.PokeType)))
             {
-                MoveEffectiveness._Move move = new MoveEffectiveness._Move();
-                move.type = moveType.ToString();
+                if (moveType == PokeConstants.PokeType.Other)
+                {
+                    MoveEffectiveness._Move move = new MoveEffectiveness._Move();
+                    move.type = moveType.ToString();
 
-                List<MoveEffectiveness._Move._Pokemon> pokemon = new List<MoveEffectiveness._Move._Pokemon>();
-                foreach (var pokeType in Enum.GetValues(typeof(PokeConstants.PokeType)))
-                    pokemon.Add(new MoveEffectiveness._Move._Pokemon(pokeType.ToString(), PokeConstants.Effectivness[(int)moveType][(int)pokeType]));
+                    List<MoveEffectiveness._Move._Pokemon> pokemon = new List<MoveEffectiveness._Move._Pokemon>();
+                    foreach (var pokeType in Enum.GetValues(typeof(PokeConstants.PokeType)))
+                        if (moveType != PokeConstants.PokeType.Other)
+                            pokemon.Add(new MoveEffectiveness._Move._Pokemon(pokeType.ToString(), PokeConstants.Effectivness[(int)moveType][(int)pokeType]));
 
-                move.Pokemon = pokemon.ToArray();
+                    move.Pokemon = pokemon.ToArray();
 
-                moves.Add(move);
+                    moves.Add(move);
+                }
             }
 
             Moves = moves.ToArray();

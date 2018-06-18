@@ -64,9 +64,9 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
 
 		public GAME_MASTERS() { }
 
-		public GAME_MASTERS(_GAME_MASTER[] gameMasters)
+		public GAME_MASTERS(_GAME_MASTER[] gameMasters, DateTime updateDateTime)
 		{
-			last_updated = DateTime.Parse(gameMasters[0].timestamp);
+			last_updated = updateDateTime;
 			GAME_MASTER = gameMasters;
 		}
 
@@ -82,7 +82,9 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
 		/// </summary>
 		public static void Write(Dictionary<string, bool> gameMasters, GameMasterStatsCalculator gameMasterStatsCalculator)
 		{
-			if (!File.Exists(XmlFilePath) || !File.Exists(ProjFilePath) || Utils.GetLastUpdated(XmlFilePath) < gameMasterStatsCalculator.GameMasterStats.last_updated.Date)
+            DateTime updateDateTime = gameMasterStatsCalculator.GameMasterStats.last_updated.Date;
+
+            if (!File.Exists(XmlFilePath) || !File.Exists(ProjFilePath) || Utils.GetLastUpdated(XmlFilePath) < updateDateTime)
 			{
 				List<GAME_MASTERS._GAME_MASTER> gameMasterList = new List<GAME_MASTERS._GAME_MASTER>();
 				using (TextWriter writer = new StreamWriter(ProjFilePath))
@@ -119,7 +121,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
 					writer.WriteLine("</Project>");
 				}
 
-				Utils.WriteXML(new GAME_MASTERS(gameMasterList.ToArray()), XmlFilePath);
+				Utils.WriteXML(new GAME_MASTERS(gameMasterList.ToArray(), updateDateTime), XmlFilePath);
 			}
 		}
 

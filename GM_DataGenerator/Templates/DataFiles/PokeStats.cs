@@ -232,9 +232,9 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
 
         public PokeStats() { }
 
-        public PokeStats(int _gen, _Pokemon[] pokemon)
+        public PokeStats(int _gen, _Pokemon[] pokemon, DateTime updateDateTime)
         {
-            last_updated = DateTime.Today;
+            last_updated = updateDateTime;
             gen = _gen;
             region = PokeConstants.Regions[_gen];
             Pokemon = pokemon;
@@ -249,6 +249,11 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
         /// </summary>
         public static void Write(IEnumerable<PokemonTranslator> pokemonTranslators, PokemonAvailability pokemonAvailability, PokemonUnreleased pokemonUnreleased, GameMasterStatsCalculator gameMasterStatsCalculator)
         {
+            DateTime updateDateTime = new DateTime(Math.Max(Math.Max(
+                gameMasterStatsCalculator.GameMasterStats.last_updated.Date.Ticks,
+                pokemonAvailability.last_updated.Date.Ticks),
+                pokemonAvailability.last_updated.Date.Ticks));
+
             // Create an array of lists to hold each generation.
             bool update = false;
             List<PokeStats._Pokemon>[] pokemonList = new List<PokeStats._Pokemon>[PokeConstants.Regions.Length + 1];
@@ -256,10 +261,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
             {
                 string filePath = Path.Combine(Utils.OutputDataFileFolder, "pokestats.gen" + i + ".xml");
                 DateTime lastUpdated = Utils.GetLastUpdated(filePath);
-                if (!File.Exists(filePath) ||
-                    lastUpdated < pokemonAvailability.last_updated.Date ||
-                    lastUpdated < pokemonUnreleased.last_updated ||
-                    lastUpdated < gameMasterStatsCalculator.GameMasterStats.last_updated.Date)
+                if (!File.Exists(filePath) || lastUpdated < updateDateTime)
                 {
                     update = true;
                     pokemonList[i] = new List<PokeStats._Pokemon>();
@@ -291,7 +293,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
 
                 for (int i = 1; i < PokeConstants.Regions.Length; i++)
                     if (pokemonList[i] != null)
-                        Utils.WriteXML(new PokeStats(i, pokemonList[i].ToArray()), Path.Combine(Utils.OutputDataFileFolder, "pokestats.gen" + i + ".xml"));
+                        Utils.WriteXML(new PokeStats(i, pokemonList[i].ToArray(), updateDateTime), Path.Combine(Utils.OutputDataFileFolder, "pokestats.gen" + i + ".xml"));
             }
         }
 

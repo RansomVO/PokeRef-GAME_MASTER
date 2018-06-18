@@ -70,8 +70,10 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
         /// </summary>
         public static void Write(IEnumerable<MoveTranslator> moves, GameMasterStatsCalculator gameMasterStatsCalculator)
         {
-            if (!File.Exists(FastFilePath) || Utils.GetLastUpdated(FastFilePath) < gameMasterStatsCalculator.GameMasterStats.last_updated.Date ||
-                !File.Exists(ChargedFilePath) || Utils.GetLastUpdated(ChargedFilePath) < gameMasterStatsCalculator.GameMasterStats.last_updated.Date)
+            DateTime updateDateTime = gameMasterStatsCalculator.GameMasterStats.last_updated.Date;
+
+            if (!File.Exists(FastFilePath) || Utils.GetLastUpdated(FastFilePath) < updateDateTime ||
+                !File.Exists(ChargedFilePath) || Utils.GetLastUpdated(ChargedFilePath) < updateDateTime)
             {
                 List<Moves._Move> movesFast = new List<Moves._Move>();
                 List<Moves._Move> movesCharged = new List<Moves._Move>();
@@ -81,18 +83,18 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
                         new Moves._Move(move.Name, move.Type, move.Energy, move.Power, move.Duration, move.DamageWindowStart, move.DamageWindowEnd));
                 }
 
-                if (!File.Exists(FastFilePath) || Utils.GetLastUpdated(FastFilePath) < gameMasterStatsCalculator.GameMasterStats.last_updated.Date)
+                if (!File.Exists(FastFilePath) || Utils.GetLastUpdated(FastFilePath) < updateDateTime)
                     Utils.WriteXML(new Moves()
                     {
-                        last_updated = DateTime.Today,
+                        last_updated = updateDateTime,
                         category = "Fast",
                         Move = movesFast.ToArray(),
                     }, FastFilePath);
 
-                if (!File.Exists(ChargedFilePath) || Utils.GetLastUpdated(ChargedFilePath) < gameMasterStatsCalculator.GameMasterStats.last_updated.Date)
+                if (!File.Exists(ChargedFilePath) || Utils.GetLastUpdated(ChargedFilePath) < updateDateTime)
                     Utils.WriteXML(new Moves()
                     {
-                        last_updated = DateTime.Today,
+                        last_updated = updateDateTime,
                         category = "Charged",
                         Move = movesCharged.ToArray(),
                     }, ChargedFilePath);
