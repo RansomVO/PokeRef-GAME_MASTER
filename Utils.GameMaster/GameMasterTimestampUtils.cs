@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 
@@ -10,24 +11,49 @@ namespace VanOrman.PokemonGO.GAME_MASTER
     {
         #region data
 
-        private static readonly DateTime DateOfMangle = new DateTime(2018, 04, 30);
-        private static readonly TimeSpan MangleAmount = new TimeSpan(250, 0, 0);
+        private class Mangle
+        {
+            public DateTime Start { get; set; }
+
+            private DateTime Corrected { get; set; }
+
+            public TimeSpan Amount { get { return Start.ToUniversalTime() - Corrected.ToUniversalTime(); } }
+
+            public Mangle(string gameMaster, DateTime corrected)
+            {
+                Start = TimestampUtils.HexTimeStampToDateTime(gameMaster);
+                Corrected = corrected;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private static readonly Mangle[] Mangles =
+        {
+            // MUST be sorted descending by Hex TimeStamp.
+            new Mangle("0000016477739A1E", new DateTime(2018, 06, 15, 13, 13, 0, DateTimeKind.Local)),
+            new Mangle("0000016470644D97", new DateTime(2018, 06, 19, 14, 37, 0, DateTimeKind.Local)),
+            new Mangle("00000164159FEF31", new DateTime(2018, 06, 08, 15, 19, 0, DateTimeKind.Local)),
+            new Mangle("0000016322DEEA14", new DateTime(2018, 04, 22, 05, 00, 0, DateTimeKind.Local)),
+        };
 
         #endregion data
 
-        public static ulong DateTimeToTimestamp(DateTime dateTime)
+
+        public static ulong DateTimeToTicks(DateTime dateTime)
         {
-            return TimestampUtils.DateTimeToTimestamp(dateTime);
+            return TimestampUtils.DateTimeToTicks(dateTime);
         }
 
-        public static ulong HexTimeStampToTimeStamp(string hexTimeStamp)
+        public static ulong HexTimeStampToTicks(string hexTimeStamp)
         {
-            return TimestampUtils.HexTimeStampToTimeStamp(hexTimeStamp);
+            return TimestampUtils.HexTimeStampToTicks(hexTimeStamp);
         }
 
-        public static DateTime TimestampToDateTime(ulong timeStamp)
+        public static DateTime TicksToDateTime(ulong timeStamp)
         {
-            return AdjustForMangle(TimestampUtils.TimestampToDateTime(timeStamp));
+            return AdjustForMangle(TimestampUtils.TicksToDateTime(timeStamp));
         }
 
         public static DateTime TimestampToDateTime(string timeStamp)
@@ -42,7 +68,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER
 
         public static DateTime FileNameToDateTime(string fileName)
         {
-            return TimestampToDateTime(HexTimeStampToTimeStamp(FileNameToHexTimeStamp(fileName)));
+            return TicksToDateTime(HexTimeStampToTicks(FileNameToHexTimeStamp(fileName)));
         }
 
         public static void FixGameMasterFileTime(string filePath)
@@ -52,7 +78,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER
                 // Decode hex time stamp in the name of the file.
                 string timeStampCode = Path.GetFileName(filePath).Split('_', '.')[0];
                 ulong timeStampValue = ulong.Parse(timeStampCode, System.Globalization.NumberStyles.HexNumber);
-                DateTime timeStamp = TimestampToDateTime(timeStampValue);
+                DateTime timeStamp = TicksToDateTime(timeStampValue).ToLocalTime();
 
                 // Set the timestamps on the file.
                 if (Directory.Exists(filePath))
@@ -78,8 +104,9 @@ namespace VanOrman.PokemonGO.GAME_MASTER
 
         private static DateTime AdjustForMangle(DateTime value)
         {
-            if (value > DateOfMangle)
-                return value.Subtract(MangleAmount);
+            foreach (var mangle in Mangles)
+                if (value >= mangle.Start)
+                    return value.Subtract(mangle.Amount);
 
             return value;
         }

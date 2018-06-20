@@ -50,8 +50,8 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
 			{
 				name = _name;
 				timestamp_hex = GameMasterTimestampUtils.FileNameToHexTimeStamp(name);
-				timestamp_dec = GameMasterTimestampUtils.HexTimeStampToTimeStamp(timestamp_hex);
-				timestamp = GameMasterTimestampUtils.TimestampToDateTime(timestamp_dec).ToString(PokeConstants.DateTimeFormat);
+				timestamp_dec = GameMasterTimestampUtils.HexTimeStampToTicks(timestamp_hex);
+				timestamp = GameMasterTimestampUtils.TicksToDateTime(timestamp_dec).ToString(PokeConstants.DateTimeFormat);
 				have_original = _have_original;
 			}
 

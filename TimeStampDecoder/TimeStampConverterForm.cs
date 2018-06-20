@@ -30,7 +30,7 @@ namespace TimeStampDecoder
             try
             {
                 Working = true;
-                numberBox.Value = GameMasterTimestampUtils.DateTimeToTimestamp(maskedDateTimePicker.Value);
+                numberBox.Value = GameMasterTimestampUtils.DateTimeToTicks(maskedDateTimePicker.Value);
             }
             finally
             {
@@ -48,8 +48,8 @@ namespace TimeStampDecoder
                 Working = true;
 
                 maskedDateTimePicker.Value = checkBoxGameMaster.Checked ?
-                    GameMasterTimestampUtils.TimestampToDateTime(numberBox.Value) :
-                    TimestampUtils.TimestampToDateTime(numberBox.Value);
+                    GameMasterTimestampUtils.TicksToDateTime(numberBox.Value) :
+                    TimestampUtils.TicksToDateTime(numberBox.Value);
             }
             finally
             {

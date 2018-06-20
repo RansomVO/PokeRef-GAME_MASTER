@@ -37,8 +37,8 @@ namespace TimeStampDecoder
 
             set
             {
-                _maskedTextBox.Text = value.ToString(_dateFormat);
                 UTC = value.Kind == DateTimeKind.Utc;
+                _maskedTextBox.Text = value.ToString(_dateFormat);
             }
         }
 
