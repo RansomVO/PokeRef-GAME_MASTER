@@ -25,26 +25,60 @@ namespace VanOrman.PokemonGO.GAME_MASTER.Decoder
             {
                 if (args.Count() < 1 || args[0].Contains("?"))
                 {
-                    Console.Out.WriteLine("GAME_MASTER Decoder");
-                    Console.Out.WriteLine("A tool to decode Pokémon GO GAME_MASTER files into JSON.");
-                    Console.Out.WriteLine();
-                    Console.Out.WriteLine("Usage: GM_Decoder {FilePath}");
-                    Console.Out.WriteLine("\tFilePath: Path to the GAME_MASTER file to be decoded.");
-                    Console.Out.WriteLine();
-
+                    WriteHelp();
                     return;
                 }
 
-                if (!File.Exists(args[0]))
+                int decoded = 0;
+                for (int arg = 0; arg < args.Length; arg++)
                 {
-                    Console.Error.WriteLine("The specified file does not exist: " + args[0]);
+                    bool createOnly = string.Equals(args[arg], "-c") || string.Equals(args[arg], "-create");
+                    if (createOnly)
+                    {
+                        arg++;
+                        if (arg >= args.Length)
+                            break;
+                    }
 
-                    return;
+                    string folder;
+                    string filePattern;
+                    int pos = args[arg].LastIndexOf('\\');
+                    if (pos == -1)
+                    {
+                        folder = ".";
+                        filePattern = args[arg];
+                    }
+                    else
+                    {
+                        folder = args[arg].Substring(0, pos);
+                        filePattern = args[arg].Substring(pos + 1);
+                    }
+
+                    if (!Directory.Exists(folder))
+                    {
+                        Console.Error.WriteLine("ERROR: Folder does not exist: \"" + folder + "\"");
+                        continue;
+                    }
+
+                    foreach (var filePath in Directory.EnumerateFiles(folder, filePattern))
+#if true
+                        if (Path.GetExtension(filePath).Length == 0 && (!createOnly || !File.Exists(filePath + ".json")))
+                        {
+                            Console.Out.WriteLine("Decoding \"" + filePath + "\"");
+                            GameMasterDecoder.WriteGameMasterJson(filePath);
+                            decoded++;
+                        }
+#else
+                        // This code is to reset the timestamps of the files
+                        try
+                        {
+                            GameMasterTimestampUtils.FixGameMasterFileTime(filePath);
+                        }
+                        catch (Exception) { }
+#endif
                 }
 
-                // Deserialize specified GAME_MASTER file.
-                GameMaster gameMaster = GameMasterDecoder.ReadGameMaster(args[0]);
-                GameMasterDecoder.WriteGameMasterJson(gameMaster, args[0] + ".json");
+                Console.Out.WriteLine("Finished. " + decoded + " files decoded.");
             }
             catch (Exception ex)
             {
@@ -59,6 +93,20 @@ namespace VanOrman.PokemonGO.GAME_MASTER.Decoder
                     ex = ex.InnerException;
                 }
             }
+        }
+
+        private static void WriteHelp()
+        {
+            Console.Out.WriteLine("GAME_MASTER Decoder");
+            Console.Out.WriteLine("A tool to decode Pokémon GO GAME_MASTER files into JSON.");
+            Console.Out.WriteLine();
+            Console.Out.WriteLine("Usage: GM_Decoder [-create] {FilePattern} [[-create] {FilePattern}...]");
+            Console.Out.WriteLine("\t-create (-c): Only decode the GAME_MASTER for the FilePattern if ");
+            Console.Out.WriteLine("\t\tthe .json file doesn't already exist.");
+            Console.Out.WriteLine("\tFilePattern: Pattern of the GAME_MASTER files to be decoded.");
+            Console.Out.WriteLine();
+            Console.Out.WriteLine("\tE.G.: GM_Decoder GAME_MASTER\\*");
+            Console.Out.WriteLine();
         }
     }
 }

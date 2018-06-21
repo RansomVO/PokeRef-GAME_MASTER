@@ -79,7 +79,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.Decoder
         }
 
         /// <summary>
-        /// Writes the the current GameMaster object into a .json file.
+        /// Writes the the GameMaster object into a .json file.
         /// </summary>
         /// <param name="filePathJson"></param>
         internal static void WriteGameMasterJson(GameMaster gameMaster, string filePathJson)
@@ -88,6 +88,16 @@ namespace VanOrman.PokemonGO.GAME_MASTER.Decoder
                 writer.Write(JsonConvert.SerializeObject(gameMaster, Formatting.Indented));
 
             GameMasterTimestampUtils.FixGameMasterFileTime(filePathJson);
+        }
+
+        /// <summary>
+        /// Writes the the current GameMaster object into a .json file.
+        /// </summary>
+        /// <param name="filePathJson"></param>
+        internal static void WriteGameMasterJson(string filePathGameMaster)
+        {
+            GameMaster gameMaster = GameMasterDecoder.ReadGameMaster(filePathGameMaster);
+            GameMasterDecoder.WriteGameMasterJson(gameMaster, filePathGameMaster + ".json");
         }
     }
 }
