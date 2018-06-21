@@ -11,6 +11,21 @@ namespace VanOrman.PokemonGO.GAME_MASTER
     {
         #region data
 
+        /// <summary>
+        /// Originally the TimeStamp on the GAME_MASTER files was correct.
+        ///     Later they started setting them to times in the future, and the amount frequently changed.
+        ///     This table is data I can use to "unmangle" the TimeStamps to get the correct date.
+        /// </summary>
+        private static readonly Mangle[] Mangles =
+        {
+            // MUST be sorted descending by Hex TimeStamp.
+            new Mangle("0000016447AC2253", new DateTime(2018, 06, 21, 11, 32, 0, DateTimeKind.Local)),
+            new Mangle("0000016477739A1E", new DateTime(2018, 06, 15, 13, 13, 0, DateTimeKind.Local)),
+            new Mangle("0000016470644D97", new DateTime(2018, 06, 19, 14, 37, 0, DateTimeKind.Local)),
+            new Mangle("00000164159FEF31", new DateTime(2018, 06, 08, 15, 19, 0, DateTimeKind.Local)),
+            new Mangle("0000016322DEEA14", new DateTime(2018, 04, 22, 05, 00, 0, DateTimeKind.Local)),
+        };
+
         private class Mangle
         {
             public DateTime Start { get; set; }
@@ -25,18 +40,6 @@ namespace VanOrman.PokemonGO.GAME_MASTER
                 Corrected = corrected;
             }
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private static readonly Mangle[] Mangles =
-        {
-            // MUST be sorted descending by Hex TimeStamp.
-            new Mangle("0000016477739A1E", new DateTime(2018, 06, 15, 13, 13, 0, DateTimeKind.Local)),
-            new Mangle("0000016470644D97", new DateTime(2018, 06, 19, 14, 37, 0, DateTimeKind.Local)),
-            new Mangle("00000164159FEF31", new DateTime(2018, 06, 08, 15, 19, 0, DateTimeKind.Local)),
-            new Mangle("0000016322DEEA14", new DateTime(2018, 04, 22, 05, 00, 0, DateTimeKind.Local)),
-        };
 
         #endregion data
 
