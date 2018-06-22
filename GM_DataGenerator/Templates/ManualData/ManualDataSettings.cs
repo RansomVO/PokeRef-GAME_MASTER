@@ -75,7 +75,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData
             foreach (var pokemon in PokemonAvailability.Pokemon)
                 if (pokemon.id != 0 && pokemon.date == null &&
                     !pokemon.availability.Contains(PokeConstants.Availability.Unreleased))
-                    stringBuilder.AppendLine("  • " + pokemon.id.ToString() + " - " + pokemon.name + (pokemon.form == null ? string.Empty : (" (" + pokemon.form + ")")));
+                    stringBuilder.AppendLine("  • " + pokemon.id.ToString() + " - " + pokemon.name);
 
             if (stringBuilder.Length > 0)
                 ConsoleOutput.OutputError("Update the release date in _datafiles.manual\\pokemon.availability.xml for the following Pokemon:\r\n" + stringBuilder.ToString());

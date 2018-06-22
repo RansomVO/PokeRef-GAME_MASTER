@@ -79,8 +79,8 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
                 }
             }
 
-            // Sort by the HEX value on the front of the file name.
-            return filePaths.OrderBy(filePath => 0 - (Int64.Parse(Path.GetFileName(filePath).Substring(0, 16), System.Globalization.NumberStyles.HexNumber)));
+            // Sort by the HEX value on the front of the file name, adjusted for Mangling.
+            return filePaths.OrderBy(filePath => 0 - GameMasterTimestampUtils.FileNameToDateTime(filePath).Ticks);
         }
     }
 }
