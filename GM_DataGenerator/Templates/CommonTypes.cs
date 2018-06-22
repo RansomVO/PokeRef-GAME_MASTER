@@ -68,10 +68,9 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates
 
         public PokemonForm() { }
 
-        public PokemonForm(int _id, string _name, Form formId)
+        public PokemonForm(int _id, string _name, Form formId) :
+            base(_id, _name)
         {
-            id = _id;
-            name = _name;
             formIdRaw = formId;
         }
 

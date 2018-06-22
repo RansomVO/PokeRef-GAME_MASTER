@@ -32,7 +32,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates
 
         public int Id { get { return int.Parse(TemplateId.Substring(1, 4)); } }
 
-        public string Name { get { return FixPokemonName(PokemonSettings.pokemon_id.ToString()) + (Form == Form.FORM_UNSET ? string.Empty : (" (" + FormName + ")")); } }
+        public string Name { get { return FixPokemonName(PokemonSettings.pokemon_id.ToString()); } }
 
         public Form Form { get { return PokemonSettings.form; } }
 
