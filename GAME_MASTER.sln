@@ -6,7 +6,6 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_datafiles.manual", "_datafiles.manual", "{E1E2B8AD-800A-478A-A52E-C0AC01EF4C5B}"
 	ProjectSection(SolutionItems) = preProject
 		..\www\_datafiles.manual\eggs.xml = ..\www\_datafiles.manual\eggs.xml
-		..\www\_datafiles.manual\fieldresearch.hold.xml = ..\www\_datafiles.manual\fieldresearch.hold.xml
 		..\www\_datafiles.manual\fieldresearch.xml = ..\www\_datafiles.manual\fieldresearch.xml
 		..\www\_datafiles.manual\news.xml = ..\www\_datafiles.manual\news.xml
 		..\www\_datafiles.manual\raidbosses.xml = ..\www\_datafiles.manual\raidbosses.xml
@@ -267,6 +266,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_GAME_MASTER", "_GAME_MASTE
 		..\www\_GAME_MASTER\00000163BCC54DEE_GAME_MASTER.json = ..\www\_GAME_MASTER\00000163BCC54DEE_GAME_MASTER.json
 		..\www\_GAME_MASTER\00000164159FEF31_GAME_MASTER = ..\www\_GAME_MASTER\00000164159FEF31_GAME_MASTER
 		..\www\_GAME_MASTER\00000164159FEF31_GAME_MASTER.json = ..\www\_GAME_MASTER\00000164159FEF31_GAME_MASTER.json
+		..\www\_GAME_MASTER\0000016447AC2253_GAME_MASTER = ..\www\_GAME_MASTER\0000016447AC2253_GAME_MASTER
+		..\www\_GAME_MASTER\0000016447AC2253_GAME_MASTER.json = ..\www\_GAME_MASTER\0000016447AC2253_GAME_MASTER.json
+		..\www\_GAME_MASTER\0000016470644D97_GAME_MASTER = ..\www\_GAME_MASTER\0000016470644D97_GAME_MASTER
+		..\www\_GAME_MASTER\0000016470644D97_GAME_MASTER.json = ..\www\_GAME_MASTER\0000016470644D97_GAME_MASTER.json
+		..\www\_GAME_MASTER\0000016477739A1E_GAME_MASTER = ..\www\_GAME_MASTER\0000016477739A1E_GAME_MASTER
+		..\www\_GAME_MASTER\0000016477739A1E_GAME_MASTER.json = ..\www\_GAME_MASTER\0000016477739A1E_GAME_MASTER.json
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "infrequent", "infrequent", "{E206F9F6-262B-4D02-BCE4-32839D4CB976}"
@@ -276,6 +281,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "infrequent", "infrequent", 
 		..\www\_datafiles.manual\infrequent\pokemon.unreleased_gens.xml = ..\www\_datafiles.manual\infrequent\pokemon.unreleased_gens.xml
 		..\www\_datafiles.manual\infrequent\ranges.xml = ..\www\_datafiles.manual\infrequent\ranges.xml
 		..\www\_datafiles.manual\infrequent\special.moves.xml = ..\www\_datafiles.manual\infrequent\special.moves.xml
+		..\www\_datafiles.manual\infrequent\trading.xml = ..\www\_datafiles.manual\infrequent\trading.xml
 	EndProjectSection
 EndProject
 Global

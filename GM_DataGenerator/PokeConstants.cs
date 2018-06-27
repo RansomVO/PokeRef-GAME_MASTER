@@ -29,9 +29,9 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
             public const string Regional = "Regional";
             public const string RaidBossOnly = "Raid Boss Only";
             public const string EXRaidBossOnly = "EX Raid Boss Only";
-            public const string HatchOnly_2K = "Hatch Only: 2K";
-            public const string HatchOnly_5K = "Hatch Only: 5K";
-            public const string HatchOnly_10K = "Hatch Only: 10K";
+            public const string HatchOnly = "Hatch Only";
+            public const string HatchOnlyFormat = HatchOnly + ": {0}K";
+            public const string EvolveOnly = "Evolve Only";
 
             public static class Region
             {

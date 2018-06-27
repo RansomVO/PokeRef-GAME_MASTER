@@ -233,11 +233,11 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
 		/// <summary>
 		/// Write the rarely-changed files that are referenced globally.
 		/// </summary>
-		public static void Write(Ranges ranges, GameMasterStatsCalculator gameMasterStatsCalculator)
+		public static void Write(ManualDataSettings manualDataSettings, GameMasterStatsCalculator gameMasterStatsCalculator)
 		{
             DateTime updateDateTime = new DateTime(Math.Max(
                 gameMasterStatsCalculator.GameMasterStats.last_updated.Date.Ticks,
-                ranges.last_updated.Ticks));
+                manualDataSettings.Ranges.last_updated.Ticks));
 
             DateTime lastUpdated = Utils.GetLastUpdated(XmlFilePath);
 			if (!File.Exists(XmlFilePath) || lastUpdated < updateDateTime)
@@ -246,15 +246,15 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
 				{
 					last_updated = updateDateTime,
 					GameMasterStats = gameMasterStatsCalculator.GameMasterStats,
-					Desirable = new Settings._Desirable(ranges.Desirability),
-					MaxCP = new Settings.Range(ranges.MaxCP),
-					MaxHP = new Settings.Range(ranges.MaxHP),
-					DPSPercent = new Settings.Range(ranges.DPSPercent),
-					DPS = new Settings.Range(ranges.DPS),
-					Capture = new Settings.Difficulty(ranges.CaptureRate),
-					Flee = new Settings.Rate(ranges.FleeRate),
-					Attack = new Settings.Rate(ranges.AttackRate),
-					Dodge = new Settings.Rate(ranges.DodgeRate),
+					Desirable = new Settings._Desirable(manualDataSettings.Ranges.Desirability),
+					MaxCP = new Settings.Range(manualDataSettings.Ranges.MaxCP),
+					MaxHP = new Settings.Range(manualDataSettings.Ranges.MaxHP),
+					DPSPercent = new Settings.Range(manualDataSettings.Ranges.DPSPercent),
+					DPS = new Settings.Range(manualDataSettings.Ranges.DPS),
+					Capture = new Settings.Difficulty(manualDataSettings.Ranges.CaptureRate),
+					Flee = new Settings.Rate(manualDataSettings.Ranges.FleeRate),
+					Attack = new Settings.Rate(manualDataSettings.Ranges.AttackRate),
+					Dodge = new Settings.Rate(manualDataSettings.Ranges.DodgeRate),
 				};
 
 				Utils.WriteXML(settings, XmlFilePath);

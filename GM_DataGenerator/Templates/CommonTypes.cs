@@ -56,7 +56,23 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates
 
         [XmlAttribute]
         [DefaultValue("")]
-        public string form { get { return GetFormName(formIdRaw, name); } set { } }
+        public string form
+        {
+            get
+            {
+                if (_form != null)
+                    return _form;
+                return GetFormName(formIdRaw, name);
+            }
+            set
+            {
+                // Need to do this to deal with Forms that are not yet released.
+                if (formIdRaw == Form.FORM_UNSET && !string.IsNullOrWhiteSpace(value))
+                    _form = value;
+            }
+        }
+        [XmlIgnore]
+        private string _form;
 
         [XmlAttribute]
         [DefaultValue(0)]
@@ -68,8 +84,8 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates
 
         public PokemonForm() { }
 
-        public PokemonForm(int _id, string _name, Form formId) :
-            base(_id, _name)
+        public PokemonForm(int id, string name, Form formId) :
+            base(id, name)
         {
             formIdRaw = formId;
         }
@@ -80,7 +96,10 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates
         /// <param name="pokemon"></param>
         public PokemonForm(PokemonForm pokemonForm) :
             this(pokemonForm.id, pokemonForm.name, pokemonForm.formIdRaw)
-        { }
+        {
+            // Deal with Forms that are not yet released.
+            form = pokemonForm.form;
+        }
 
         #endregion ctor
 

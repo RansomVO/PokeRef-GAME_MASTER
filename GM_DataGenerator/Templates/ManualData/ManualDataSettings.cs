@@ -13,7 +13,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData
     /// <summary>
     /// Contains the data from the manually updated.xml files.
     /// </summary>
-    class ManualDataSettings
+    public class ManualDataSettings
     {
         #region Properties
 

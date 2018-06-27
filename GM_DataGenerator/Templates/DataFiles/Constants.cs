@@ -110,13 +110,19 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
             public string RaidBossOnly_EX { get { return PokeConstants.Availability.EXRaidBossOnly; } set { } }
 
             [XmlAttribute]
-            public string HatchOnly_2K { get { return PokeConstants.Availability.HatchOnly_2K; } set { } }
+            public string HatchOnly_2K { get { return string.Format(PokeConstants.Availability.HatchOnlyFormat, 2); } set { } }
 
             [XmlAttribute]
-            public string HatchOnly_5K { get { return PokeConstants.Availability.HatchOnly_5K; } set { } }
+            public string HatchOnly_5K { get { return string.Format(PokeConstants.Availability.HatchOnlyFormat, 5); } set { } }
 
             [XmlAttribute]
-            public string HatchOnly_10K { get { return PokeConstants.Availability.HatchOnly_10K; } set { } }
+            public string HatchOnly_7K { get { return string.Format(PokeConstants.Availability.HatchOnlyFormat, 7); } set { } }
+
+            [XmlAttribute]
+            public string HatchOnly_10K { get { return string.Format(PokeConstants.Availability.HatchOnlyFormat, 10); } set { } }
+
+            [XmlAttribute]
+            public string EvolveOnly { get { return PokeConstants.Availability.EvolveOnly; } set { } }
         }
 
         [Serializable]

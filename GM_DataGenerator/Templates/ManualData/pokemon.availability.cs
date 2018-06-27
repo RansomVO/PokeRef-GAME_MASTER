@@ -64,6 +64,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData
             public string availability { get; set; }
 
             [XmlAttribute]
+			[DefaultValue("")]
             public string rarity { get; set; }
 
             [XmlAttribute]
@@ -123,6 +124,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData
                 public string availability { get; set; }
 
                 [XmlAttribute]
+				[DefaultValue("")]
                 public string rarity { get; set; }
 
                 [XmlAttribute]
@@ -151,22 +153,42 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData
                     continue;
                 }
 
-                _pokemonLookup.Add(pokemon.name, pokemon);
-                if (pokemon.Form != null)
-                    foreach (var form in pokemon.Form)
-                        _pokemonLookup.Add(pokemon.name + " (" + form.name + ")", new _Pokemon(pokemon, form));
-            }
-        }
+				_pokemonLookup.Add(pokemon.name, pokemon);
+				if (pokemon.Form != null)
+				{
+					foreach (var form in pokemon.Form)
+					{
+						string key = GetPokemonLookupKey(pokemon.name, form.name);
+						if (!_pokemonLookup.ContainsKey(key))
+							_pokemonLookup.Add(key, new _Pokemon(pokemon, form));
+					}
+				}
+			}
+		}
 
-        public _Pokemon GetPokemon(string name)
+		public static string GetPokemonLookupKey(string pokemonName, string form)
+		{
+			string result = pokemonName;
+
+			if (!string.IsNullOrEmpty(form) && !string.Equals(form, "Normal", StringComparison.OrdinalIgnoreCase))
+			{
+				result += " (" + form + ")";
+			}
+
+			return result;
+		}
+
+        public _Pokemon GetPokemon(string name, string form)
         {
-            if (!_pokemonLookup.ContainsKey(name))
+			string key = GetPokemonLookupKey(name, form);
+
+			if (!_pokemonLookup.ContainsKey(key))
             {
-                Console.Error.WriteLine("_datafiles.manual\\pokemon.availability.xml missing: " + name);
+                Console.Error.WriteLine("_datafiles.manual\\pokemon.availability.xml missing: " + key);
                 return null;
             }
 
-            return _pokemonLookup[name];
+            return _pokemonLookup[key];
         }
     }
 }

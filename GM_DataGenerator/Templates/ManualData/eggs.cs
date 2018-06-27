@@ -21,9 +21,19 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData
             public string type { get; set; }
 
             [XmlElement]
-            public Pokemon[] Pokemon { get; set; }
+            public PokemonForm[] Pokemon { get; set; }
         }
 
         #endregion Internal classes
+
+        public _Egg GetEgg(PokemonTranslator pokemonTranslator)
+        {
+            foreach (var egg in Egg)
+                foreach (var pokemon in egg.Pokemon)
+                    if (pokemon.id == pokemonTranslator.Id && pokemon.formIdRaw == pokemonTranslator.Form)
+                        return egg;
+
+            return null;
+        }
     }
 }

@@ -52,11 +52,11 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
 		/// <summary>
 		/// Write out data for Encounters
 		/// </summary>
-		public static void Write(FieldResearch fieldResearch, GameMasterStatsCalculator gameMasterStatsCalculator)
+		public static void Write(ManualDataSettings manualDataSettings, GameMasterStatsCalculator gameMasterStatsCalculator)
 		{
             DateTime updateDateTime = new DateTime(Math.Max(
                 gameMasterStatsCalculator.GameMasterStats.last_updated.Date.Ticks,
-                fieldResearch.last_updated.Ticks));
+                manualDataSettings.FieldResearch.last_updated.Ticks));
 
             if (!Directory.Exists(OutputXmlFolder))
 				Directory.CreateDirectory(OutputXmlFolder);
@@ -64,7 +64,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
 			// Write all encounter files. Keeping track if all are up-to-date.
 			bool upToDate = true;
 			List<int> written = new List<int>();
-			foreach (var category in fieldResearch.Category)
+			foreach (var category in manualDataSettings.FieldResearch.Category)
 				foreach (var research in category.Research)
 					if (research.Encounter != null)
 						foreach (var encounter in research.Encounter)
@@ -85,7 +85,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
 					projWriter.WriteLine("  <!-- ======================================================================= -->");
 					projWriter.WriteLine("  <ItemGroup>");
 
-					foreach (var category in fieldResearch.Category)
+					foreach (var category in manualDataSettings.FieldResearch.Category)
 						foreach (var research in category.Research)
 							if (research.Encounter != null)
 								foreach (var encounter in research.Encounter)

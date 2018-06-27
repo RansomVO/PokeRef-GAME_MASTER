@@ -72,7 +72,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
         /// <summary>
         /// Write out the Raid Boss data.
         /// </summary>
-        public static void Write(RaidBosses raidBosses, GameMasterStatsCalculator gameMasterStatsCalculator)
+        public static void Write(ManualDataSettings manualDataSettings, GameMasterStatsCalculator gameMasterStatsCalculator)
         {
             DateTime updateDateTime = gameMasterStatsCalculator.GameMasterStats.last_updated.Date;
 
@@ -81,7 +81,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
 
             // Write all raidboss files. Keeping track if all are up-to-date.
             bool upToDate = true;
-            foreach (var raidboss in raidBosses.RaidBoss)
+            foreach (var raidboss in manualDataSettings.RaidBosses.RaidBoss)
                 if (raidboss.id > 0)
                     upToDate = WriteRaidBoss(raidboss, updateDateTime) && upToDate;
 
@@ -97,7 +97,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
                     projWriter.WriteLine("  <!-- ======================================================================= -->");
                     projWriter.WriteLine("  <ItemGroup>");
 
-                    foreach (var raidboss in raidBosses.RaidBoss)
+                    foreach (var raidboss in manualDataSettings.RaidBosses.RaidBoss)
                     {
                         string raidbossFileName = GetFileNameBase(raidboss);
                         projWriter.WriteLine("    <!-- #region " + raidboss.name + " -->");

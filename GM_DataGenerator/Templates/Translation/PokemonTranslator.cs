@@ -44,7 +44,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates
 
         public string CandyType { get { return TemplateTranslator.FixName(PokemonSettings.family_id.ToString().Substring(MARKER_CANDY.Length)); } }
 
-        public string Rarity { get { return string.IsNullOrEmpty(PokemonSettings.rarity.ToString()) ? string.Empty : TemplateTranslator.FixName(PokemonSettings.rarity.ToString().Substring(MARKER_RARITY.Length)); } }
+        public string Rarity { get { return PokemonSettings.rarity == PokemonRarity.NORMAL  ? string.Empty : TemplateTranslator.FixName(PokemonSettings.rarity.ToString().Substring(MARKER_RARITY.Length)); } }
 
         #endregion Computed Properties
 

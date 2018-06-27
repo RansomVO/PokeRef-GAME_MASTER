@@ -56,28 +56,30 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
             }
         }
 
-        public void Update(MoveSets._MoveSet moveSet)
+        public void Update(MoveSets._Pokemon pokemonMoveSets)
         {
             try
             {
-                int gen = PokeFormulas.GetGeneration(moveSet.Pokemon.id);
+                int gen = PokeFormulas.GetGeneration(pokemonMoveSets.id);
 
-                _moveSetsStats[0].count++;
-                _moveSetsStats[gen].count++;
-                _moveSetsStats[0].totalDPS += moveSet.base_dps;
-                _moveSetsStats[gen].totalDPS += moveSet.base_dps;
-                _moveSetsStats[0].totalTrueDPS += moveSet.true_dps;
-                _moveSetsStats[gen].totalTrueDPS += moveSet.true_dps;
+				foreach (var moveSet in pokemonMoveSets.MoveSet)
+				{
+					_moveSetsStats[0].count++;
+					_moveSetsStats[gen].count++;
+					_moveSetsStats[0].totalDPS += moveSet.base_dps;
+					_moveSetsStats[gen].totalDPS += moveSet.base_dps;
+					_moveSetsStats[0].totalTrueDPS += moveSet.true_dps;
+					_moveSetsStats[gen].totalTrueDPS += moveSet.true_dps;
 
-                GameMasterStats.MoveSets[0].dps_max = Math.Max(GameMasterStats.MoveSets[0].dps_max, moveSet.base_dps);
-                GameMasterStats.MoveSets[gen].dps_max = Math.Max(GameMasterStats.MoveSets[gen].dps_max, moveSet.base_dps);
-                GameMasterStats.MoveSets[0].true_dps_max = Math.Max(GameMasterStats.MoveSets[0].true_dps_max, moveSet.true_dps);
-                GameMasterStats.MoveSets[gen].true_dps_max = Math.Max(GameMasterStats.MoveSets[gen].true_dps_max, moveSet.true_dps);
-                GameMasterStats.MoveSets[0].dps_avg = _moveSetsStats[0].totalDPS / _moveSetsStats[0].count;
-                GameMasterStats.MoveSets[gen].dps_avg = _moveSetsStats[gen].totalDPS / _moveSetsStats[gen].count;
-                GameMasterStats.MoveSets[0].true_dps_avg = _moveSetsStats[0].totalTrueDPS / _moveSetsStats[0].count;
-                GameMasterStats.MoveSets[gen].true_dps_avg = _moveSetsStats[gen].totalTrueDPS / _moveSetsStats[gen].count;
-
+					GameMasterStats.MoveSets[0].dps_max = Math.Max(GameMasterStats.MoveSets[0].dps_max, moveSet.base_dps);
+					GameMasterStats.MoveSets[gen].dps_max = Math.Max(GameMasterStats.MoveSets[gen].dps_max, moveSet.base_dps);
+					GameMasterStats.MoveSets[0].true_dps_max = Math.Max(GameMasterStats.MoveSets[0].true_dps_max, moveSet.true_dps);
+					GameMasterStats.MoveSets[gen].true_dps_max = Math.Max(GameMasterStats.MoveSets[gen].true_dps_max, moveSet.true_dps);
+					GameMasterStats.MoveSets[0].dps_avg = _moveSetsStats[0].totalDPS / _moveSetsStats[0].count;
+					GameMasterStats.MoveSets[gen].dps_avg = _moveSetsStats[gen].totalDPS / _moveSetsStats[gen].count;
+					GameMasterStats.MoveSets[0].true_dps_avg = _moveSetsStats[0].totalTrueDPS / _moveSetsStats[0].count;
+					GameMasterStats.MoveSets[gen].true_dps_avg = _moveSetsStats[gen].totalTrueDPS / _moveSetsStats[gen].count;
+				}
                 //Console.Out.WriteLine("{0}\t{1}\t{2}\t{3}\t{4}", _moveSetsStats[gen].count, moveSet.base_dps, _moveSetsStats[gen].totalDPS, GameMasterStats.MoveSets[gen].dps_max, GameMasterStats.MoveSets[0].dps_avg);
             }
             catch (Exception ex)

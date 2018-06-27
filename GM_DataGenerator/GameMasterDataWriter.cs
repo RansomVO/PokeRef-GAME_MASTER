@@ -123,13 +123,13 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
             GAME_MASTERS.Write(GameMasters, GameMasterStatsCalculator);
 
             Moves.Write(PokeMoves.Values, GameMasterStatsCalculator);
-            MoveSets.Write(Pokemon.Values, Forms, PokeMoves, GameMasterStatsCalculator, ManualDataSettings.SpecialMoves);
-            PokeStats.Write(Pokemon.Values, ManualDataSettings.PokemonAvailability, ManualDataSettings.PokemonUnreleased, GameMasterStatsCalculator);
-            RaidBoss.Write(ManualDataSettings.RaidBosses, GameMasterStatsCalculator);
-            Encounter.Write(ManualDataSettings.FieldResearch, GameMasterStatsCalculator);
+            MoveSets.Write(Pokemon.Values, Forms, PokeMoves, ManualDataSettings, GameMasterStatsCalculator);
+            PokeStats.Write(Pokemon.Values, ManualDataSettings, GameMasterStatsCalculator);
+            RaidBoss.Write(ManualDataSettings, GameMasterStatsCalculator);
+            Encounter.Write(ManualDataSettings, GameMasterStatsCalculator);
 
 			// Must be written last so other Write() methods can update.
-			Settings.Write(ManualDataSettings.Ranges, GameMasterStatsCalculator);
+			Settings.Write(ManualDataSettings, GameMasterStatsCalculator);
         }
 
         /// <summary>

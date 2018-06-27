@@ -8,262 +8,292 @@ using VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData;
 
 namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
 {
-    [Serializable]
-    public class MoveSets
-    {
-        #region Properties
+	[Serializable]
+	public class MoveSets
+	{
+		#region Properties
 
-        [XmlAttribute(DataType = "date")]
-        public DateTime last_updated { get; set; }
+		[XmlAttribute(DataType = "date")]
+		public DateTime last_updated { get; set; }
 
-        [XmlAttribute]
-        public int gen { get; set; }
+		[XmlAttribute]
+		public int gen { get; set; }
 
-        [XmlElement]
-        public _MoveSet[] MoveSet { get; set; }
+		[XmlElement]
+		public _Pokemon[] Pokemon { get; set; }
 
-        #endregion Properties
+		#endregion Properties
 
-        #region Internal classes
+		#region Internal classes
 
-        [Serializable]
-        public class _MoveSet
-        {
-            #region Properties
+		[Serializable]
+		public class _Pokemon : PokemonForm
+		{
+			#region Properties
 
-            [XmlAttribute]
-            public double base_dps { get; set; }
+			[XmlElement]
+			public _MoveSet[] MoveSet { get; set; }
 
-            [XmlAttribute]
-            public double true_dps { get; set; }
+			#endregion Properties
 
-            [XmlAttribute]
-            public int comparison { get; set; }
+			#region Internal classes
 
-            [XmlElement]
-            public PokemonForm Pokemon { get; set; }
+			[Serializable]
+			public class _MoveSet
+			{
+				#region Properties
 
-            [XmlElement]
-            public Attack FastAttack { get; set; }
+				[XmlAttribute]
+				public double base_dps { get; set; }
 
-            [XmlElement]
-            public Attack ChargedAttack { get; set; }
+				[XmlAttribute]
+				public double true_dps { get; set; }
 
-            #endregion Properties
+				[XmlAttribute]
+				public int comparison { get; set; }
 
-            #region Internal classes
+				[XmlElement]
+				public Attack FastAttack { get; set; }
 
-            [Serializable]
-            public class Attack
-            {
-                #region Properties
+				[XmlElement]
+				public Attack ChargedAttack { get; set; }
 
-                [XmlAttribute]
-                public string name { get; set; }
+				#endregion Properties
 
-                [XmlAttribute]
-                public bool stab { get; set; }
+				#region Internal classes
 
-                [XmlAttribute]
-                public bool legacy { get; set; }
+				[Serializable]
+				public class Attack
+				{
+					#region Properties
 
-                #endregion Properties
+					[XmlAttribute]
+					public string name { get; set; }
 
-                #region ctor
+					[XmlAttribute]
+					public bool stab { get; set; }
 
-                public Attack() { }
+					[XmlAttribute]
+					public bool legacy { get; set; }
 
-                public Attack(string _name, bool _stab, bool _legacy)
-                {
-                    name = _name;
-                    stab = _stab;
-                    legacy = _legacy;
-                }
+					#endregion Properties
 
-                #endregion ctor
-            }
+					#region ctor
 
-            #endregion Internal classes
+					public Attack() { }
 
-            #region ctor
+					public Attack(string _name, bool _stab, bool _legacy)
+					{
+						name = _name;
+						stab = _stab;
+						legacy = _legacy;
+					}
 
-            public _MoveSet() { }
+					#endregion ctor
+				}
 
-            public _MoveSet(PokemonTranslator pokemonTranslator, MoveTranslator fastMove, bool fastMoveLegacy, MoveTranslator chargedMove, bool chargedMoveLegacy) :
-                this(pokemonTranslator, fastMove, fastMoveLegacy, PokeFormulas.HasStab(pokemonTranslator, fastMove), chargedMove, chargedMoveLegacy, PokeFormulas.HasStab(pokemonTranslator, chargedMove))
-            { }
+				#endregion Internal classes
 
-            public _MoveSet(PokemonTranslator pokemonTranslator, MoveTranslator fastMove, bool fastMoveLegacy, bool fastMoveStab, MoveTranslator chargedMove, bool chargedMoveLegacy) :
-                this(pokemonTranslator, fastMove, fastMoveLegacy, fastMoveStab, chargedMove, chargedMoveLegacy, PokeFormulas.HasStab(pokemonTranslator, chargedMove))
-            { }
+				#region ctor
 
-            public _MoveSet(PokemonTranslator pokemonTranslator, MoveTranslator fastMove, bool fastMoveLegacy, MoveTranslator chargedMove, bool chargedMoveLegacy, bool chargedMoveStab) :
-                this(pokemonTranslator, fastMove, fastMoveLegacy, PokeFormulas.HasStab(pokemonTranslator, fastMove), chargedMove, chargedMoveLegacy, chargedMoveStab)
-            { }
+				public _MoveSet() { }
 
-            public _MoveSet(PokemonTranslator pokemonTranslator, MoveTranslator fastMove, bool fastMoveLegacy, bool fastMoveStab, MoveTranslator chargedMove, bool chargedMoveLegacy, bool chargedMoveStab)
-            {
-                base_dps = PokeFormulas.GetMoveSetDPS(pokemonTranslator, fastMove, chargedMove);
-                true_dps = PokeFormulas.GetTrueDPS(pokemonTranslator, fastMove, fastMoveStab, chargedMove, chargedMoveStab);
-                Pokemon = new PokemonForm(pokemonTranslator.Id, pokemonTranslator.Name, pokemonTranslator.Form);
-                FastAttack = new Attack(fastMove.Name, fastMoveStab, fastMoveLegacy);
-                ChargedAttack = new Attack(chargedMove.Name, chargedMoveStab, chargedMoveLegacy);
-            }
+				public _MoveSet(PokemonTranslator pokemonTranslator, MoveTranslator fastMove, bool fastMoveLegacy, MoveTranslator chargedMove, bool chargedMoveLegacy) :
+					this(pokemonTranslator, fastMove, fastMoveLegacy, PokeFormulas.HasStab(pokemonTranslator, fastMove), chargedMove, chargedMoveLegacy, PokeFormulas.HasStab(pokemonTranslator, chargedMove))
+				{ }
 
-            #endregion ctor
-        }
+				public _MoveSet(PokemonTranslator pokemonTranslator, MoveTranslator fastMove, bool fastMoveLegacy, bool fastMoveStab, MoveTranslator chargedMove, bool chargedMoveLegacy) :
+					this(pokemonTranslator, fastMove, fastMoveLegacy, fastMoveStab, chargedMove, chargedMoveLegacy, PokeFormulas.HasStab(pokemonTranslator, chargedMove))
+				{ }
 
-        #endregion Internal classes
+				public _MoveSet(PokemonTranslator pokemonTranslator, MoveTranslator fastMove, bool fastMoveLegacy, MoveTranslator chargedMove, bool chargedMoveLegacy, bool chargedMoveStab) :
+					this(pokemonTranslator, fastMove, fastMoveLegacy, PokeFormulas.HasStab(pokemonTranslator, fastMove), chargedMove, chargedMoveLegacy, chargedMoveStab)
+				{ }
 
-        #region ctor
+				public _MoveSet(PokemonTranslator pokemonTranslator, MoveTranslator fastMove, bool fastMoveLegacy, bool fastMoveStab, MoveTranslator chargedMove, bool chargedMoveLegacy, bool chargedMoveStab)
+				{
+					base_dps = PokeFormulas.GetMoveSetDPS(pokemonTranslator, fastMove, chargedMove);
+					true_dps = PokeFormulas.GetTrueDPS(pokemonTranslator, fastMove, fastMoveStab, chargedMove, chargedMoveStab);
+					FastAttack = new Attack(fastMove.Name, fastMoveStab, fastMoveLegacy);
+					ChargedAttack = new Attack(chargedMove.Name, chargedMoveStab, chargedMoveLegacy);
+				}
 
-        public MoveSets() { }
+				#endregion ctor
+			}
 
-        public MoveSets(int _gen, _MoveSet[] moveSets, DateTime updateDateTime)
-        {
-            last_updated = updateDateTime;
-            gen = _gen;
-            MoveSet = moveSets;
-        }
+			#endregion Internal classes
 
-        #endregion ctor
+			#region ctor
 
-        #region Writers
+			public _Pokemon() { }
 
-        /// <summary>
-        /// Write out the Move Sets for each generation of Pokemon.
-        /// </summary>
-        public static void Write(IEnumerable<PokemonTranslator> pokemonTranslators, Dictionary<PokemonId, FormSettingsTranslator> forms, Dictionary<PokemonMove, MoveTranslator> moves, GameMasterStatsCalculator gameMasterStatsCalculator, SpecialMoves specialMoves)
-        {
-            DateTime updateDateTime = new DateTime(Math.Max(
-                gameMasterStatsCalculator.GameMasterStats.last_updated.Date.Ticks,
-                specialMoves.last_updated.Date.Ticks));
+			public _Pokemon(PokemonTranslator pokemonTranslator, _MoveSet[] moveSet) :
+				base(pokemonTranslator.Id, pokemonTranslator.Name, pokemonTranslator.Form)
+			{
+				MoveSet = moveSet;
+			}
 
-            bool update = false;
-            List<MoveSets._MoveSet>[] moveSetList = new List<MoveSets._MoveSet>[PokeConstants.Regions.Length + 1];
-            for (int gen = 1; gen < PokeConstants.Regions.Length; gen++)
-            {
-                string filePath = Path.Combine(Utils.OutputDataFileFolder, "movesets.gen" + gen + ".xml");
-                DateTime lastUpdated = Utils.GetLastUpdated(filePath);
-                if (!File.Exists(filePath) || lastUpdated < updateDateTime)
-                {
-                    update = true;
-                    moveSetList[gen] = new List<MoveSets._MoveSet>();
-                }
-            }
+			#endregion ctor
+		}
 
-            if (update)
-            {
-                foreach (var pokemonTranslator in pokemonTranslators)
-                {
-                    // Need to deal with the following cases:
-                    //  - Unown has multiple forms, but only a single record.
-                    //  - Castform has multiple forms and multiple records, but each record has unique movesets.
-                    //  - Deoxys has multiple forms and multiple records, but all records have the same movesets.
-                    if (forms.ContainsKey(pokemonTranslator.PokemonSettings.pokemon_id) &&
-                        forms[pokemonTranslator.PokemonSettings.pokemon_id].FormSettings.forms.Count > 0)
-                    {
-                        List<PokemonTranslator> records = new List<PokemonTranslator>();
-                        foreach (var pokemon in pokemonTranslators)
-                            if (pokemon.Id == pokemonTranslator.Id)
-                                records.Add(pokemon);
+		#endregion Internal classes
 
-                        // If there are more that 1 match, then we need to deal with pokemon with multiple forms. (E.G. Unown)
-                        if (records.Count > 1)
-                        {
-                            // There are multiple records. We need to compare the movesets for the records.
-                            int matches = 0;
-                            foreach (var record in records)
-                                if (IsMoveSetMatch(pokemonTranslator, record))
-                                    matches++;
+		#region ctor
 
-                            // If every record matches the moveset, skip all but the base form.
-                            if (matches == records.Count)
-                            {
-                                if (pokemonTranslator.Form != Form.FORM_UNSET)
-                                    continue;
-                            }
-                            // If only a sub-set of records match the moveset, skip the base form.
-                            else if (pokemonTranslator.Form == Form.FORM_UNSET)
-                                continue;
-                        }
-                    }
+		public MoveSets() { }
 
-                    int gen = PokeFormulas.GetGeneration(pokemonTranslator);
-                    if (moveSetList[gen] != null)
-                    {
-                        List<MoveSets._MoveSet> pokemonMoveSets = new List<MoveSets._MoveSet>();
+		public MoveSets(int _gen, _Pokemon[] pokemon, DateTime updateDateTime)
+		{
+			last_updated = updateDateTime;
+			gen = _gen;
 
-                        AddMoveSets(pokemonMoveSets, pokemonTranslator, moves, false, false);
-                        AddMoveSets(pokemonMoveSets, pokemonTranslator, moves, true, false);
-                        AddMoveSets(pokemonMoveSets, pokemonTranslator, moves, false, true);
-                        AddMoveSets(pokemonMoveSets, pokemonTranslator, moves, true, true);
+			Pokemon = pokemon;
+		}
 
-                        double maxDPS = 0;
-                        foreach (var moveSet in pokemonMoveSets)
-                            if (!moveSet.FastAttack.legacy && !moveSet.ChargedAttack.legacy)
-                                maxDPS = Math.Max(maxDPS, moveSet.true_dps);
+		#endregion ctor
 
-                        foreach (var moveSet in pokemonMoveSets)
-                        {
-                            moveSet.comparison = (int)Math.Ceiling(moveSet.true_dps / maxDPS * 100);
-                            gameMasterStatsCalculator.Update(moveSet);
-                            moveSetList[gen].Add(moveSet);
-                        }
-                    }
-                }
+		#region Writers
 
-                for (int gen = 1; gen < PokeConstants.Regions.Length; gen++)
-                    if (moveSetList[gen] != null && moveSetList[gen].Count > 1)
-                        Utils.WriteXML(new MoveSets(gen, moveSetList[gen].ToArray(), updateDateTime), Path.Combine(Utils.OutputDataFileFolder, "movesets.gen" + gen + ".xml"));
-            }
-        }
+		/// <summary>
+		/// Write out the Move Sets for each generation of Pokemon.
+		/// </summary>
+		public static void Write(IEnumerable<PokemonTranslator> pokemonTranslators, Dictionary<PokemonId, FormSettingsTranslator> forms, Dictionary<PokemonMove, MoveTranslator> moves, ManualDataSettings manualDataSettings, GameMasterStatsCalculator gameMasterStatsCalculator)
+		{
+			DateTime updateDateTime = new DateTime(Math.Max(
+				gameMasterStatsCalculator.GameMasterStats.last_updated.Date.Ticks,
+                manualDataSettings.SpecialMoves.last_updated.Date.Ticks));
 
-        private static void AddMoveSets(List<MoveSets._MoveSet> pokemonMoveSets, PokemonTranslator pokemonTranslator, Dictionary<PokemonMove, MoveTranslator> moves, bool fastMovesLegacy, bool chargedMovesLegacy)
-        {
-            List<PokemonMove> fastMoves = fastMovesLegacy ? pokemonTranslator.LegacyFastMoves : pokemonTranslator.PokemonSettings.quick_moves;
-            List<PokemonMove> chargedMoves = chargedMovesLegacy ? pokemonTranslator.LegacyChargedMoves : pokemonTranslator.PokemonSettings.cinematic_moves;
+			bool update = false;
+			List<MoveSets._Pokemon>[] pokemonMoveSetList = new List<MoveSets._Pokemon>[PokeConstants.Regions.Length + 1];
+			for (int gen = 1; gen < PokeConstants.Regions.Length; gen++)
+			{
+				string filePath = Path.Combine(Utils.OutputDataFileFolder, "movesets.gen" + gen + ".xml");
+				DateTime lastUpdated = Utils.GetLastUpdated(filePath);
+				if (!File.Exists(filePath) || lastUpdated < updateDateTime)
+				{
+					update = true;
+					pokemonMoveSetList[gen] = new List<MoveSets._Pokemon>();
+				}
+			}
 
-            foreach (var fastMove in fastMoves)
-                foreach (var chargedMove in chargedMoves)
-                    if (fastMove == PokemonMove.HIDDEN_POWER_FAST)
-                    {
-                        pokemonMoveSets.Add(new MoveSets._MoveSet(pokemonTranslator, moves[fastMove], fastMovesLegacy, true, moves[chargedMove], chargedMovesLegacy));
-                        pokemonMoveSets.Add(new MoveSets._MoveSet(pokemonTranslator, moves[fastMove], fastMovesLegacy, false, moves[chargedMove], chargedMovesLegacy));
-                    }
-                    else
-                        pokemonMoveSets.Add(new MoveSets._MoveSet(pokemonTranslator, moves[fastMove], fastMovesLegacy, moves[chargedMove], chargedMovesLegacy));
-        }
+			if (update)
+			{
+				foreach (var pokemonTranslator in pokemonTranslators)
+				{
+					// Need to deal with the following cases:
+					//  - Unown has multiple forms, but only a single record.
+					//  - Castform has multiple forms and multiple records, but each record has unique movesets.
+					//  - Deoxys has multiple forms and multiple records, but all records have the same movesets.
+					if (forms.ContainsKey(pokemonTranslator.PokemonSettings.pokemon_id) &&
+						forms[pokemonTranslator.PokemonSettings.pokemon_id].FormSettings.forms.Count > 0)
+					{
+						List<PokemonTranslator> records = new List<PokemonTranslator>();
+						foreach (var pokemon in pokemonTranslators)
+							if (pokemon.Id == pokemonTranslator.Id)
+								records.Add(pokemon);
 
-        private static bool IsMoveSetMatch(PokemonTranslator pokemonTranslator1, PokemonTranslator pokemonTranslator2)
-        {
-            return
-                IsMoveSetMatch(pokemonTranslator1.PokemonSettings.quick_moves, pokemonTranslator2.PokemonSettings.quick_moves) &&
-                IsMoveSetMatch(pokemonTranslator1.PokemonSettings.cinematic_moves, pokemonTranslator2.PokemonSettings.cinematic_moves);
-        }
+						// If there are more that 1 match, then we need to deal with pokemon with multiple forms. (E.G. Unown)
+						if (records.Count > 1)
+						{
+							// There are multiple records. We need to compare the movesets for the records.
+							int matches = 0;
+							foreach (var record in records)
+								if (IsMoveSetMatch(pokemonTranslator, record))
+									matches++;
 
-        private static bool IsMoveSetMatch(IEnumerable<PokemonMove> moves1, IEnumerable<PokemonMove> moves2)
-        {
-            bool match = true;
-            foreach (var move1 in moves1)
-            {
-                bool found = false;
-                foreach (var move2 in moves2)
-                    if (string.Equals(move1, move2))
-                    {
-                        found = true;
-                        break;
-                    }
-                if (!found)
-                {
-                    match = false;
-                    break;
-                }
-            }
+							// If every record matches the moveset, skip all but the base form.
+							if (matches == records.Count)
+							{
+								if (pokemonTranslator.Form != Form.FORM_UNSET)
+									continue;
+							}
+							// If only a sub-set of records match the moveset, skip the base form.
+							else if (pokemonTranslator.Form == Form.FORM_UNSET)
+								continue;
+						}
+					}
 
-            return match;
-        }
+					int gen = PokeFormulas.GetGeneration(pokemonTranslator);
+					if (pokemonMoveSetList[gen] != null)
+					{
+						List<_Pokemon._MoveSet> moveSets = new List<_Pokemon._MoveSet>();
 
-        #endregion Writers
-    }
+						moveSets.AddRange(GetMoveSets(pokemonTranslator, moves, false, false));
+						moveSets.AddRange(GetMoveSets(pokemonTranslator, moves, true, false));
+						moveSets.AddRange(GetMoveSets(pokemonTranslator, moves, false, true));
+						moveSets.AddRange(GetMoveSets(pokemonTranslator, moves, true, true));
+
+						double maxDPS = 0;
+						foreach (var moveSet in moveSets)
+							if (!moveSet.FastAttack.legacy && !moveSet.ChargedAttack.legacy)
+								maxDPS = Math.Max(maxDPS, moveSet.true_dps);
+
+						foreach (var moveSet in moveSets)
+							moveSet.comparison = (int)Math.Ceiling(moveSet.true_dps / maxDPS * 100);
+
+						_Pokemon pokemon = new _Pokemon(pokemonTranslator, moveSets.ToArray());
+						pokemonMoveSetList[gen].Add(pokemon);
+						gameMasterStatsCalculator.Update(pokemon);
+					}
+				}
+
+				for (int gen = 1; gen < PokeConstants.Regions.Length; gen++)
+					if (pokemonMoveSetList[gen] != null && pokemonMoveSetList[gen].Count > 1)
+						Utils.WriteXML(new MoveSets(gen, pokemonMoveSetList[gen].ToArray(), updateDateTime), Path.Combine(Utils.OutputDataFileFolder, "movesets.gen" + gen + ".xml"));
+			}
+		}
+
+		private static List<_Pokemon._MoveSet> GetMoveSets(PokemonTranslator pokemonTranslator, Dictionary<PokemonMove, MoveTranslator> moves, bool fastMovesLegacy, bool chargedMovesLegacy)
+		{
+			List<_Pokemon._MoveSet> moveSets = new List<_Pokemon._MoveSet>();
+
+			List<PokemonMove> fastMoves = fastMovesLegacy ? pokemonTranslator.LegacyFastMoves : pokemonTranslator.PokemonSettings.quick_moves;
+			List<PokemonMove> chargedMoves = chargedMovesLegacy ? pokemonTranslator.LegacyChargedMoves : pokemonTranslator.PokemonSettings.cinematic_moves;
+
+			foreach (var fastMove in fastMoves)
+			{
+				foreach (var chargedMove in chargedMoves)
+					if (fastMove == PokemonMove.HIDDEN_POWER_FAST)
+					{
+						moveSets.Add(new _Pokemon._MoveSet(pokemonTranslator, moves[fastMove], fastMovesLegacy, true, moves[chargedMove], chargedMovesLegacy));
+						moveSets.Add(new _Pokemon._MoveSet(pokemonTranslator, moves[fastMove], fastMovesLegacy, false, moves[chargedMove], chargedMovesLegacy));
+					}
+					else
+						moveSets.Add(new _Pokemon._MoveSet(pokemonTranslator, moves[fastMove], fastMovesLegacy, moves[chargedMove], chargedMovesLegacy));
+			}
+
+			return moveSets;
+		}
+
+		private static bool IsMoveSetMatch(PokemonTranslator pokemonTranslator1, PokemonTranslator pokemonTranslator2)
+		{
+			return
+				IsMoveSetMatch(pokemonTranslator1.PokemonSettings.quick_moves, pokemonTranslator2.PokemonSettings.quick_moves) &&
+				IsMoveSetMatch(pokemonTranslator1.PokemonSettings.cinematic_moves, pokemonTranslator2.PokemonSettings.cinematic_moves);
+		}
+
+		private static bool IsMoveSetMatch(IEnumerable<PokemonMove> moves1, IEnumerable<PokemonMove> moves2)
+		{
+			bool match = true;
+			foreach (var move1 in moves1)
+			{
+				bool found = false;
+				foreach (var move2 in moves2)
+					if (string.Equals(move1, move2))
+					{
+						found = true;
+						break;
+					}
+				if (!found)
+				{
+					match = false;
+					break;
+				}
+			}
+
+			return match;
+		}
+
+		#endregion Writers
+	}
 }
