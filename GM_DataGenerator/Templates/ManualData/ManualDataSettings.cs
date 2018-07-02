@@ -78,7 +78,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData
                     stringBuilder.AppendLine("  • " + pokemon.id.ToString() + " - " + pokemon.name);
 
             if (stringBuilder.Length > 0)
-                ConsoleOutput.OutputError("Update the release date in _datafiles.manual\\pokemon.availability.xml for the following Pokemon:\r\n" + stringBuilder.ToString());
+                ConsoleOutput.OutputError("Update the release date in _datafiles.manual\\infrequent\\pokemon.availability.xml for the following Pokemon:\r\n" + stringBuilder.ToString());
         }
 
         private static object ReadXmlConfig(string filePath, Type type)

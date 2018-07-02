@@ -167,7 +167,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
                     htmlWriter.WriteLine("<!DOCTYPE Root [");
                     htmlWriter.WriteLine("  <!ENTITY Constants SYSTEM \"/_datafiles/constants.xml\">");
                     htmlWriter.WriteLine("  <!ENTITY Images SYSTEM \"/_datafiles/settings.xml\">");
-                    htmlWriter.WriteLine("  <!ENTITY Settings SYSTEM \"/_datafiles.manual/images.xml\">");
+                    htmlWriter.WriteLine("  <!ENTITY Settings SYSTEM \"/_datafiles.manual/infrequent/images.xml\">");
                     htmlWriter.WriteLine("  <!ENTITY RaidBoss SYSTEM \"/_datafiles/raidboss/" + raidbossFileName + ".xml\">");
                     htmlWriter.WriteLine("]>");
                     htmlWriter.WriteLine("<?xml-stylesheet type=\"text/xsl\" href=\"raidboss.xsl\" output=\"" + raidbossFileName + ".html\"?>");

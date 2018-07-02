@@ -149,7 +149,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData
             {
                 if (_pokemonLookup.ContainsKey(pokemon.name))
                 {
-                    Console.Error.WriteLine("_datafiles.manual\\pokemon.availability.xml contains duplicate: " + pokemon.name);
+                    Console.Error.WriteLine("_datafiles.manual\\infrequent\\pokemon.availability.xml contains duplicate: " + pokemon.name);
                     continue;
                 }
 
@@ -184,7 +184,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData
 
 			if (!_pokemonLookup.ContainsKey(key))
             {
-                Console.Error.WriteLine("_datafiles.manual\\pokemon.availability.xml missing: " + key);
+                Console.Error.WriteLine("_datafiles.manual\\infrequent\\pokemon.availability.xml missing: " + key);
                 return null;
             }
 
