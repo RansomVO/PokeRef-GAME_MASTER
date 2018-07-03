@@ -154,9 +154,18 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
 			public const string Neutral = "⚲";
 		}
 
-		#endregion constants.xml
+        public static class Friendship
+        {
+            public const string Level_1 = "Friend";
+            public const string Level_2 = "Good Friend";
+            public const string Level_3 = "Great Friend";
+            public const string Level_4 = "Ultra Friend";
+            public const string Level_5 = "Best Friend";
+        }
 
-		public enum PokeType
+        #endregion constants.xml
+
+        public enum PokeType
         {
             Other = -1,
             Bug = 0,

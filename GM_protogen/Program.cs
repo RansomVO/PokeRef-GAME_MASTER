@@ -1,11 +1,9 @@
 ﻿using Google.Protobuf.Reflection;
-using ProtoBuf;
-using ProtoBuf.Reflection;
 using System;
-//using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
+
+using VanOrman.Utils;
 
 namespace GM_protogen
 {
@@ -26,7 +24,7 @@ namespace GM_protogen
         {
             if (args.Length != 2)
             {
-                Console.Error.WriteLine("Usage: GM_protegen {inputFolder} {outputFolder}");
+                ConsoleOutput.OutputError("Usage: GM_protegen {inputFolder} {outputFolder}");
                 return (int)ErrorCode.Parameters;
             }
 
@@ -41,17 +39,17 @@ namespace GM_protogen
 
                 if (!Directory.Exists(inputFolder))
                 {
-                    Console.Error.WriteLine("inputFolder not found: \"{inputFolder}\"");
+                    ConsoleOutput.OutputError("inputFolder not found: \"{inputFolder}\"");
                     return ErrorCode.InputFolderDoesNotExist;
                 }
 
                 if (!Directory.Exists(outputFolder))
                 {
-                    Console.Out.WriteLine("outputFolder not found, creating... \"{outputFolder}\"");
+                    ConsoleOutput.OutputWarning("outputFolder not found, creating... \"{outputFolder}\"");
                     Directory.CreateDirectory(outputFolder);
                     if (!Directory.Exists(outputFolder))
                     {
-                        Console.Error.WriteLine("Could not create outputFolder: \"{outputFolder}\"");
+                        ConsoleOutput.OutputError("Could not create outputFolder: \"{outputFolder}\"");
                         return ErrorCode.OutputFolderCouldNotBeCreated;
                     }
                 }
@@ -75,7 +73,7 @@ namespace GM_protogen
                     if (!fileDescriptorSet.Add(proto, true))
                     {
                         error = true;
-                        Console.Error.WriteLine($"Error Loading: {proto}");
+                        ConsoleOutput.OutputError($"Error Loading: {proto}");
                     }
                 }
                 if (error)
@@ -89,7 +87,7 @@ namespace GM_protogen
                 {
                     foreach (var err in errors)
                     {
-                        Console.Error.WriteLine(err.ToString());
+                        ConsoleOutput.OutputError(err.ToString());
                     }
 
                     return ErrorCode.FileDescriptorSetProcessFailure;
@@ -106,12 +104,12 @@ namespace GM_protogen
                     var fileFolder = Path.GetDirectoryName(filePath);
                     if(!Directory.Exists(fileFolder))
                     {
-                        Console.Out.WriteLine($"Output directory does not exist, creating... {fileFolder}");
+                        ConsoleOutput.OutputWarning($"Output directory does not exist, creating... {fileFolder}");
                         Directory.CreateDirectory(fileFolder);
                     }
 
                     File.WriteAllText(filePath, file.Text);
-                    Console.WriteLine($"generated: {filePath}");
+                    ConsoleOutput.OutputSuccess($"generated: {filePath}");
                 }
 
                 #endregion Generate the .cs files.
@@ -120,8 +118,8 @@ namespace GM_protogen
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine(ex.Message);
-                Console.Error.WriteLine(ex.StackTrace);
+                ConsoleOutput.OutputException(ex);
+
                 return ErrorCode.Exception;
             }
         }

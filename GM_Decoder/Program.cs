@@ -2,7 +2,8 @@
 using System.IO;
 using System.Linq;
 
-using GameMaster = POGOProtos.Networking.Responses.DownloadItemTemplatesResponse;
+using VanOrman.Utils;
+
 
 namespace VanOrman.PokemonGO.GAME_MASTER.Decoder
 {
@@ -56,7 +57,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.Decoder
 
                     if (!Directory.Exists(folder))
                     {
-                        Console.Error.WriteLine("ERROR: Folder does not exist: \"" + folder + "\"");
+                        ConsoleOutput.OutputError("ERROR: Folder does not exist: \"{0}\"", folder);
                         continue;
                     }
 
@@ -78,20 +79,11 @@ namespace VanOrman.PokemonGO.GAME_MASTER.Decoder
 #endif
                 }
 
-                Console.Out.WriteLine("Finished. " + decoded + " files decoded.");
+                ConsoleOutput.OutputSuccess("Finished. {decoded} files decoded.");
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine("********** ERROR!!! **********");
-
-                while (ex != null)
-                {
-                    Console.Error.WriteLine("-----" + ex.Message + "-----");
-                    Console.Error.WriteLine(ex.StackTrace);
-                    Console.Error.WriteLine();
-
-                    ex = ex.InnerException;
-                }
+                ConsoleOutput.OutputException(ex, "********** ERROR!!! **********");
             }
         }
 

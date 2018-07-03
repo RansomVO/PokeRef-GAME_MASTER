@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Xml.Serialization;
 
+using VanOrman.Utils;
+
 namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData
 {
     [Serializable]
@@ -149,7 +151,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData
             {
                 if (_pokemonLookup.ContainsKey(pokemon.name))
                 {
-                    Console.Error.WriteLine("_datafiles.manual\\infrequent\\pokemon.availability.xml contains duplicate: " + pokemon.name);
+                    ConsoleOutput.OutputError("_datafiles.manual\\infrequent\\pokemon.availability.xml contains duplicate: \"{0}\"", pokemon.name);
                     continue;
                 }
 
@@ -184,7 +186,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData
 
 			if (!_pokemonLookup.ContainsKey(key))
             {
-                Console.Error.WriteLine("_datafiles.manual\\infrequent\\pokemon.availability.xml missing: " + key);
+                ConsoleOutput.OutputError("_datafiles.manual\\infrequent\\pokemon.availability.xml missing: \"{0}\"", key);
                 return null;
             }
 

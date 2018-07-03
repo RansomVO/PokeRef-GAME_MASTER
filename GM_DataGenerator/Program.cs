@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 using VanOrman.Utils;
 
@@ -32,7 +30,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
 
                 if (!Directory.Exists(args[0]))
                 {
-                    Console.Error.WriteLine("The specified folder does not exist: " + args[0]);
+                    ConsoleOutput.OutputError("The specified folder does not exist: \"{0}\"", args[0]);
 
                     return;
                 }
@@ -47,23 +45,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
             }
             catch (Exception ex)
             {
-                StringBuilder message = new StringBuilder();
-                StringBuilder stack = new StringBuilder();
-                while (ex != null)
-                {
-                    message.AppendLine("-------------------------------------------------------------------------------");
-                    message.AppendLine(ex.Message);
-                    stack.AppendLine("-------------------------------------------------------------------------------");
-                    stack.AppendLine("-----" + ex.Message + "-----");
-                    stack.AppendLine(ex.StackTrace);
-
-                    ex = ex.InnerException;
-                }
-
-                Console.Error.WriteLine("********************************** ERROR!!! ***********************************");
-                Console.Error.WriteLine(message.ToString());
-                Console.Error.WriteLine("===============================================================================");
-                Console.Error.WriteLine(stack.ToString());
+                ConsoleOutput.OutputException(ex, "********************************** ERROR!!! ***********************************");
             }
         }
     }

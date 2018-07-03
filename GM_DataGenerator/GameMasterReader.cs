@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using VanOrman.PokemonGO.GAME_MASTER.Decoder;
+
 using VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates;
+using VanOrman.Utils;
 
 namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
 {
@@ -49,6 +50,9 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
                 GameMasterTemplate gameMasterTemplate = new GameMasterTemplate(file);
                 if (gameMasterTemplate.GameMaster == null)
                     continue;
+
+                if (gameMasterTemplate.GameMaster.item_templates.Count == 0)
+                    ConsoleOutput.OutputError("JSON failed to Deserialize: {0}", file);
 
                 if (GameMasterTemplate == null)
                     GameMasterTemplate = gameMasterTemplate;

@@ -397,6 +397,25 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
             #endregion Internal classes
         }
 
+        [Serializable]
+        public class _Friendship
+        {
+            [XmlAttribute]
+            public string Level_1 { get { return PokeConstants.Friendship.Level_1; } set { } }
+
+            [XmlAttribute]
+            public string Level_2 { get { return PokeConstants.Friendship.Level_2; } set { } }
+
+            [XmlAttribute]
+            public string Level_3 { get { return PokeConstants.Friendship.Level_3; } set { } }
+
+            [XmlAttribute]
+            public string Level_4 { get { return PokeConstants.Friendship.Level_4; } set { } }
+
+            [XmlAttribute]
+            public string Level_5 { get { return PokeConstants.Friendship.Level_5; } set { } }
+        }
+
         #endregion Internal classes
 
         public Constants()
