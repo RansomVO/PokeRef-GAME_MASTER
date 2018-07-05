@@ -145,22 +145,13 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
                 public static readonly EvaluationValue Excellent = new EvaluationValue(13, 14);
                 public static readonly EvaluationValue Wow = new EvaluationValue(15, 15);
             }
-		}
+        }
 
-		public static class Gender
-		{
-			public const string Male = "♂";
-			public const string Female = "♀";
-			public const string Neutral = "⚲";
-		}
-
-        public static class Friendship
+        public static class Gender
         {
-            public const string Level_1 = "Friend";
-            public const string Level_2 = "Good Friend";
-            public const string Level_3 = "Great Friend";
-            public const string Level_4 = "Ultra Friend";
-            public const string Level_5 = "Best Friend";
+            public const string Male = "♂";
+            public const string Female = "♀";
+            public const string Neutral = "⚲";
         }
 
         #endregion constants.xml

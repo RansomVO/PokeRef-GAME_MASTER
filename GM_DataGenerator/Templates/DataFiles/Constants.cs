@@ -397,25 +397,6 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
             #endregion Internal classes
         }
 
-        [Serializable]
-        public class _Friendship
-        {
-            [XmlAttribute]
-            public string Level_1 { get { return PokeConstants.Friendship.Level_1; } set { } }
-
-            [XmlAttribute]
-            public string Level_2 { get { return PokeConstants.Friendship.Level_2; } set { } }
-
-            [XmlAttribute]
-            public string Level_3 { get { return PokeConstants.Friendship.Level_3; } set { } }
-
-            [XmlAttribute]
-            public string Level_4 { get { return PokeConstants.Friendship.Level_4; } set { } }
-
-            [XmlAttribute]
-            public string Level_5 { get { return PokeConstants.Friendship.Level_5; } set { } }
-        }
-
         #endregion Internal classes
 
         public Constants()
@@ -432,23 +413,23 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
             CPMultipliers = new _CPMultipliers();
         }
 
-		#region Writers
+        #region Writers
 
-		private static string ConstantsXmlFilePath { get { return Path.Combine(Utils.OutputDataFileFolder, "constants.xml"); } }
-		private static string EffectivenessXmlFilePath { get { return Path.Combine(Utils.OutputDataFileFolder, "effectiveness.xml"); } }
+        private static string ConstantsXmlFilePath { get { return Path.Combine(Utils.OutputDataFileFolder, "constants.xml"); } }
+        private static string EffectivenessXmlFilePath { get { return Path.Combine(Utils.OutputDataFileFolder, "effectiveness.xml"); } }
 
-		/// <summary>
-		/// Write the files that don't usually change.
-		/// </summary>
-		public static void Write()
-		{
-			if (!File.Exists(ConstantsXmlFilePath) || Utils.GetLastUpdated(ConstantsXmlFilePath) < PokeConstants.LastModified)
-				Utils.WriteXML(new Constants(), ConstantsXmlFilePath);
+        /// <summary>
+        /// Write the files that don't usually change.
+        /// </summary>
+        public static void Write()
+        {
+            if (!File.Exists(ConstantsXmlFilePath) || Utils.GetLastUpdated(ConstantsXmlFilePath) < PokeConstants.LastModified)
+                Utils.WriteXML(new Constants(), ConstantsXmlFilePath);
 
-			if (!File.Exists(EffectivenessXmlFilePath) || Utils.GetLastUpdated(EffectivenessXmlFilePath) < MoveEffectiveness.LastModified)
-				Utils.WriteXML(new MoveEffectiveness(), EffectivenessXmlFilePath);
-		}
+            if (!File.Exists(EffectivenessXmlFilePath) || Utils.GetLastUpdated(EffectivenessXmlFilePath) < MoveEffectiveness.LastModified)
+                Utils.WriteXML(new MoveEffectiveness(), EffectivenessXmlFilePath);
+        }
 
-		#endregion Writers
-	}
+        #endregion Writers
+    }
 }
