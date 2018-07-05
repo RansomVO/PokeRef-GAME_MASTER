@@ -39,6 +39,12 @@ namespace POGOProtos.Data.Player
         [global::ProtoBuf.ProtoMember(8)]
         public global::POGOProtos.Enums.GymBadgeType gym_badge_type { get; set; }
 
+        [global::ProtoBuf.ProtoMember(9)]
+        public global::System.Collections.Generic.List<PlayerBadge> badges { get; } = new global::System.Collections.Generic.List<PlayerBadge>();
+
+        [global::ProtoBuf.ProtoMember(10)]
+        public long experience { get; set; }
+
     }
 
 }

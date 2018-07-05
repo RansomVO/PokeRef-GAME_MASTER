@@ -42,6 +42,9 @@ namespace POGOProtos.Data.Logs
         [global::ProtoBuf.ProtoMember(9)]
         public global::System.Collections.Generic.List<global::POGOProtos.Inventory.Item.ItemData> team_bonus_items { get; } = new global::System.Collections.Generic.List<global::POGOProtos.Inventory.Item.ItemData>();
 
+        [global::ProtoBuf.ProtoMember(10)]
+        public global::System.Collections.Generic.List<global::POGOProtos.Data.Gift.GiftBox> gift_boxes { get; } = new global::System.Collections.Generic.List<global::POGOProtos.Data.Gift.GiftBox>();
+
         [global::ProtoBuf.ProtoContract()]
         public enum Result
         {

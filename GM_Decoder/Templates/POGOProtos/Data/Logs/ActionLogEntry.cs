@@ -94,6 +94,33 @@ namespace POGOProtos.Data.Logs
         public bool ShouldSerializecomplete_quest_pokemon_encounter() => __pbn__Action.Is(10);
         public void Resetcomplete_quest_pokemon_encounter() => global::ProtoBuf.DiscriminatedUnionObject.Reset(ref __pbn__Action, 10);
 
+        [global::ProtoBuf.ProtoMember(12)]
+        public OpenGiftLogEntry open_gift
+        {
+            get { return __pbn__Action.Is(12) ? ((OpenGiftLogEntry)__pbn__Action.Object) : default(OpenGiftLogEntry); }
+            set { __pbn__Action = new global::ProtoBuf.DiscriminatedUnionObject(12, value); }
+        }
+        public bool ShouldSerializeopen_gift() => __pbn__Action.Is(12);
+        public void Resetopen_gift() => global::ProtoBuf.DiscriminatedUnionObject.Reset(ref __pbn__Action, 12);
+
+        [global::ProtoBuf.ProtoMember(13)]
+        public SendGiftLogEntry send_gift
+        {
+            get { return __pbn__Action.Is(13) ? ((SendGiftLogEntry)__pbn__Action.Object) : default(SendGiftLogEntry); }
+            set { __pbn__Action = new global::ProtoBuf.DiscriminatedUnionObject(13, value); }
+        }
+        public bool ShouldSerializesend_gift() => __pbn__Action.Is(13);
+        public void Resetsend_gift() => global::ProtoBuf.DiscriminatedUnionObject.Reset(ref __pbn__Action, 13);
+
+        [global::ProtoBuf.ProtoMember(14)]
+        public TradingLogEntry trading
+        {
+            get { return __pbn__Action.Is(14) ? ((TradingLogEntry)__pbn__Action.Object) : default(TradingLogEntry); }
+            set { __pbn__Action = new global::ProtoBuf.DiscriminatedUnionObject(14, value); }
+        }
+        public bool ShouldSerializetrading() => __pbn__Action.Is(14);
+        public void Resettrading() => global::ProtoBuf.DiscriminatedUnionObject.Reset(ref __pbn__Action, 14);
+
     }
 
 }

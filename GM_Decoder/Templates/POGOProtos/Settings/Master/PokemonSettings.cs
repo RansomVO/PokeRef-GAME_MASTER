@@ -81,7 +81,7 @@ namespace POGOProtos.Settings.Master
         public float km_buddy_distance { get; set; }
 
         [global::ProtoBuf.ProtoMember(24)]
-        public BuddySize buddy_size { get; set; }
+        public global::POGOProtos.Enums.BuddySize buddy_size { get; set; }
 
         [global::ProtoBuf.ProtoMember(25)]
         public float model_height { get; set; }
@@ -110,15 +110,11 @@ namespace POGOProtos.Settings.Master
         [global::ProtoBuf.ProtoMember(33)]
         public float buddy_scale { get; set; }
 
-        [global::ProtoBuf.ProtoContract()]
-        public enum BuddySize
-        {
-            BUDDY_MEDIUM = 0,
-            BUDDY_SHOULDER = 1,
-            BUDDY_BIG = 2,
-            BUDDY_FLYING = 3,
-            BUDDY_BABY = 4,
-        }
+        [global::ProtoBuf.ProtoMember(34, IsPacked = true)]
+        public float[] buddy_portrait_offset { get; set; }
+
+        [global::ProtoBuf.ProtoMember(35)]
+        public global::POGOProtos.Enums.Form parent_form { get; set; }
 
     }
 

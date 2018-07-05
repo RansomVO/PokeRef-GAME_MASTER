@@ -41,6 +41,12 @@ namespace POGOProtos.Settings
         [global::ProtoBuf.ProtoMember(9)]
         public int max_player_total_deployed_pokemon { get; set; }
 
+        [global::ProtoBuf.ProtoMember(10)]
+        public bool enable_hyperlinks_in_poi_descriptions { get; set; }
+
+        [global::ProtoBuf.ProtoMember(11)]
+        public bool enable_right_to_left_text_display { get; set; }
+
     }
 
 }

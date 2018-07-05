@@ -32,6 +32,7 @@ namespace POGOProtos.Networking.Responses
             NO_PLAYER = 3,
             WRONG_ITEM_TYPE = 4,
             ITEM_NOT_IN_INVENTORY = 5,
+            NOT_ENOUGH_ITEMS = 6,
         }
 
     }

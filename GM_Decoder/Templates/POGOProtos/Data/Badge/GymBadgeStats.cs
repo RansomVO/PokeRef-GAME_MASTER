@@ -29,6 +29,9 @@ namespace POGOProtos.Data.Badge
         [global::ProtoBuf.ProtoMember(4)]
         public uint num_deploys { get; set; }
 
+        [global::ProtoBuf.ProtoMember(15)]
+        public global::System.Collections.Generic.List<global::POGOProtos.Data.Gym.GymBattle> gym_battles { get; } = new global::System.Collections.Generic.List<global::POGOProtos.Data.Gym.GymBattle>();
+
     }
 
 }

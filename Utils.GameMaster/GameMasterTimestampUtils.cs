@@ -99,7 +99,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER
             }
             catch (Exception ex)
             {
-                ConsoleOutput.OutputException(ex, "Error setting time stamp on {0}", filePath);
+                ConsoleOutput.OutputException(ex, $"Error setting time stamp on {filePath}");
             }
         }
 

@@ -27,6 +27,9 @@ namespace POGOProtos.Data.Battle
         [global::ProtoBuf.ProtoMember(4)]
         public BattlePokemonInfo active_attacker { get; set; }
 
+        [global::ProtoBuf.ProtoMember(5)]
+        public global::POGOProtos.Enums.FriendshipLevelMilestone highest_friendship_milestone { get; set; }
+
     }
 
 }

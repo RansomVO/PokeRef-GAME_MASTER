@@ -1,7 +1,9 @@
 ﻿using Google.Protobuf.Reflection;
+using ProtoBuf.Reflection;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 using VanOrman.Utils;
 
@@ -9,10 +11,15 @@ namespace GM_protogen
 {
     class Program
     {
+        #region Data
+
+        private const string ProjFile = "protos.proj";
+
         private enum ErrorCode : int
         {
             Success = 0,
             Parameters,
+            BasePathDoesNotExist,
             InputFolderDoesNotExist,
             OutputFolderCouldNotBeCreated,
             InvalidProto,
@@ -20,51 +27,73 @@ namespace GM_protogen
             Exception,
         }
 
+        #endregion Data
+
+        #region Internal Classes
+
+        private class VersionComparer : IComparer<string>
+        {
+            public int Compare(string x, string y)
+            {
+                return -(new Version(GetFolderName(x)).CompareTo(new Version(GetFolderName(y))));
+            }
+        }
+
+        #endregion Internal Classes
+
         static int Main(string[] args)
         {
-            if (args.Length != 2)
+            if (args.Length != 3)
             {
-                ConsoleOutput.OutputError("Usage: GM_protegen {inputFolder} {outputFolder}");
+                ConsoleOutput.OutputError("Usage: GM_protegen {basePath} {inputFolder} {outputFolder}");
                 return (int)ErrorCode.Parameters;
             }
 
-            return (int)GenerateCode(args[0], args[1]);
+            return (int)GenerateCode(args[0], args[1], args[2]);
         }
 
-        static ErrorCode GenerateCode(string inputFolder, string outputFolder)
+#if !MULTI_PROTO
+        static ErrorCode GenerateCode(string basePath, string inputFolder, string outputFolder)
         {
+            #region Validate Parameters
+
+            if (!Directory.Exists(basePath))
+            {
+                ConsoleOutput.OutputError($"basePath not found: \"{basePath}\"");
+                return ErrorCode.BasePathDoesNotExist;
+            }
+
+            string inputPath = Path.Combine(basePath, inputFolder);
+            if (!Directory.Exists(inputPath))
+            {
+                ConsoleOutput.OutputError($"inputFolder not found: \"{inputFolder}\"");
+                return ErrorCode.InputFolderDoesNotExist;
+            }
+
+            string outputPath = Path.Combine(basePath, outputFolder);
+            if (!Directory.Exists(outputPath))
+            {
+                ConsoleOutput.OutputWarning($"outputFolder not found, creating \"{outputFolder}\"...");
+                Directory.CreateDirectory(outputPath);
+                if (!Directory.Exists(outputPath))
+                {
+                    ConsoleOutput.OutputError($"Could not create outputFolder: \"{outputFolder}\"");
+                    return ErrorCode.OutputFolderCouldNotBeCreated;
+                }
+            }
+
+            #endregion Validate Parameters
+
             try
             {
-                #region Validate Parameters
-
-                if (!Directory.Exists(inputFolder))
-                {
-                    ConsoleOutput.OutputError("inputFolder not found: \"{inputFolder}\"");
-                    return ErrorCode.InputFolderDoesNotExist;
-                }
-
-                if (!Directory.Exists(outputFolder))
-                {
-                    ConsoleOutput.OutputWarning("outputFolder not found, creating... \"{outputFolder}\"");
-                    Directory.CreateDirectory(outputFolder);
-                    if (!Directory.Exists(outputFolder))
-                    {
-                        ConsoleOutput.OutputError("Could not create outputFolder: \"{outputFolder}\"");
-                        return ErrorCode.OutputFolderCouldNotBeCreated;
-                    }
-                }
-
-                #endregion Validate Parameters
-
-                #region Get the list of .proto files.
-
+                ErrorCode result = ErrorCode.Success;
                 var fileDescriptorSet = new FileDescriptorSet { AllowNameOnlyImport = true };
-                fileDescriptorSet.AddImportPath(inputFolder);
+                fileDescriptorSet.AddImportPath(inputPath);
 
                 var inputFiles = new List<string>();
-                foreach (var path in Directory.EnumerateFiles(inputFolder, "*.proto", SearchOption.AllDirectories))
+                foreach (var path in Directory.EnumerateFiles(inputPath, "*.proto", SearchOption.AllDirectories))
                 {
-                    inputFiles.Add(MakeRelativePath(inputFolder, path));
+                    inputFiles.Add(MakeRelativePath(inputPath, path));
                 }
 
                 bool error = false;
@@ -85,36 +114,71 @@ namespace GM_protogen
                 var errors = fileDescriptorSet.GetErrors();
                 if (errors.Length > 0)
                 {
+                    StringBuilder stringBuilder = new StringBuilder();
                     foreach (var err in errors)
-                    {
-                        ConsoleOutput.OutputError(err.ToString());
-                    }
+                        stringBuilder.AppendLine(err.ToString());
+
+                    ConsoleOutput.OutputError(stringBuilder.ToString());
 
                     return ErrorCode.FileDescriptorSetProcessFailure;
                 }
 
-                #endregion Get the list of .proto files.
+                #region Generate the files.
 
-                #region Generate the .cs files.
+                Dictionary<string, string> options = new Dictionary<string, string>();
+                string outputRelativePath = MakeRelativePath(basePath, outputPath);
 
-                foreach (var file in GM_CSharpCodeGenerator.Default.Generate(fileDescriptorSet))
+                using (StreamWriter writer = new StreamWriter(Path.Combine(basePath, inputFolder, ProjFile)))
                 {
-                    var filePath = Path.Combine(outputFolder, file.Name);
+                    writer.WriteLine("<Project xmlns=\"http://schemas.microsoft.com/developer/msbuild/2003\">");
+                    writer.WriteLine("  <!-- ======================================================================= -->");
+                    writer.WriteLine("  <!-- =============== This file is generated by GM_protogen. ================ -->");
+                    writer.WriteLine("  <!-- ======================================================================= -->");
+                    writer.WriteLine();
 
-                    var fileFolder = Path.GetDirectoryName(filePath);
-                    if(!Directory.Exists(fileFolder))
+                    writer.WriteLine("  <!-- .proto files -->");
+                    writer.WriteLine("  <ItemGroup>");
+                    foreach (var file in fileDescriptorSet.Files)
                     {
-                        ConsoleOutput.OutputWarning($"Output directory does not exist, creating... {fileFolder}");
-                        Directory.CreateDirectory(fileFolder);
+                        writer.WriteLine($"    <None Include=\"{Path.Combine(inputFolder, file.Name)}\">");
+                        writer.WriteLine($"      <Visible>true</Visible>");
+                        writer.WriteLine($"    </None>");
                     }
+                    writer.WriteLine("  </ItemGroup>");
+                    writer.WriteLine();
 
-                    File.WriteAllText(filePath, file.Text);
-                    ConsoleOutput.OutputSuccess($"generated: {filePath}");
+                    writer.WriteLine("  <!-- Generated .cs files -->");
+                    writer.WriteLine("  <ItemGroup>");
+                    foreach (var file in GM_CSharpCodeGenerator.Default.Generate(fileDescriptorSet, null, options))
+                    {
+                        var filePath = Path.Combine(outputPath, file.Name);
+                        var fileFolder = Path.GetDirectoryName(filePath);
+                        if (!Directory.Exists(fileFolder))
+                        {
+                            ConsoleOutput.OutputWarning($"Output directory does not exist, creating... {fileFolder}");
+                            Directory.CreateDirectory(fileFolder);
+                        }
+
+                        File.WriteAllText(filePath, file.Text);
+
+                        writer.WriteLine($"    <Compile Include=\"{Path.Combine(outputRelativePath, file.Name)}\">");
+                        writer.WriteLine($"      <Visible>true</Visible>");
+                        writer.WriteLine($"    </Compile>");
+
+                        ConsoleOutput.OutputSuccess($"generated: {filePath}");
+                    }
+                    writer.WriteLine("  </ItemGroup>");
+
+                    writer.WriteLine();
+
+                    writer.WriteLine("</Project>");
                 }
 
-                #endregion Generate the .cs files.
+                ConsoleOutput.OutputSuccess($"generated: {ProjFile}");
 
-                return ErrorCode.Success;
+                #endregion Generate the files.
+
+                return result;
             }
             catch (Exception ex)
             {
@@ -124,31 +188,204 @@ namespace GM_protogen
             }
         }
 
-        public static String MakeRelativePath(String fromPath, String toPath)
+#else
+
+        // Code to deal multiple versions of the GAME_MASTER protos.
+
+        static ErrorCode GenerateCode(string basePath, string inputFolder, string outputFolder)
         {
-            if (String.IsNullOrEmpty(fromPath)) throw new ArgumentNullException("fromPath");
-            if (String.IsNullOrEmpty(toPath)) throw new ArgumentNullException("toPath");
+            #region Validate Parameters
+
+            if (!Directory.Exists(basePath))
+            {
+                ConsoleOutput.OutputError($"basePath not found: \"{basePath}\"");
+                return ErrorCode.BasePathDoesNotExist;
+            }
+
+            string inputPath = Path.Combine(basePath, inputFolder);
+            if (!Directory.Exists(inputPath))
+            {
+                ConsoleOutput.OutputError($"inputFolder not found: \"{inputFolder}\"");
+                return ErrorCode.InputFolderDoesNotExist;
+            }
+
+            string outputPath = Path.Combine(basePath, outputFolder);
+            if (!Directory.Exists(outputPath))
+            {
+                ConsoleOutput.OutputWarning($"outputFolder not found, creating \"{outputFolder}\"...");
+                Directory.CreateDirectory(outputPath);
+                if (!Directory.Exists(outputPath))
+                {
+                    ConsoleOutput.OutputError($"Could not create outputFolder: \"{outputFolder}\"");
+                    return ErrorCode.OutputFolderCouldNotBeCreated;
+                }
+            }
+
+            #endregion Validate Parameters
+
+            try
+            {
+                ErrorCode result = ErrorCode.Success;
+                using (StreamWriter writer = new StreamWriter(Path.Combine(basePath, inputFolder, ProjFile)))
+                {
+                    writer.WriteLine("<Project xmlns=\"http://schemas.microsoft.com/developer/msbuild/2003\">");
+                    writer.WriteLine("  <!-- ======================================================================= -->");
+                    writer.WriteLine("  <!-- =============== This file is generated by GM_protogen. ================ -->");
+                    writer.WriteLine("  <!-- ======================================================================= -->");
+                    writer.WriteLine();
+
+                    string[] folders = Directory.GetDirectories(inputPath);
+                    Array.Sort(folders, new VersionComparer());
+                    foreach (var folderPath in folders)
+                    {
+                        ErrorCode errorCode = GenerateCode(writer, basePath, folderPath, outputPath, folderPath == folders[0]);
+
+                        if (errorCode != ErrorCode.Success)
+                            result = errorCode;
+                    }
+
+                    writer.WriteLine("</Project>");
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ConsoleOutput.OutputException(ex);
+
+                return ErrorCode.Exception;
+            }
+        }
+
+        static ErrorCode GenerateCode(StreamWriter writer, string basePath, string inputPath, string outputPath, bool current)
+        {
+            string inputFolder = GetFolderName(inputPath);
+            string inputRelativePath = MakeRelativePath(basePath, inputPath);
+
+            #region Get the list of .proto files.
+
+            var fileDescriptorSet = new FileDescriptorSet
+            {
+                AllowNameOnlyImport = true,
+            };
+            fileDescriptorSet.AddImportPath(inputPath);
+
+            var inputFiles = new List<string>();
+            foreach (var path in Directory.EnumerateFiles(inputPath, "*.proto", SearchOption.AllDirectories))
+            {
+                inputFiles.Add(MakeRelativePath(inputPath, path));
+            }
+
+            bool error = false;
+            foreach (var proto in inputFiles)
+            {
+                if (!fileDescriptorSet.Add(proto, true))
+                {
+                    error = true;
+                    ConsoleOutput.OutputError($"Error Loading: {proto}");
+                }
+            }
+            if (error)
+            {
+                return ErrorCode.InvalidProto;
+            }
+
+            fileDescriptorSet.Process();
+            var errors = fileDescriptorSet.GetErrors();
+            if (errors.Length > 0)
+            {
+                foreach (var err in errors)
+                {
+                    ConsoleOutput.OutputError(err.ToString());
+                }
+
+                return ErrorCode.FileDescriptorSetProcessFailure;
+            }
+
+            #endregion Get the list of .proto files.
+
+            #region Generate the files.
+
+            Dictionary<string, string> options = new Dictionary<string, string>();
+            if (!current)
+            {
+                string version = inputFolder;
+                options.Add("PROTO_VERSION", version);
+                outputPath = Path.Combine(outputPath, version);
+            }
+            string outputRelativePath = MakeRelativePath(basePath, outputPath);
+
+            writer.WriteLine($"<!-- {outputRelativePath} -->");
+            writer.WriteLine("  <ItemGroup>");
+
+
+            foreach (var file in GM_CSharpCodeGenerator.Default.Generate(fileDescriptorSet, null, options))
+            {
+                var filePath = Path.Combine(outputPath, file.Name);
+                var fileFolder = Path.GetDirectoryName(filePath);
+                if (!Directory.Exists(fileFolder))
+                {
+                    ConsoleOutput.OutputWarning($"Output directory does not exist, creating... {fileFolder}");
+                    Directory.CreateDirectory(fileFolder);
+                }
+
+                File.WriteAllText(filePath, file.Text);
+
+                writer.WriteLine($"    <Compile Include=\"{Path.Combine(outputRelativePath, file.Name)}\">");
+                writer.WriteLine($"      <Visible>true</Visible>");
+                writer.WriteLine($"    </Compile>");
+
+                ConsoleOutput.OutputSuccess($"generated: {filePath}");
+            }
+            writer.WriteLine("  </ItemGroup>");
+
+            writer.WriteLine("  <ItemGroup>");
+            foreach (var file in fileDescriptorSet.Files)
+            {
+                writer.WriteLine($"    <None Include=\"{Path.Combine(inputRelativePath, file.Name)}\">");
+                writer.WriteLine($"      <Visible>true</Visible>");
+                writer.WriteLine($"    </None>");
+            }
+            writer.WriteLine("  </ItemGroup>");
+            writer.WriteLine();
+
+            ConsoleOutput.OutputSuccess($"generated: {ProjFile}");
+
+            #endregion Generate the files.
+
+            return ErrorCode.Success;
+        }
+#endif
+        public static string GetFolderName(string path)
+        {
+            return new DirectoryInfo(path).Name;
+        }
+
+        public static string MakeRelativePath(string fromPath, string toPath)
+        {
+            if (string.IsNullOrEmpty(fromPath))
+                throw new ArgumentNullException("fromPath");
+            if (string.IsNullOrEmpty(toPath))
+                throw new ArgumentNullException("toPath");
+
+            // Normalize the path so Uri knows it is a folder.
+            fromPath = fromPath.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar) + Path.DirectorySeparatorChar;
 
             Uri fromUri = new Uri(fromPath, UriKind.RelativeOrAbsolute);
             if (!fromUri.IsAbsoluteUri)
-            {
                 fromUri = new Uri(Path.Combine(Directory.GetCurrentDirectory(), fromPath));
-            }
             Uri toUri = new Uri(toPath, UriKind.RelativeOrAbsolute);
             if (!toUri.IsAbsoluteUri)
-            {
                 toUri = new Uri(Path.Combine(Directory.GetCurrentDirectory(), toPath));
-            }
 
-            if (fromUri.Scheme != toUri.Scheme) { return toPath; } // path can't be made relative.
+            if (fromUri.Scheme != toUri.Scheme)
+                return toPath;  // path can't be made relative.
 
             Uri relativeUri = fromUri.MakeRelativeUri(toUri);
-            String relativePath = Uri.UnescapeDataString(relativeUri.ToString());
+            string relativePath = Uri.UnescapeDataString(relativeUri.ToString());
 
-            if (toUri.Scheme.Equals("file", StringComparison.OrdinalIgnoreCase))
-            {
+            if (toUri.IsFile)
                 relativePath = relativePath.Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar);
-            }
 
             return relativePath;
         }

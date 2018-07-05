@@ -38,6 +38,12 @@ namespace POGOProtos.Data.Raid
         [global::ProtoBuf.ProtoMember(8)]
         public float bonus_item_multiplier { get; set; }
 
+        [global::ProtoBuf.ProtoMember(9)]
+        public global::POGOProtos.Enums.FriendshipLevelMilestone highest_friendship_milestone { get; set; }
+
+        [global::ProtoBuf.ProtoMember(10)]
+        public int highest_friendship_pokeballs { get; set; }
+
     }
 
 }

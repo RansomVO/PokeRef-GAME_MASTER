@@ -30,7 +30,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
 
                 if (!Directory.Exists(args[0]))
                 {
-                    ConsoleOutput.OutputError("The specified folder does not exist: \"{0}\"", args[0]);
+                    ConsoleOutput.OutputError($"The specified folder does not exist: \"{args[0]}\"");
 
                     return;
                 }

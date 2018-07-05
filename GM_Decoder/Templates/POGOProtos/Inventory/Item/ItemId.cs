@@ -57,6 +57,7 @@ namespace POGOProtos.Inventory.Item
         ITEM_PAID_RAID_TICKET = 1402,
         ITEM_LEGENDARY_RAID_TICKET = 1403,
         ITEM_STAR_PIECE = 1404,
+        ITEM_FRIEND_GIFT_BOX = 1405,
     }
 
 }

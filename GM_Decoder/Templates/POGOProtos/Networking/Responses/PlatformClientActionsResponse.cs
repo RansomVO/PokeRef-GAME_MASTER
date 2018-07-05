@@ -61,6 +61,129 @@ namespace POGOProtos.Networking.Responses
 
     }
 
+    [global::ProtoBuf.ProtoContract()]
+    public partial class RedeemPasscodeResponse : global::ProtoBuf.IExtensible
+    {
+        private global::ProtoBuf.IExtension __pbn__extensionData;
+        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+            => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+        [global::ProtoBuf.ProtoMember(1)]
+        public Result result { get; set; }
+
+        [global::ProtoBuf.ProtoMember(2)]
+        public global::System.Collections.Generic.List<AcquiredItem> acquired_item { get; } = new global::System.Collections.Generic.List<AcquiredItem>();
+
+        [global::ProtoBuf.ProtoMember(3)]
+        public byte[] acquired_items_proto { get; set; }
+
+        [global::ProtoBuf.ProtoMember(4)]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string passcode { get; set; } = "";
+
+        [global::ProtoBuf.ProtoContract()]
+        public partial class AcquiredItem : global::ProtoBuf.IExtensible
+        {
+            private global::ProtoBuf.IExtension __pbn__extensionData;
+            global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+                => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+            [global::ProtoBuf.ProtoMember(1)]
+            [global::System.ComponentModel.DefaultValue("")]
+            public string item { get; set; } = "";
+
+            [global::ProtoBuf.ProtoMember(2)]
+            public long count { get; set; }
+
+        }
+
+        [global::ProtoBuf.ProtoContract()]
+        public enum Result
+        {
+            UNSET = 0,
+            SUCCESS = 1,
+            NOT_AVAILABLE = 2,
+            OVER_INVENTORY_LIMIT = 3,
+            ALREADY_REDEEMED = 4,
+        }
+
+    }
+
+    [global::ProtoBuf.ProtoContract()]
+    public partial class AddNewPoiResponse : global::ProtoBuf.IExtensible
+    {
+        private global::ProtoBuf.IExtension __pbn__extensionData;
+        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+            => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+        [global::ProtoBuf.ProtoMember(1)]
+        public Status status { get; set; }
+
+        [global::ProtoBuf.ProtoMember(2)]
+        public global::System.Collections.Generic.List<string> message { get; } = new global::System.Collections.Generic.List<string>();
+
+        [global::ProtoBuf.ProtoContract()]
+        public enum Status
+        {
+            UNSET = 0,
+            SUCCESS = 1,
+            FAILURE = 2,
+            INTERNAL_ERROR = 3,
+            TOO_MANY_RECENT_SUBMISSIONS = 4,
+            INVALID_INPUT = 5,
+        }
+
+    }
+
+    [global::ProtoBuf.ProtoContract()]
+    public partial class ProxySocialActionResponse : global::ProtoBuf.IExtensible
+    {
+        private global::ProtoBuf.IExtension __pbn__extensionData;
+        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+            => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+        [global::ProtoBuf.ProtoMember(1)]
+        public Status status { get; set; }
+
+        [global::ProtoBuf.ProtoMember(2)]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string assigned_host { get; set; } = "";
+
+        [global::ProtoBuf.ProtoMember(3)]
+        public byte[] payload { get; set; }
+
+        [global::ProtoBuf.ProtoContract()]
+        public enum Status
+        {
+            UNSET = 0,
+            COMPLETED = 1,
+            COMPLETED_AND_REASSIGNED = 2,
+            ACTION_NOT_FOUND = 3,
+            ASSIGNMENT_ERROR = 4,
+            PROXY_UNAUTHORIZED_ERROR = 5,
+            INTERNAL_ERROR = 6,
+            BAD_REQUEST = 7,
+            ACCESS_DENIED = 8,
+            TIMEOUT_ERROR = 9,
+        }
+
+    }
+
+    [global::ProtoBuf.ProtoContract()]
+    public partial class GetAvailableSubmissionsResponse : global::ProtoBuf.IExtensible
+    {
+        private global::ProtoBuf.IExtension __pbn__extensionData;
+        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+            => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+        [global::ProtoBuf.ProtoMember(1)]
+        public int submissions_left { get; set; }
+
+        [global::ProtoBuf.ProtoMember(2)]
+        public int min_player_level { get; set; }
+
+    }
+
 }
 
 #pragma warning restore CS1591, CS0612, CS3021, IDE1006

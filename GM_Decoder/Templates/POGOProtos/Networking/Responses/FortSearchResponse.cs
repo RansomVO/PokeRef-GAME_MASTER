@@ -57,6 +57,9 @@ namespace POGOProtos.Networking.Responses
         [global::ProtoBuf.ProtoMember(14)]
         public global::POGOProtos.Data.Quests.ClientQuest challenge_quest { get; set; }
 
+        [global::ProtoBuf.ProtoMember(15)]
+        public global::POGOProtos.Data.Gift.GiftBox gift_box { get; set; }
+
         [global::ProtoBuf.ProtoContract()]
         public enum Result
         {

@@ -17,6 +17,7 @@ namespace POGOProtos.Enums
         BACKGROUND = 4,
         INTERNAL = 5,
         SFIDA = 6,
+        SUPER_AWESOME = 7,
     }
 
 }

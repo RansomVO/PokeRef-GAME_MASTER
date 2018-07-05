@@ -44,6 +44,17 @@ namespace GM_protogen
         protected override void WriteFileHeader(GeneratorContext ctx, FileDescriptorProto file, ref object state)
         {
             ctx.WriteLine("// ***** This is for GAME_MASTER files. *****");
+
+            string version = ctx.GetCustomOption("PROTO_VERSION");
+            if (version != null)
+            {
+                version = "v" + version.Replace('.', '_');
+                int pos = file.Package.IndexOf('.');
+                file.Package = pos == -1 ?
+                    file.Package + '.' + version :
+                    file.Package.Substring(0, pos) + '.' + version + file.Package.Substring(pos);
+            }
+
             base.WriteFileHeader(ctx, file, ref state);
         }
 

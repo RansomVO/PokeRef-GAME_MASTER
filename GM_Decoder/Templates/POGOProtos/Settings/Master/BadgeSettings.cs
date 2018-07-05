@@ -29,6 +29,9 @@ namespace POGOProtos.Settings.Master
         [global::ProtoBuf.ProtoMember(5)]
         public bool event_badge { get; set; }
 
+        [global::ProtoBuf.ProtoMember(6)]
+        public EventBadgeSettings event_badge_settings { get; set; }
+
     }
 
 }

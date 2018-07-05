@@ -32,6 +32,9 @@ namespace POGOProtos.Map.Weather
         [global::ProtoBuf.ProtoMember(6)]
         public int wind_direction { get; set; }
 
+        [global::ProtoBuf.ProtoMember(7)]
+        public DisplayLevel special_effect_level { get; set; }
+
         [global::ProtoBuf.ProtoContract()]
         public enum DisplayLevel
         {

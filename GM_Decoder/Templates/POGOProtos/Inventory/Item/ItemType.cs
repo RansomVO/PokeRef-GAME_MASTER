@@ -28,6 +28,7 @@ namespace POGOProtos.Inventory.Item
         ITEM_TYPE_CANDY = 15,
         ITEM_TYPE_RAID_TICKET = 16,
         ITEM_TYPE_STARDUST_BOOST = 17,
+        ITEM_TYPE_FRIEND_GIFT_BOX = 18,
     }
 
 }

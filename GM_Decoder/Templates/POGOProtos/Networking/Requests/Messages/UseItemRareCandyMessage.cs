@@ -20,6 +20,9 @@ namespace POGOProtos.Networking.Requests.Messages
         [global::ProtoBuf.ProtoMember(2)]
         public global::POGOProtos.Enums.PokemonId pokemon_id { get; set; }
 
+        [global::ProtoBuf.ProtoMember(3)]
+        public int candy_count { get; set; }
+
     }
 
 }

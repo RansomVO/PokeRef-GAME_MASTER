@@ -67,13 +67,19 @@ namespace POGOProtos.Settings
         public NewsGlobalSettings news_global_settings { get; set; }
 
         [global::ProtoBuf.ProtoMember(21)]
-        public MetricsGlobalSettings metrics_global_settings { get; set; }
+        public TelemetryGlobalSettings telemetry_global_settings { get; set; }
 
         [global::ProtoBuf.ProtoMember(22)]
         public LoginSettings login_settings { get; set; }
 
         [global::ProtoBuf.ProtoMember(19)]
         public QuestGlobalSettings quest_global_settings { get; set; }
+
+        [global::ProtoBuf.ProtoMember(23)]
+        public SocialClientSettings social_settings { get; set; }
+
+        [global::ProtoBuf.ProtoMember(24)]
+        public TradingGlobalSettings trading_global_settings { get; set; }
 
     }
 

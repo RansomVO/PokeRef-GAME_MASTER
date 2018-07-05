@@ -52,7 +52,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
                     continue;
 
                 if (gameMasterTemplate.GameMaster.item_templates.Count == 0)
-                    ConsoleOutput.OutputError("JSON failed to Deserialize: {0}", file);
+                    ConsoleOutput.OutputError($"JSON failed to Deserialize: {file}");
 
                 if (GameMasterTemplate == null)
                     GameMasterTemplate = gameMasterTemplate;

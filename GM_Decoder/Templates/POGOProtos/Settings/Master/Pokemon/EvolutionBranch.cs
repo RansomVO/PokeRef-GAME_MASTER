@@ -26,6 +26,9 @@ namespace POGOProtos.Settings.Master.Pokemon
         [global::ProtoBuf.ProtoMember(4)]
         public float km_buddy_distance_requirement { get; set; }
 
+        [global::ProtoBuf.ProtoMember(5)]
+        public global::POGOProtos.Enums.Form form { get; set; }
+
     }
 
 }

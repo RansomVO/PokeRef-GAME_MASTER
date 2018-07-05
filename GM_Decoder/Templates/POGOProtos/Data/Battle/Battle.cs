@@ -36,6 +36,9 @@ namespace POGOProtos.Data.Battle
         [global::ProtoBuf.ProtoMember(7)]
         public global::POGOProtos.Enums.WeatherCondition weather_condition { get; set; }
 
+        [global::ProtoBuf.ProtoMember(8)]
+        public global::POGOProtos.Enums.FriendshipLevelMilestone highest_friendship_milestone { get; set; }
+
     }
 
 }

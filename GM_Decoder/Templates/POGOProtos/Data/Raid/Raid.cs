@@ -38,6 +38,9 @@ namespace POGOProtos.Data.Raid
         [global::ProtoBuf.ProtoMember(8)]
         public bool received_default_rewards { get; set; }
 
+        [global::ProtoBuf.ProtoMember(9)]
+        public bool incremented_raid_friends { get; set; }
+
     }
 
 }

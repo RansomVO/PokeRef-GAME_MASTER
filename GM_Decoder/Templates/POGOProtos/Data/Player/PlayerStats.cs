@@ -116,6 +116,15 @@ namespace POGOProtos.Data.Player
         [global::ProtoBuf.ProtoMember(34)]
         public int num_challenge_quests_completed { get; set; }
 
+        [global::ProtoBuf.ProtoMember(35)]
+        public int num_trades { get; set; }
+
+        [global::ProtoBuf.ProtoMember(36)]
+        public int num_max_level_friends { get; set; }
+
+        [global::ProtoBuf.ProtoMember(37)]
+        public long trade_accumulated_distance_km { get; set; }
+
     }
 
 }

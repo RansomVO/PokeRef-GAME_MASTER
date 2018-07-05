@@ -232,7 +232,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
                 }
                 catch (Exception ex)
                 {
-                    ConsoleOutput.OutputException(ex, "Error processing {0} ({1})", itemTemplate.template_id, gameMasterTemplate.FileName);
+                    ConsoleOutput.OutputException(ex, $"Error processing {itemTemplate.template_id} ({gameMasterTemplate.FileName})");
                 }
             }
 

@@ -21,6 +21,8 @@ namespace POGOProtos.Enums
         POKESTOP_TUTORIAL = 8,
         GYM_TUTORIAL = 9,
         CHALLENGE_QUEST_TUTORIAL = 10,
+        PRIVACY_POLICY_CONFIRMATION = 11,
+        TRADING_TUTORIAL = 12,
     }
 
 }

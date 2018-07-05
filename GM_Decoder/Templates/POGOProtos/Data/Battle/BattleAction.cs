@@ -53,6 +53,9 @@ namespace POGOProtos.Data.Battle
         [global::ProtoBuf.ProtoMember(14, DataFormat = global::ProtoBuf.DataFormat.FixedSize)]
         public ulong target_pokemon_id { get; set; }
 
+        [global::ProtoBuf.ProtoMember(15)]
+        public global::POGOProtos.Data.Friends.LeveledUpFriends leveled_up_friends { get; set; }
+
     }
 
 }

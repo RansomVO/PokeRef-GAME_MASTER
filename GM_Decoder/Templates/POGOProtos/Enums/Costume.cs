@@ -15,6 +15,7 @@ namespace POGOProtos.Enums
         ANNIVERSARY = 2,
         ONE_YEAR_ANNIVERSARY = 3,
         HALLOWEEN_2017 = 4,
+        SUMMER_2018 = 5,
     }
 
 }

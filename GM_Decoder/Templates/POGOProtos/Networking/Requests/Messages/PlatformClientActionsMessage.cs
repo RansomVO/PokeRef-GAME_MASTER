@@ -92,6 +92,108 @@ namespace POGOProtos.Networking.Requests.Messages
 
     }
 
+    [global::ProtoBuf.ProtoContract()]
+    public partial class RedeemPasscodeMessage : global::ProtoBuf.IExtensible
+    {
+        private global::ProtoBuf.IExtension __pbn__extensionData;
+        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+            => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+        [global::ProtoBuf.ProtoMember(1)]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string passcode { get; set; } = "";
+
+    }
+
+    [global::ProtoBuf.ProtoContract()]
+    public partial class AddNewPoiMessage : global::ProtoBuf.IExtensible
+    {
+        private global::ProtoBuf.IExtension __pbn__extensionData;
+        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+            => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+        [global::ProtoBuf.ProtoMember(1)]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string title { get; set; } = "";
+
+        [global::ProtoBuf.ProtoMember(2)]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string long_description { get; set; } = "";
+
+        [global::ProtoBuf.ProtoMember(3)]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string image_gs_file_path { get; set; } = "";
+
+        [global::ProtoBuf.ProtoMember(4)]
+        public int lat_e6 { get; set; }
+
+        [global::ProtoBuf.ProtoMember(5)]
+        public int lng_e6 { get; set; }
+
+        [global::ProtoBuf.ProtoMember(6)]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string image_serving_url { get; set; } = "";
+
+        [global::ProtoBuf.ProtoMember(7)]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string user_id { get; set; } = "";
+
+        [global::ProtoBuf.ProtoMember(8)]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string player_language { get; set; } = "";
+
+        [global::ProtoBuf.ProtoMember(9)]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string game_unique_id { get; set; } = "";
+
+        [global::ProtoBuf.ProtoMember(10)]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string app_id { get; set; } = "";
+
+        [global::ProtoBuf.ProtoMember(11)]
+        public global::POGOProtos.Data.Player.PlayerReputation player_reputation { get; set; }
+
+    }
+
+    [global::ProtoBuf.ProtoContract()]
+    public partial class ProxySocialActionMessage : global::ProtoBuf.IExtensible
+    {
+        private global::ProtoBuf.IExtension __pbn__extensionData;
+        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+            => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+        [global::ProtoBuf.ProtoMember(1)]
+        public uint action { get; set; }
+
+        [global::ProtoBuf.ProtoMember(2)]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string host { get; set; } = "";
+
+        [global::ProtoBuf.ProtoMember(3)]
+        public byte[] payload { get; set; }
+
+    }
+
+    [global::ProtoBuf.ProtoContract()]
+    public partial class GetAvailableSubmissionsMessage : global::ProtoBuf.IExtensible
+    {
+        private global::ProtoBuf.IExtension __pbn__extensionData;
+        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+            => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+        [global::ProtoBuf.ProtoMember(1)]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string user_id { get; set; } = "";
+
+        [global::ProtoBuf.ProtoMember(2)]
+        public global::POGOProtos.Data.Player.PlayerReputation player_reputation { get; set; }
+
+        [global::ProtoBuf.ProtoMember(3)]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string game_unique_id { get; set; } = "";
+
+    }
+
 }
 
 #pragma warning restore CS1591, CS0612, CS3021, IDE1006

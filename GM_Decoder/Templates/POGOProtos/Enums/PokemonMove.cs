@@ -247,6 +247,7 @@ namespace POGOProtos.Enums
         FRENZY_PLANT = 296,
         SMACK_DOWN_FAST = 297,
         BLAST_BURN = 298,
+        HYDRO_CANNON = 299,
     }
 
 }

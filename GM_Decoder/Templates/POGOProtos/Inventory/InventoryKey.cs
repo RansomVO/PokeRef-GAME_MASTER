@@ -57,6 +57,9 @@ namespace POGOProtos.Inventory
         [global::ProtoBuf.ProtoMember(14)]
         public bool quests { get; set; }
 
+        [global::ProtoBuf.ProtoMember(15)]
+        public bool gift_boxes { get; set; }
+
     }
 
 }

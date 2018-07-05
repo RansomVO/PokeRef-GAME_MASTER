@@ -38,6 +38,12 @@ namespace POGOProtos.Data.Battle
         [global::ProtoBuf.ProtoMember(8)]
         public bool weather_boosted { get; set; }
 
+        [global::ProtoBuf.ProtoMember(9)]
+        public global::POGOProtos.Enums.FriendshipLevelMilestone highest_friendship_milestone { get; set; }
+
+        [global::ProtoBuf.ProtoMember(10)]
+        public global::System.Collections.Generic.List<string> friend_codename { get; } = new global::System.Collections.Generic.List<string>();
+
     }
 
 }

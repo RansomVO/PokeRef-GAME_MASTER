@@ -138,6 +138,19 @@ namespace POGOProtos.Data
         [global::ProtoBuf.ProtoMember(41)]
         public long deployed_returned_timestamp_ms { get; set; }
 
+        [global::ProtoBuf.ProtoMember(42)]
+        public float cp_multiplier_before_trading { get; set; }
+
+        [global::ProtoBuf.ProtoMember(43)]
+        public int original_owner_hash { get; set; }
+
+        [global::ProtoBuf.ProtoMember(44)]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string original_owner_nickname { get; set; } = "";
+
+        [global::ProtoBuf.ProtoMember(45)]
+        public long traded_time_ms { get; set; }
+
     }
 
 }

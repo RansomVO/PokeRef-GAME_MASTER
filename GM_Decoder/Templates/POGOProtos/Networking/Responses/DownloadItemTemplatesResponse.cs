@@ -112,6 +112,9 @@ namespace POGOProtos.Networking.Responses
             [global::ProtoBuf.ProtoMember(30)]
             public global::POGOProtos.Settings.Master.OnboardingSettings onboarding_settings { get; set; }
 
+            [global::ProtoBuf.ProtoMember(31)]
+            public global::POGOProtos.Settings.Master.FriendshipLevelMilestoneSettings friendship_milestone_settings { get; set; }
+
         }
 
         [global::ProtoBuf.ProtoContract()]

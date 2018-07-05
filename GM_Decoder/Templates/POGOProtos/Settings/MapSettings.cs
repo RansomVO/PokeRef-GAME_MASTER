@@ -39,6 +39,12 @@ namespace POGOProtos.Settings
         [global::ProtoBuf.ProtoMember(8)]
         public int min_nearby_hide_sightings { get; set; }
 
+        [global::ProtoBuf.ProtoMember(9)]
+        public bool enable_special_weather { get; set; }
+
+        [global::ProtoBuf.ProtoMember(10)]
+        public float special_weather_probability { get; set; }
+
     }
 
 }

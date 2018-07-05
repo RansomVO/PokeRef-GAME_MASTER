@@ -32,6 +32,9 @@ namespace POGOProtos.Inventory
         [global::ProtoBuf.ProtoMember(6)]
         public bool experience { get; set; }
 
+        [global::ProtoBuf.ProtoMember(7)]
+        public global::POGOProtos.Data.PokemonData pokemon_egg { get; set; }
+
     }
 
 }
