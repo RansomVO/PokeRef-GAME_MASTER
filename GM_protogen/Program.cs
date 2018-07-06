@@ -138,9 +138,9 @@ namespace GM_protogen
 
                     writer.WriteLine("  <!-- .proto files -->");
                     writer.WriteLine("  <ItemGroup>");
-                    foreach (var file in fileDescriptorSet.Files)
+                    foreach (var file in inputFiles)
                     {
-                        writer.WriteLine($"    <None Include=\"{Path.Combine(inputFolder, file.Name)}\">");
+                        writer.WriteLine($"    <None Include=\"{Path.Combine(inputFolder, file)}\">");
                         writer.WriteLine($"      <Visible>true</Visible>");
                         writer.WriteLine($"    </None>");
                     }

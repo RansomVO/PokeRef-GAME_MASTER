@@ -286,8 +286,13 @@ namespace VanOrman.PokemonGO.GAME_MASTER.Decoder
         /// <param name="filePathJson"></param>
         internal static void WriteGameMasterJson(GameMaster gameMaster, string filePathJson)
         {
+            JsonSerializerSettings settings = new JsonSerializerSettings()
+            {
+                Formatting = Formatting.Indented,
+            };
+
             using (StreamWriter writer = new StreamWriter(filePathJson))
-                writer.Write(JsonConvert.SerializeObject(gameMaster, Formatting.Indented));
+                writer.Write(JsonConvert.SerializeObject(gameMaster, settings));
 
             GameMasterTimestampUtils.FixGameMasterFileTime(filePathJson);
         }
@@ -299,7 +304,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.Decoder
         internal static void WriteGameMasterJson(string filePathGameMaster)
         {
             GameMaster gameMaster = GameMasterDecoder.ReadGameMaster(filePathGameMaster);
-            GameMasterDecoder.WriteGameMasterJson(gameMaster, filePathGameMaster + ".json");
+            WriteGameMasterJson(gameMaster, filePathGameMaster + ".json");
         }
 
         private static GameMaster FixGameMaster(string filePathJson)
