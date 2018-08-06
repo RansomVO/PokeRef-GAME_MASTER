@@ -17,6 +17,7 @@ namespace POGOProtos.Data
         [global::ProtoBuf.ProtoMember(1, DataFormat = global::ProtoBuf.DataFormat.FixedSize)]
         public ulong id { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(2)]
         public global::POGOProtos.Enums.PokemonId pokemon_id { get; set; }
 
@@ -29,9 +30,11 @@ namespace POGOProtos.Data
         [global::ProtoBuf.ProtoMember(5)]
         public int stamina_max { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(6)]
         public global::POGOProtos.Enums.PokemonMove move_1 { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(7)]
         public global::POGOProtos.Enums.PokemonMove move_2 { get; set; }
 
@@ -73,6 +76,7 @@ namespace POGOProtos.Data
         [global::ProtoBuf.ProtoMember(20)]
         public float cp_multiplier { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(21)]
         public global::POGOProtos.Inventory.Item.ItemId pokeball { get; set; }
 
@@ -142,7 +146,7 @@ namespace POGOProtos.Data
         public float cp_multiplier_before_trading { get; set; }
 
         [global::ProtoBuf.ProtoMember(43)]
-        public int original_owner_hash { get; set; }
+        public int trading_original_owner_hash { get; set; }
 
         [global::ProtoBuf.ProtoMember(44)]
         [global::System.ComponentModel.DefaultValue("")]
@@ -150,6 +154,9 @@ namespace POGOProtos.Data
 
         [global::ProtoBuf.ProtoMember(45)]
         public long traded_time_ms { get; set; }
+
+        [global::ProtoBuf.ProtoMember(46)]
+        public bool is_lucky { get; set; }
 
     }
 

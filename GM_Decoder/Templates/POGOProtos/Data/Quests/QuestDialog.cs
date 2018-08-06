@@ -18,6 +18,7 @@ namespace POGOProtos.Data.Quests
         [global::System.ComponentModel.DefaultValue("")]
         public string text { get; set; } = "";
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(2)]
         public CharacterExpression expression { get; set; }
 
@@ -25,6 +26,7 @@ namespace POGOProtos.Data.Quests
         [global::System.ComponentModel.DefaultValue("")]
         public string image_uri { get; set; } = "";
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(4)]
         public Character character { get; set; }
 

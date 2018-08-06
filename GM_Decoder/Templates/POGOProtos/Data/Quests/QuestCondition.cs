@@ -14,6 +14,7 @@ namespace POGOProtos.Data.Quests
         global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
             => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(1)]
         public ConditionType type { get; set; }
 
@@ -148,6 +149,7 @@ namespace POGOProtos.Data.Quests
             global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
                 => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
 
+            [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
             [global::ProtoBuf.ProtoMember(1)]
             public global::POGOProtos.Enums.ActivityType throw_type { get; set; }
 
@@ -190,6 +192,7 @@ namespace POGOProtos.Data.Quests
             global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
                 => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
 
+            [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
             [global::ProtoBuf.ProtoMember(1)]
             public global::POGOProtos.Inventory.Item.ItemId item { get; set; }
 
@@ -211,6 +214,7 @@ namespace POGOProtos.Data.Quests
             global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
                 => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
 
+            [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
             [global::ProtoBuf.ProtoMember(1)]
             public Context context { get; set; }
 
@@ -285,6 +289,7 @@ namespace POGOProtos.Data.Quests
             WITH_BADGE_TYPE = 16,
             WITH_PLAYER_LEVEL = 17,
             WITH_WIN_BATTLE_STATUS = 18,
+            WITH_NEW_FRIEND = 19,
         }
 
     }

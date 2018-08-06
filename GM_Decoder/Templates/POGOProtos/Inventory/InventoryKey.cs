@@ -17,6 +17,7 @@ namespace POGOProtos.Inventory
         [global::ProtoBuf.ProtoMember(1, DataFormat = global::ProtoBuf.DataFormat.FixedSize)]
         public ulong pokemon_id { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(2)]
         public global::POGOProtos.Inventory.Item.ItemId item { get; set; }
 
@@ -41,9 +42,11 @@ namespace POGOProtos.Inventory
         [global::ProtoBuf.ProtoMember(9)]
         public bool egg_incubators { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(10)]
         public global::POGOProtos.Enums.PokemonFamilyId pokemon_family_id { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(11)]
         public global::POGOProtos.Enums.QuestType quest_type { get; set; }
 

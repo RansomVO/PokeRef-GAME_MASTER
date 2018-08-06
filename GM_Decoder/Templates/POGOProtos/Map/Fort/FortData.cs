@@ -27,9 +27,11 @@ namespace POGOProtos.Map.Fort
         [global::ProtoBuf.ProtoMember(4)]
         public double longitude { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(5)]
         public global::POGOProtos.Enums.TeamColor owned_by_team { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(6)]
         public global::POGOProtos.Enums.PokemonId guard_pokemon_id { get; set; }
 
@@ -39,6 +41,7 @@ namespace POGOProtos.Map.Fort
         [global::ProtoBuf.ProtoMember(8)]
         public bool enabled { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(9)]
         public FortType type { get; set; }
 
@@ -57,9 +60,11 @@ namespace POGOProtos.Map.Fort
         [global::ProtoBuf.ProtoMember(14)]
         public long cooldown_complete_timestamp_ms { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(15)]
         public FortSponsor sponsor { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(16)]
         public FortRenderingType rendering_type { get; set; }
 

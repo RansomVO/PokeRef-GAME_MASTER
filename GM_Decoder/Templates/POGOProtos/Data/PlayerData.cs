@@ -21,6 +21,7 @@ namespace POGOProtos.Data
         [global::System.ComponentModel.DefaultValue("")]
         public string username { get; set; } = "";
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(5)]
         public global::POGOProtos.Enums.TeamColor team { get; set; }
 
@@ -62,6 +63,9 @@ namespace POGOProtos.Data
 
         [global::ProtoBuf.ProtoMember(19)]
         public bool name_is_blacklisted { get; set; }
+
+        [global::ProtoBuf.ProtoMember(20)]
+        public global::POGOProtos.Settings.SocialPlayerSettings social_player_settings { get; set; }
 
     }
 

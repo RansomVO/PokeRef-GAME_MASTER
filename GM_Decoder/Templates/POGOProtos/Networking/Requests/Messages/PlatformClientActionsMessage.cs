@@ -68,6 +68,7 @@ namespace POGOProtos.Networking.Requests.Messages
         [global::ProtoBuf.ProtoMember(2, IsPacked = true)]
         public long[] create_timestamp_ms { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(3)]
         public NotificationState state { get; set; }
 
@@ -191,6 +192,138 @@ namespace POGOProtos.Networking.Requests.Messages
         [global::ProtoBuf.ProtoMember(3)]
         [global::System.ComponentModel.DefaultValue("")]
         public string game_unique_id { get; set; } = "";
+
+    }
+
+    [global::ProtoBuf.ProtoContract()]
+    public partial class PushNotificationRegistryMessage : global::ProtoBuf.IExtensible
+    {
+        private global::ProtoBuf.IExtension __pbn__extensionData;
+        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+            => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+        [global::ProtoBuf.ProtoMember(1)]
+        public RegisterPushNotificationMessage.ApnToken apn_token { get; set; }
+
+        [global::ProtoBuf.ProtoMember(2)]
+        public RegisterPushNotificationMessage.GcmToken gcm_token { get; set; }
+
+    }
+
+    [global::ProtoBuf.ProtoContract()]
+    public partial class AddLoginActionMessage : global::ProtoBuf.IExtensible
+    {
+        private global::ProtoBuf.IExtension __pbn__extensionData;
+        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+            => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        [global::ProtoBuf.ProtoMember(1)]
+        public global::POGOProtos.Enums.IdentityProvider identity_provider { get; set; }
+
+        [global::ProtoBuf.ProtoMember(2)]
+        public byte[] inner_message { get; set; }
+
+    }
+
+    [global::ProtoBuf.ProtoContract()]
+    public partial class RemoveLoginActionMessage : global::ProtoBuf.IExtensible
+    {
+        private global::ProtoBuf.IExtension __pbn__extensionData;
+        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+            => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+        [global::ProtoBuf.ProtoMember(1)]
+        public bool success { get; set; }
+
+        [global::ProtoBuf.ProtoMember(2)]
+        public global::System.Collections.Generic.List<global::POGOProtos.Data.Login.LoginDetail> login_detail { get; } = new global::System.Collections.Generic.List<global::POGOProtos.Data.Login.LoginDetail>();
+
+    }
+
+    [global::ProtoBuf.ProtoContract()]
+    public partial class SubmitNewPoiMessage : global::ProtoBuf.IExtensible
+    {
+        private global::ProtoBuf.IExtension __pbn__extensionData;
+        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+            => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+        [global::ProtoBuf.ProtoMember(1)]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string title { get; set; } = "";
+
+        [global::ProtoBuf.ProtoMember(2)]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string long_description { get; set; } = "";
+
+        [global::ProtoBuf.ProtoMember(3)]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string image_gs_file_path { get; set; } = "";
+
+        [global::ProtoBuf.ProtoMember(4)]
+        public int lat_e6 { get; set; }
+
+        [global::ProtoBuf.ProtoMember(5)]
+        public int lng_e6 { get; set; }
+
+        [global::ProtoBuf.ProtoMember(6)]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string image_serving_url { get; set; } = "";
+
+        [global::ProtoBuf.ProtoMember(7)]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string user_id { get; set; } = "";
+
+        [global::ProtoBuf.ProtoMember(8)]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string player_language { get; set; } = "";
+
+        [global::ProtoBuf.ProtoMember(9)]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string game_unique_id { get; set; } = "";
+
+        [global::ProtoBuf.ProtoMember(10)]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string app_id { get; set; } = "";
+
+        [global::ProtoBuf.ProtoMember(11)]
+        public global::POGOProtos.Data.Player.PlayerReputation player_reputation { get; set; }
+
+    }
+
+    [global::ProtoBuf.ProtoContract()]
+    public partial class UploadPoiPhotoByUrlMessage : global::ProtoBuf.IExtensible
+    {
+        private global::ProtoBuf.IExtension __pbn__extensionData;
+        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+            => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+        [global::ProtoBuf.ProtoMember(1)]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string request_id { get; set; } = "";
+
+        [global::ProtoBuf.ProtoMember(2)]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string image_url { get; set; } = "";
+
+    }
+
+    [global::ProtoBuf.ProtoContract()]
+    public partial class PingMessage : global::ProtoBuf.IExtensible
+    {
+        private global::ProtoBuf.IExtension __pbn__extensionData;
+        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+            => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+        [global::ProtoBuf.ProtoMember(1)]
+        public int response_size_bytes { get; set; }
+
+        [global::ProtoBuf.ProtoMember(2)]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string random_request_bytes { get; set; } = "";
+
+        [global::ProtoBuf.ProtoMember(3)]
+        public bool use_cache_for_random_request_bytes { get; set; }
 
     }
 

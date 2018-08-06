@@ -25,6 +25,7 @@ namespace POGOProtos.Networking.Responses
         [global::ProtoBuf.ProtoMember(3)]
         public bool is_assignable { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(4)]
         public Status status { get; set; }
 

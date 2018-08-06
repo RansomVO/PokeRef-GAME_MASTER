@@ -14,6 +14,7 @@ namespace POGOProtos.Data.Trading
         global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
             => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(1)]
         public TradingState state { get; set; }
 
@@ -38,6 +39,9 @@ namespace POGOProtos.Data.Trading
 
         [global::ProtoBuf.ProtoMember(8)]
         public bool is_special_trading { get; set; }
+
+        [global::ProtoBuf.ProtoMember(9)]
+        public global::POGOProtos.Data.Friends.FriendshipLevelData pre_trading_friendship_level { get; set; }
 
         [global::ProtoBuf.ProtoContract()]
         public enum TradingState

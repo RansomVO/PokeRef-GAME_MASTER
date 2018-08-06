@@ -18,6 +18,7 @@ namespace POGOProtos.Networking.Responses
         [global::System.ComponentModel.DefaultValue("")]
         public string fort_id { get; set; } = "";
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(2)]
         public global::POGOProtos.Enums.TeamColor team_color { get; set; }
 
@@ -40,6 +41,7 @@ namespace POGOProtos.Networking.Responses
         [global::ProtoBuf.ProtoMember(8)]
         public int max_stamina { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(9)]
         public global::POGOProtos.Map.Fort.FortType type { get; set; }
 

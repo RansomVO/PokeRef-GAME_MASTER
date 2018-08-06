@@ -24,6 +24,7 @@ namespace POGOProtos.Networking.Responses
         [global::ProtoBuf.ProtoMember(3)]
         public global::System.Collections.Generic.List<string> urls { get; } = new global::System.Collections.Generic.List<string>();
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(4)]
         public Result result { get; set; }
 

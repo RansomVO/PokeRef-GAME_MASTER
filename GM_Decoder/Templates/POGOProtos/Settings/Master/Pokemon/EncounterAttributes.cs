@@ -29,6 +29,7 @@ namespace POGOProtos.Settings.Master.Pokemon
         [global::ProtoBuf.ProtoMember(5)]
         public float collision_head_radius_m { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(6)]
         public global::POGOProtos.Enums.PokemonMovementType movement_type { get; set; }
 

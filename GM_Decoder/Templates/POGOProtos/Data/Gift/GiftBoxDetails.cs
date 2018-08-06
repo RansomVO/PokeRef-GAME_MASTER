@@ -60,6 +60,9 @@ namespace POGOProtos.Data.Gift
         [global::ProtoBuf.ProtoMember(13, DataFormat = global::ProtoBuf.DataFormat.FixedSize)]
         public ulong delivery_pokemon_id { get; set; }
 
+        [global::ProtoBuf.ProtoMember(14)]
+        public bool is_sponsored { get; set; }
+
     }
 
 }

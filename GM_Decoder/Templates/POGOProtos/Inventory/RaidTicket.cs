@@ -18,6 +18,7 @@ namespace POGOProtos.Inventory
         [global::System.ComponentModel.DefaultValue("")]
         public string ticket_id { get; set; } = "";
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(2)]
         public global::POGOProtos.Inventory.Item.ItemId item { get; set; }
 

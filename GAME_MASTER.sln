@@ -16,6 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_datafiles", "_datafiles", 
 	ProjectSection(SolutionItems) = preProject
 		..\www\_datafiles\constants.xml = ..\www\_datafiles\constants.xml
 		..\www\_datafiles\effectiveness.xml = ..\www\_datafiles\effectiveness.xml
+		..\www\_datafiles\friends.xml = ..\www\_datafiles\friends.xml
 		..\www\_datafiles\GAME_MASTER.xml = ..\www\_datafiles\GAME_MASTER.xml
 		..\www\_datafiles\moves.charged.xml = ..\www\_datafiles\moves.charged.xml
 		..\www\_datafiles\moves.fast.xml = ..\www\_datafiles\moves.fast.xml
@@ -272,6 +273,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_GAME_MASTER", "_GAME_MASTE
 		..\www\_GAME_MASTER\0000016470644D97_GAME_MASTER.json = ..\www\_GAME_MASTER\0000016470644D97_GAME_MASTER.json
 		..\www\_GAME_MASTER\0000016477739A1E_GAME_MASTER = ..\www\_GAME_MASTER\0000016477739A1E_GAME_MASTER
 		..\www\_GAME_MASTER\0000016477739A1E_GAME_MASTER.json = ..\www\_GAME_MASTER\0000016477739A1E_GAME_MASTER.json
+		..\www\_GAME_MASTER\0000016486ED5920_GAME_MASTER = ..\www\_GAME_MASTER\0000016486ED5920_GAME_MASTER
+		..\www\_GAME_MASTER\0000016486ED5920_GAME_MASTER.json = ..\www\_GAME_MASTER\0000016486ED5920_GAME_MASTER.json
+		..\www\_GAME_MASTER\00000164D105FCB9_GAME_MASTER = ..\www\_GAME_MASTER\00000164D105FCB9_GAME_MASTER
+		..\www\_GAME_MASTER\00000164D105FCB9_GAME_MASTER.json = ..\www\_GAME_MASTER\00000164D105FCB9_GAME_MASTER.json
+		..\www\_GAME_MASTER\000001650A8B5966_GAME_MASTER = ..\www\_GAME_MASTER\000001650A8B5966_GAME_MASTER
+		..\www\_GAME_MASTER\000001650A8B5966_GAME_MASTER.json = ..\www\_GAME_MASTER\000001650A8B5966_GAME_MASTER.json
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "infrequent", "infrequent", "{E206F9F6-262B-4D02-BCE4-32839D4CB976}"

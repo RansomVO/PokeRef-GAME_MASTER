@@ -18,6 +18,7 @@ namespace POGOProtos.Data.Badge
         [global::System.ComponentModel.DefaultValue("")]
         public string fort_id { get; set; } = "";
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(2)]
         public global::POGOProtos.Enums.GymBadgeType gym_badge_type { get; set; }
 

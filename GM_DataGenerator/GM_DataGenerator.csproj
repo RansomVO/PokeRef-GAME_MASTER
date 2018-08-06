@@ -61,6 +61,7 @@
     <Compile Include="PokeFormulas.cs" />
     <Compile Include="Templates\DataFiles\GAME_MASTER.cs" />
     <Compile Include="Templates\DataFiles\Common.cs" />
+    <Compile Include="Templates\DataFiles\Friendship.cs" />
     <Compile Include="Templates\DataFiles\MoveSets.cs" />
     <Compile Include="Templates\DataFiles\PokeStats.cs" />
     <Compile Include="Templates\DataFiles\Moves.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="Templates\DataFiles\RaidBoss.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Templates\Translation\FriendshipTranslator.cs" />
     <Compile Include="Templates\Translation\FormSettingsTranslator.cs" />
     <Compile Include="Templates\Translation\GenderRatioTranslator.cs" />
     <Compile Include="Templates\Translation\MoveTranslator.cs" />

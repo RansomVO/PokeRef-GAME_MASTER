@@ -17,6 +17,7 @@ namespace POGOProtos.Settings.Master
         [global::ProtoBuf.ProtoMember(1, IsPacked = true)]
         public float[] attack_scalar { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(2)]
         public global::POGOProtos.Enums.PokemonType attack_type { get; set; }
 

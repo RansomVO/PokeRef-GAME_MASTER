@@ -14,15 +14,18 @@ namespace POGOProtos.Settings.Master
         global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
             => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(1)]
         public global::POGOProtos.Enums.PokemonId pokemon_id { get; set; }
 
         [global::ProtoBuf.ProtoMember(3)]
         public float model_scale { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(4)]
         public global::POGOProtos.Enums.PokemonType type { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(5)]
         public global::POGOProtos.Enums.PokemonType type_2 { get; set; }
 
@@ -50,6 +53,7 @@ namespace POGOProtos.Settings.Master
         [global::ProtoBuf.ProtoMember(13)]
         public int evolution_pips { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(14)]
         public global::POGOProtos.Enums.PokemonRarity rarity { get; set; }
 
@@ -59,6 +63,7 @@ namespace POGOProtos.Settings.Master
         [global::ProtoBuf.ProtoMember(16)]
         public float pokedex_weight_kg { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(17)]
         public global::POGOProtos.Enums.PokemonId parent_pokemon_id { get; set; }
 
@@ -71,6 +76,7 @@ namespace POGOProtos.Settings.Master
         [global::ProtoBuf.ProtoMember(20)]
         public float km_distance_to_hatch { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(21)]
         public global::POGOProtos.Enums.PokemonFamilyId family_id { get; set; }
 
@@ -80,6 +86,7 @@ namespace POGOProtos.Settings.Master
         [global::ProtoBuf.ProtoMember(23)]
         public float km_buddy_distance { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(24)]
         public global::POGOProtos.Enums.BuddySize buddy_size { get; set; }
 
@@ -92,12 +99,15 @@ namespace POGOProtos.Settings.Master
         [global::ProtoBuf.ProtoMember(27)]
         public float model_scale_v2 { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(28)]
         public global::POGOProtos.Enums.Form form { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(29)]
         public global::POGOProtos.Enums.PokemonMove event_quick_move { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(30)]
         public global::POGOProtos.Enums.PokemonMove event_cinematic_move { get; set; }
 
@@ -113,6 +123,7 @@ namespace POGOProtos.Settings.Master
         [global::ProtoBuf.ProtoMember(34, IsPacked = true)]
         public float[] buddy_portrait_offset { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(35)]
         public global::POGOProtos.Enums.Form parent_form { get; set; }
 

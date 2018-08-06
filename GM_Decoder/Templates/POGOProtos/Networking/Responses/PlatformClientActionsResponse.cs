@@ -14,6 +14,7 @@ namespace POGOProtos.Networking.Responses
         global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
             => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(1)]
         public Result result { get; set; }
 
@@ -40,6 +41,7 @@ namespace POGOProtos.Networking.Responses
         [global::ProtoBuf.ProtoMember(2, IsPacked = true)]
         public long[] create_timestamp_ms { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(3)]
         public NotificationState state { get; set; }
 
@@ -68,6 +70,7 @@ namespace POGOProtos.Networking.Responses
         global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
             => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(1)]
         public Result result { get; set; }
 
@@ -116,6 +119,7 @@ namespace POGOProtos.Networking.Responses
         global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
             => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(1)]
         public Status status { get; set; }
 
@@ -142,6 +146,7 @@ namespace POGOProtos.Networking.Responses
         global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
             => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(1)]
         public Status status { get; set; }
 
@@ -181,6 +186,141 @@ namespace POGOProtos.Networking.Responses
 
         [global::ProtoBuf.ProtoMember(2)]
         public int min_player_level { get; set; }
+
+    }
+
+    [global::ProtoBuf.ProtoContract()]
+    public partial class PushNotificationRegistryResponse : global::ProtoBuf.IExtensible
+    {
+        private global::ProtoBuf.IExtension __pbn__extensionData;
+        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+            => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        [global::ProtoBuf.ProtoMember(1)]
+        public Result result { get; set; }
+
+        [global::ProtoBuf.ProtoContract()]
+        public enum Result
+        {
+            UNSET = 0,
+            SUCCESS = 1,
+            NO_CHANGE = 2,
+        }
+
+    }
+
+    [global::ProtoBuf.ProtoContract()]
+    public partial class AddLoginActionResponse : global::ProtoBuf.IExtensible
+    {
+        private global::ProtoBuf.IExtension __pbn__extensionData;
+        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+            => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+        [global::ProtoBuf.ProtoMember(1)]
+        public bool success { get; set; }
+
+        [global::ProtoBuf.ProtoMember(2)]
+        public global::System.Collections.Generic.List<global::POGOProtos.Data.Login.LoginDetail> login_detail { get; } = new global::System.Collections.Generic.List<global::POGOProtos.Data.Login.LoginDetail>();
+
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        [global::ProtoBuf.ProtoMember(3)]
+        public Status status { get; set; }
+
+        [global::ProtoBuf.ProtoContract()]
+        public enum Status
+        {
+            UNSET = 0,
+            AUTH_FAILURE = 1,
+            LOGIN_TAKEN = 2,
+        }
+
+    }
+
+    [global::ProtoBuf.ProtoContract()]
+    public partial class RemoveLoginAction : global::ProtoBuf.IExtensible
+    {
+        private global::ProtoBuf.IExtension __pbn__extensionData;
+        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+            => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        [global::ProtoBuf.ProtoMember(1)]
+        public global::POGOProtos.Enums.IdentityProvider identity_provider { get; set; }
+
+    }
+
+    [global::ProtoBuf.ProtoContract()]
+    public partial class SubmitNewPoiResponse : global::ProtoBuf.IExtensible
+    {
+        private global::ProtoBuf.IExtension __pbn__extensionData;
+        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+            => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        [global::ProtoBuf.ProtoMember(1)]
+        public Status status { get; set; }
+
+        [global::ProtoBuf.ProtoMember(2)]
+        public global::System.Collections.Generic.List<string> message { get; } = new global::System.Collections.Generic.List<string>();
+
+        [global::ProtoBuf.ProtoContract()]
+        public enum Status
+        {
+            UNSET = 0,
+            SUCCESS = 1,
+            FAILURE = 2,
+            INTERNAL_ERROR = 3,
+            TOO_MANY_RECENT_SUBMISSIONS = 4,
+            INVALID_INPUT = 5,
+        }
+
+    }
+
+    [global::ProtoBuf.ProtoContract()]
+    public partial class UploadPoiPhotoByUrlResponse : global::ProtoBuf.IExtensible
+    {
+        private global::ProtoBuf.IExtension __pbn__extensionData;
+        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+            => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        [global::ProtoBuf.ProtoMember(1)]
+        public Result status { get; set; }
+
+        [global::ProtoBuf.ProtoContract()]
+        public enum Result
+        {
+            UNSET = 0,
+            SUCCESS = 1,
+            FEATURE_DISABLED = 2,
+            ALREADY_UPLOADED = 3,
+            IMAGE_NOT_FOUND = 4,
+            IMAGE_TOO_BIG = 5,
+            IMAGE_NOT_SERVABLE = 6,
+            PORTAL_NOT_FOUND = 7,
+        }
+
+    }
+
+    [global::ProtoBuf.ProtoContract()]
+    public partial class PingResponse : global::ProtoBuf.IExtensible
+    {
+        private global::ProtoBuf.IExtension __pbn__extensionData;
+        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+            => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+        [global::ProtoBuf.ProtoMember(1)]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string user_info { get; set; } = "";
+
+        [global::ProtoBuf.ProtoMember(2)]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string server_info { get; set; } = "";
+
+        [global::ProtoBuf.ProtoMember(3)]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string random_response_bytes { get; set; } = "";
 
     }
 

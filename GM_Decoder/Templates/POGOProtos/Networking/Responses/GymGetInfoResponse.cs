@@ -25,6 +25,7 @@ namespace POGOProtos.Networking.Responses
         [global::System.ComponentModel.DefaultValue("")]
         public string url { get; set; } = "";
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(4)]
         public Result result { get; set; }
 

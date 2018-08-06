@@ -17,11 +17,12 @@ namespace POGOProtos.Settings.Master
         [global::ProtoBuf.ProtoMember(1)]
         public bool enabled { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(2)]
         public global::POGOProtos.Data.Player.PlayerAvatarType avatar_type { get; set; }
 
         [global::ProtoBuf.ProtoMember(3, IsPacked = true)]
-        public global::System.Collections.Generic.List<global::POGOProtos.Enums.Slot> slot { get; } = new global::System.Collections.Generic.List<global::POGOProtos.Enums.Slot>();
+        public global::System.Collections.Generic.List<global::POGOProtos.Data.Avatar.AvatarCustomization.Slot> slot { get; } = new global::System.Collections.Generic.List<global::POGOProtos.Data.Avatar.AvatarCustomization.Slot>();
 
         [global::ProtoBuf.ProtoMember(4)]
         [global::System.ComponentModel.DefaultValue("")]
@@ -38,12 +39,14 @@ namespace POGOProtos.Settings.Master
         [global::ProtoBuf.ProtoMember(7)]
         public int sort_order { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(8)]
         public AvatarCustomizationUnlockType unlock_type { get; set; }
 
         [global::ProtoBuf.ProtoMember(9, IsPacked = true)]
         public global::System.Collections.Generic.List<AvatarCustomizationPromoType> promo_type { get; } = new global::System.Collections.Generic.List<AvatarCustomizationPromoType>();
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(10)]
         public global::POGOProtos.Enums.BadgeType unlock_badge_type { get; set; }
 

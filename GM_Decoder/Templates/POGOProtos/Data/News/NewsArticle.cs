@@ -36,6 +36,7 @@ namespace POGOProtos.Data.News
         [global::ProtoBuf.ProtoMember(6)]
         public long timestamp { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(7)]
         public NewsTemplate template { get; set; }
 

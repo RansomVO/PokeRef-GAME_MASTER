@@ -14,6 +14,7 @@ namespace POGOProtos.Data.Quests
         global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
             => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(1)]
         public global::POGOProtos.Enums.QuestType quest_type { get; set; }
 
@@ -26,6 +27,12 @@ namespace POGOProtos.Data.Quests
         [global::ProtoBuf.ProtoMember(4)]
         public CatchPokemonQuest catch_pokemon { get; set; }
 
+        [global::ProtoBuf.ProtoMember(5)]
+        public AddFriendQuest add_friend { get; set; }
+
+        [global::ProtoBuf.ProtoMember(6)]
+        public TradePokemonQuest trade_pokemon { get; set; }
+
         [global::ProtoBuf.ProtoMember(100)]
         [global::System.ComponentModel.DefaultValue("")]
         public string quest_id { get; set; } = "";
@@ -33,6 +40,7 @@ namespace POGOProtos.Data.Quests
         [global::ProtoBuf.ProtoMember(101)]
         public long quest_seed { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(102)]
         public Context quest_context { get; set; }
 
@@ -46,6 +54,7 @@ namespace POGOProtos.Data.Quests
         [global::ProtoBuf.ProtoMember(105)]
         public QuestGoal goal { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(106)]
         public Status status { get; set; }
 

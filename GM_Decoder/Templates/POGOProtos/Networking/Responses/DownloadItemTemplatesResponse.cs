@@ -14,6 +14,7 @@ namespace POGOProtos.Networking.Responses
         global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
             => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(1)]
         public Result result { get; set; }
 
@@ -114,6 +115,9 @@ namespace POGOProtos.Networking.Responses
 
             [global::ProtoBuf.ProtoMember(31)]
             public global::POGOProtos.Settings.Master.FriendshipLevelMilestoneSettings friendship_milestone_settings { get; set; }
+
+            [global::ProtoBuf.ProtoMember(32)]
+            public global::POGOProtos.Settings.Master.LuckyPokemonSettings lucky_pokemon_settings { get; set; }
 
         }
 

@@ -14,9 +14,9 @@ namespace GM_protogen
     /// </summary>
     public class GM_CSharpCodeGenerator : CSharpCodeGenerator
     {
-        #region Data
+		#region Data
 
-        string[] EnumPrefixes =
+		string[] EnumPrefixes =
         {
             "POKEMON_RARITY_",
         };
@@ -72,12 +72,23 @@ namespace GM_protogen
         {
             ctx.WriteLine($"{Escape(obj.Name)} = {obj.Number},");
             foreach (var prefix in EnumPrefixes)
-            {
                 if (obj.Name.StartsWith(prefix))
-                {
                     ctx.WriteLine($"{Escape(obj.Name.Substring(prefix.Length))} = {obj.Number},");
-                }
-            }
         }
+
+		/// <summary>
+		/// If the field is an enum, add an Attribute to tell JsonConvert.SerializeObject() to write the enum name, not the int value.
+		/// </summary>
+		/// <param name="ctx"></param>
+		/// <param name="obj"></param>
+		/// <param name="state"></param>
+		/// <param name="oneOfs"></param>
+		protected override void WriteField(GeneratorContext ctx, FieldDescriptorProto obj, ref object state, OneOfStub[] oneOfs)
+		{
+			if (obj.type == FieldDescriptorProto.Type.TypeEnum && obj.label != FieldDescriptorProto.Label.LabelRepeated)
+				ctx.WriteLine("[Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]");
+
+			base.WriteField(ctx, obj, ref state, oneOfs);
+		}
 	}
 }

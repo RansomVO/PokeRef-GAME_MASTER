@@ -14,6 +14,7 @@ namespace POGOProtos.Inventory
         global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
             => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(1)]
         public global::POGOProtos.Inventory.Item.ItemId item { get; set; }
 
@@ -23,6 +24,7 @@ namespace POGOProtos.Inventory
         [global::ProtoBuf.ProtoMember(3)]
         public bool pokecoin { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(4)]
         public global::POGOProtos.Enums.PokemonId pokemon_candy { get; set; }
 

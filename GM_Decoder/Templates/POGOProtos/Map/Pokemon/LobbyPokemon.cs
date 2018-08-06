@@ -17,6 +17,7 @@ namespace POGOProtos.Map.Pokemon
         [global::ProtoBuf.ProtoMember(1)]
         public long id { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(2)]
         public global::POGOProtos.Enums.PokemonId pokedex_id { get; set; }
 

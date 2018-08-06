@@ -14,11 +14,12 @@ namespace POGOProtos.Networking.Requests.Messages
         global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
             => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(1)]
         public global::POGOProtos.Data.Player.PlayerAvatarType avatar_type { get; set; }
 
         [global::ProtoBuf.ProtoMember(2, IsPacked = true)]
-        public global::System.Collections.Generic.List<global::POGOProtos.Enums.Slot> slot { get; } = new global::System.Collections.Generic.List<global::POGOProtos.Enums.Slot>();
+        public global::System.Collections.Generic.List<global::POGOProtos.Data.Avatar.AvatarCustomization.Slot> slot { get; } = new global::System.Collections.Generic.List<global::POGOProtos.Data.Avatar.AvatarCustomization.Slot>();
 
         [global::ProtoBuf.ProtoMember(3, IsPacked = true)]
         public global::System.Collections.Generic.List<global::POGOProtos.Enums.Filter> filters { get; } = new global::System.Collections.Generic.List<global::POGOProtos.Enums.Filter>();

@@ -19,10 +19,10 @@ namespace GM_protogen
         {
             Success = 0,
             Parameters,
-            BasePathDoesNotExist,
-            InputFolderDoesNotExist,
-            OutputFolderCouldNotBeCreated,
-            InvalidProto,
+			InputBaseFolderDoesNotExist,
+			ProjectBaseFolderCouldNotBeCreated,
+			CodeOutputFolderCouldNotBeCreated,
+			InvalidProto,
             FileDescriptorSetProcessFailure,
             Exception,
         }
@@ -45,7 +45,7 @@ namespace GM_protogen
         {
             if (args.Length != 3)
             {
-                ConsoleOutput.OutputError("Usage: GM_protegen {basePath} {inputFolder} {outputFolder}");
+                ConsoleOutput.OutputError("Usage: GM_protegen {inputBaseFolder} {outputBaseFolder} {codeOutputRelativeFolder}");
                 return (int)ErrorCode.Parameters;
             }
 
@@ -53,62 +53,64 @@ namespace GM_protogen
         }
 
 #if !MULTI_PROTO
-        static ErrorCode GenerateCode(string basePath, string inputFolder, string outputFolder)
+        static ErrorCode GenerateCode(string inputBaseFolder, string projectBaseFolder, string codeOutputRelativeFolder)
         {
             #region Validate Parameters
 
-            if (!Directory.Exists(basePath))
+            if (!Directory.Exists(inputBaseFolder))
             {
-                ConsoleOutput.OutputError($"basePath not found: \"{basePath}\"");
-                return ErrorCode.BasePathDoesNotExist;
+                ConsoleOutput.OutputError($"inputBaseFolder not found: \"{inputBaseFolder}\"");
+                return ErrorCode.InputBaseFolderDoesNotExist;
             }
 
-            string inputPath = Path.Combine(basePath, inputFolder);
-            if (!Directory.Exists(inputPath))
+            if (!Directory.Exists(projectBaseFolder))
             {
-                ConsoleOutput.OutputError($"inputFolder not found: \"{inputFolder}\"");
-                return ErrorCode.InputFolderDoesNotExist;
+                ConsoleOutput.OutputWarning($"projectBaseFolder not found, creating \"{projectBaseFolder}\"...");
+                Directory.CreateDirectory(projectBaseFolder);
+				if (!Directory.Exists(projectBaseFolder))
+				{
+					ConsoleOutput.OutputError($"Could not create projectBaseFolder: \"{projectBaseFolder}\"");
+					return ErrorCode.ProjectBaseFolderCouldNotBeCreated;
+				}
+				else
+					ConsoleOutput.OutputSuccess("Success");
             }
 
-            string outputPath = Path.Combine(basePath, outputFolder);
-            if (!Directory.Exists(outputPath))
-            {
-                ConsoleOutput.OutputWarning($"outputFolder not found, creating \"{outputFolder}\"...");
-                Directory.CreateDirectory(outputPath);
-                if (!Directory.Exists(outputPath))
-                {
-                    ConsoleOutput.OutputError($"Could not create outputFolder: \"{outputFolder}\"");
-                    return ErrorCode.OutputFolderCouldNotBeCreated;
-                }
-            }
+			string codeOutputBaseFolder = Path.Combine(projectBaseFolder, codeOutputRelativeFolder);
+			if (!Directory.Exists(codeOutputBaseFolder))
+			{
+				ConsoleOutput.OutputWarning($"codeOutputRelativeFolder not found, creating \"{codeOutputBaseFolder}\"...");
+				Directory.CreateDirectory(codeOutputBaseFolder);
+				if (!Directory.Exists(codeOutputBaseFolder))
+				{
+					ConsoleOutput.OutputError($"Could not create codeOutputRelativeFolder: \"{codeOutputBaseFolder}\"");
+					return ErrorCode.CodeOutputFolderCouldNotBeCreated;
+				}
+				else
+					ConsoleOutput.OutputSuccess("Success");
+			}
 
-            #endregion Validate Parameters
+			#endregion Validate Parameters
 
-            try
-            {
+			try
+			{
                 ErrorCode result = ErrorCode.Success;
                 var fileDescriptorSet = new FileDescriptorSet { AllowNameOnlyImport = true };
-                fileDescriptorSet.AddImportPath(inputPath);
+                fileDescriptorSet.AddImportPath(inputBaseFolder);
 
                 var inputFiles = new List<string>();
-                foreach (var path in Directory.EnumerateFiles(inputPath, "*.proto", SearchOption.AllDirectories))
-                {
-                    inputFiles.Add(MakeRelativePath(inputPath, path));
-                }
+                foreach (var path in Directory.EnumerateFiles(inputBaseFolder, "*.proto", SearchOption.AllDirectories))
+                    inputFiles.Add(MakeRelativePath(inputBaseFolder, path));
 
                 bool error = false;
                 foreach (var proto in inputFiles)
-                {
                     if (!fileDescriptorSet.Add(proto, true))
                     {
                         error = true;
                         ConsoleOutput.OutputError($"Error Loading: {proto}");
                     }
-                }
                 if (error)
-                {
                     return ErrorCode.InvalidProto;
-                }
 
                 fileDescriptorSet.Process();
                 var errors = fileDescriptorSet.GetErrors();
@@ -126,9 +128,8 @@ namespace GM_protogen
                 #region Generate the files.
 
                 Dictionary<string, string> options = new Dictionary<string, string>();
-                string outputRelativePath = MakeRelativePath(basePath, outputPath);
 
-                using (StreamWriter writer = new StreamWriter(Path.Combine(basePath, inputFolder, ProjFile)))
+                using (StreamWriter writer = new StreamWriter(Path.Combine(projectBaseFolder, ProjFile)))
                 {
                     writer.WriteLine("<Project xmlns=\"http://schemas.microsoft.com/developer/msbuild/2003\">");
                     writer.WriteLine("  <!-- ======================================================================= -->");
@@ -136,22 +137,11 @@ namespace GM_protogen
                     writer.WriteLine("  <!-- ======================================================================= -->");
                     writer.WriteLine();
 
-                    writer.WriteLine("  <!-- .proto files -->");
-                    writer.WriteLine("  <ItemGroup>");
-                    foreach (var file in inputFiles)
-                    {
-                        writer.WriteLine($"    <None Include=\"{Path.Combine(inputFolder, file)}\">");
-                        writer.WriteLine($"      <Visible>true</Visible>");
-                        writer.WriteLine($"    </None>");
-                    }
-                    writer.WriteLine("  </ItemGroup>");
-                    writer.WriteLine();
-
                     writer.WriteLine("  <!-- Generated .cs files -->");
                     writer.WriteLine("  <ItemGroup>");
                     foreach (var file in GM_CSharpCodeGenerator.Default.Generate(fileDescriptorSet, null, options))
                     {
-                        var filePath = Path.Combine(outputPath, file.Name);
+                        var filePath = Path.Combine(codeOutputBaseFolder, file.Name);
                         var fileFolder = Path.GetDirectoryName(filePath);
                         if (!Directory.Exists(fileFolder))
                         {
@@ -161,7 +151,7 @@ namespace GM_protogen
 
                         File.WriteAllText(filePath, file.Text);
 
-                        writer.WriteLine($"    <Compile Include=\"{Path.Combine(outputRelativePath, file.Name)}\">");
+                        writer.WriteLine($"    <Compile Include=\"{Path.Combine(codeOutputRelativeFolder, file.Name)}\">");
                         writer.WriteLine($"      <Visible>true</Visible>");
                         writer.WriteLine($"    </Compile>");
 
@@ -184,7 +174,7 @@ namespace GM_protogen
             {
                 ConsoleOutput.OutputException(ex);
 
-                return ErrorCode.Exception;
+               return ErrorCode.Exception;
             }
         }
 
@@ -199,7 +189,7 @@ namespace GM_protogen
             if (!Directory.Exists(basePath))
             {
                 ConsoleOutput.OutputError($"basePath not found: \"{basePath}\"");
-                return ErrorCode.BasePathDoesNotExist;
+                return ErrorCode.BaseFolderDoesNotExist;
             }
 
             string inputPath = Path.Combine(basePath, inputFolder);

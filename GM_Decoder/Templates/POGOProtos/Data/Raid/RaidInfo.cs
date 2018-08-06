@@ -29,6 +29,7 @@ namespace POGOProtos.Data.Raid
         [global::ProtoBuf.ProtoMember(5)]
         public global::POGOProtos.Data.PokemonData raid_pokemon { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(6)]
         public global::POGOProtos.Enums.RaidLevel raid_level { get; set; }
 

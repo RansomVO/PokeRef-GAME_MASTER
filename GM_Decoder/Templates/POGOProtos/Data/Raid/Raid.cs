@@ -23,6 +23,7 @@ namespace POGOProtos.Data.Raid
         [global::ProtoBuf.ProtoMember(3)]
         public long completed_ms { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(4)]
         public global::POGOProtos.Enums.PokemonId encounter_pokemon_id { get; set; }
 

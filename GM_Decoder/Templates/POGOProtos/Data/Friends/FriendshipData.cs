@@ -24,6 +24,10 @@ namespace POGOProtos.Data.Friends
         [global::System.ComponentModel.DefaultValue("")]
         public string codename { get; set; } = "";
 
+        [global::ProtoBuf.ProtoMember(4)]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string nickname { get; set; } = "";
+
     }
 
 }

@@ -23,6 +23,7 @@ namespace POGOProtos.Enums
         CHALLENGE_QUEST_TUTORIAL = 10,
         PRIVACY_POLICY_CONFIRMATION = 11,
         TRADING_TUTORIAL = 12,
+        POI_SUBMISSION_TUTORIAL = 13,
     }
 
 }

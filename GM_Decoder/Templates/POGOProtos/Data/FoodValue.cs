@@ -20,6 +20,7 @@ namespace POGOProtos.Data
         [global::ProtoBuf.ProtoMember(2)]
         public int cp_increase { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(3)]
         public global::POGOProtos.Inventory.Item.ItemId food_item { get; set; }
 

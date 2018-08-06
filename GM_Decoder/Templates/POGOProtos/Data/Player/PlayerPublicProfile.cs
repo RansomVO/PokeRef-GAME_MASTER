@@ -24,6 +24,7 @@ namespace POGOProtos.Data.Player
         [global::ProtoBuf.ProtoMember(3)]
         public PlayerAvatar avatar { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(4)]
         public global::POGOProtos.Enums.TeamColor team_color { get; set; }
 
@@ -36,6 +37,7 @@ namespace POGOProtos.Data.Player
         [global::ProtoBuf.ProtoMember(7)]
         public int caught_pokemon { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(8)]
         public global::POGOProtos.Enums.GymBadgeType gym_badge_type { get; set; }
 

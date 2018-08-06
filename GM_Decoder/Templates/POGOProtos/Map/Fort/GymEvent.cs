@@ -21,6 +21,7 @@ namespace POGOProtos.Map.Fort
         [global::ProtoBuf.ProtoMember(2)]
         public long timestamp_ms { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(3)]
         public Event @event { get; set; }
 

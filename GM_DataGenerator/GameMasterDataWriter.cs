@@ -82,6 +82,18 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
 
         PlayerLevelTranslator PlayerLevel { get; set; }
 
+        List<FriendshipTranslator> Friendships
+        {
+            get
+            {
+                if (_friendships == null)
+                    _friendships = new List<FriendshipTranslator>();
+
+                return _friendships;
+            }
+        }
+        private List<FriendshipTranslator> _friendships;
+
         GameMasterStatsCalculator GameMasterStatsCalculator { get; set; }
 
         #endregion Collected Data
@@ -127,9 +139,10 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
             PokeStats.Write(Pokemon.Values, ManualDataSettings, GameMasterStatsCalculator);
             RaidBoss.Write(ManualDataSettings, GameMasterStatsCalculator);
             Encounter.Write(ManualDataSettings, GameMasterStatsCalculator);
+            Friendship.Write(Friendships, GameMasterStatsCalculator);
 
-			// Must be written last so other Write() methods can update.
-			Settings.Write(ManualDataSettings, GameMasterStatsCalculator);
+            // Must be written last so other Write() methods can update.
+            Settings.Write(ManualDataSettings, GameMasterStatsCalculator);
         }
 
         /// <summary>
@@ -181,6 +194,10 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
                             FormSettingsTranslator formSettings = new FormSettingsTranslator(itemTemplate);
                             Forms.Add(formSettings.Key, formSettings);
                         }
+                    }
+                    else if (itemTemplate.friendship_milestone_settings != null)
+                    {
+						Friendships.Add(new FriendshipTranslator(itemTemplate));
                     }
 
                     #region Data I am currently not using.

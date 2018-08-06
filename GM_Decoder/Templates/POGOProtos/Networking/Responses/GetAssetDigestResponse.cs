@@ -20,6 +20,7 @@ namespace POGOProtos.Networking.Responses
         [global::ProtoBuf.ProtoMember(2)]
         public ulong timestamp_ms { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(3)]
         public Result result { get; set; }
 

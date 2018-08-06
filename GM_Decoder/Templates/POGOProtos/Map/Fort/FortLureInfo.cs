@@ -21,6 +21,7 @@ namespace POGOProtos.Map.Fort
         [global::ProtoBuf.ProtoMember(2, DataFormat = global::ProtoBuf.DataFormat.FixedSize)]
         public ulong encounter_id { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(3)]
         public global::POGOProtos.Enums.PokemonId active_pokemon_id { get; set; }
 

@@ -14,6 +14,7 @@ namespace POGOProtos.Data
         global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
             => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(1)]
         public global::POGOProtos.Enums.PokemonId pokemon_id { get; set; }
 
@@ -52,6 +53,9 @@ namespace POGOProtos.Data
 
         [global::ProtoBuf.ProtoMember(13)]
         public bool encountered_shiny { get; set; }
+
+        [global::ProtoBuf.ProtoMember(14)]
+        public int times_lucky_received { get; set; }
 
     }
 

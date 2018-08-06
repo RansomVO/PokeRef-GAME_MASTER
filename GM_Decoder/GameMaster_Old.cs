@@ -113,7 +113,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.Old
                 unlock_player_level = unlockPlayerLevel == null ? 0 : (int)unlockPlayerLevel,
             };
             foreach (var slotEntry in slot)
-                avatarCustomizationSettings.slot.Add(TypeConverter.Convert<POGOProtos.Enums.Slot>(slotEntry));
+                avatarCustomizationSettings.slot.Add(TypeConverter.Convert<POGOProtos.Data.Avatar.AvatarCustomization.Slot>(slotEntry));
 
             return avatarCustomizationSettings;
         }

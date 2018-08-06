@@ -14,6 +14,7 @@ namespace POGOProtos.Data.Battle
         global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
             => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(1)]
         public BattleActionType type { get; set; }
 
@@ -32,7 +33,7 @@ namespace POGOProtos.Data.Battle
         [global::ProtoBuf.ProtoMember(7)]
         public int target_index { get; set; }
 
-        [global::ProtoBuf.ProtoMember(8, DataFormat = global::ProtoBuf.DataFormat.FixedSize)]
+        [global::ProtoBuf.ProtoMember(8)]
         public ulong active_pokemon_id { get; set; }
 
         [global::ProtoBuf.ProtoMember(9)]
@@ -50,7 +51,7 @@ namespace POGOProtos.Data.Battle
         [global::ProtoBuf.ProtoMember(13)]
         public BattleParticipant player_left { get; set; }
 
-        [global::ProtoBuf.ProtoMember(14, DataFormat = global::ProtoBuf.DataFormat.FixedSize)]
+        [global::ProtoBuf.ProtoMember(14)]
         public ulong target_pokemon_id { get; set; }
 
         [global::ProtoBuf.ProtoMember(15)]

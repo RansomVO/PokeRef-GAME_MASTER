@@ -14,6 +14,7 @@ namespace POGOProtos.Networking.Responses
         global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
             => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(1)]
         public CatchStatus status { get; set; }
 
@@ -26,6 +27,7 @@ namespace POGOProtos.Networking.Responses
         [global::ProtoBuf.ProtoMember(4)]
         public global::POGOProtos.Data.Capture.CaptureAward capture_award { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(5)]
         public CaptureReason capture_reason { get; set; }
 

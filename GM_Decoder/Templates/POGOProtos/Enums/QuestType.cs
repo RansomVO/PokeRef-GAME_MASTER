@@ -32,6 +32,8 @@ namespace POGOProtos.Enums
         QUEST_PLAYER_LEVEL = 19,
         QUEST_JOIN_RAID = 20,
         QUEST_COMPLETE_BATTLE = 21,
+        QUEST_ADD_FRIEND = 22,
+        QUEST_TRADE_POKEMON = 23,
     }
 
 }

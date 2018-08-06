@@ -17,9 +17,11 @@ namespace POGOProtos.Networking.Responses
         [global::ProtoBuf.ProtoMember(1)]
         public global::System.Collections.Generic.List<global::POGOProtos.Map.MapCell> map_cells { get; } = new global::System.Collections.Generic.List<global::POGOProtos.Map.MapCell>();
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(2)]
         public global::POGOProtos.Map.MapObjectsStatus status { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(3)]
         public TimeOfDay time_of_day { get; set; }
 

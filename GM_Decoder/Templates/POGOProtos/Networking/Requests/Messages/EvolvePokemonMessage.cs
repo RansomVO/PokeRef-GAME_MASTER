@@ -17,6 +17,7 @@ namespace POGOProtos.Networking.Requests.Messages
         [global::ProtoBuf.ProtoMember(1, DataFormat = global::ProtoBuf.DataFormat.FixedSize)]
         public ulong pokemon_id { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(2)]
         public global::POGOProtos.Inventory.Item.ItemId evolution_item_requirement { get; set; }
 

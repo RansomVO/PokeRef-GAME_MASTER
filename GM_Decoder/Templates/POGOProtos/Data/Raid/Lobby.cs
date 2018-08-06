@@ -49,6 +49,7 @@ namespace POGOProtos.Data.Raid
         [global::ProtoBuf.ProtoMember(12)]
         public int battle_plfe_instance { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(13)]
         public global::POGOProtos.Enums.WeatherCondition weather_condition { get; set; }
 

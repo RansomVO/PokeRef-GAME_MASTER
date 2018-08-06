@@ -38,6 +38,7 @@ namespace POGOProtos.Data.Battle
         [global::ProtoBuf.ProtoMember(8)]
         public bool weather_boosted { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(9)]
         public global::POGOProtos.Enums.FriendshipLevelMilestone highest_friendship_milestone { get; set; }
 

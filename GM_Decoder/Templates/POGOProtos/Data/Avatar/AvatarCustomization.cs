@@ -15,25 +15,89 @@ namespace POGOProtos.Data.Avatar
             => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
 
         [global::ProtoBuf.ProtoMember(1)]
-        [global::System.ComponentModel.DefaultValue("")]
-        public string avatar_template_id { get; set; } = "";
+        public bool enabled { get; set; }
 
-        [global::ProtoBuf.ProtoMember(2, IsPacked = true)]
-        public global::System.Collections.Generic.List<Label> labels { get; } = new global::System.Collections.Generic.List<Label>();
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        [global::ProtoBuf.ProtoMember(2)]
+        public global::POGOProtos.Data.Player.PlayerAvatarType avatar_type { get; set; }
+
+        [global::ProtoBuf.ProtoMember(3, IsPacked = true)]
+        public global::System.Collections.Generic.List<Slot> slot { get; } = new global::System.Collections.Generic.List<Slot>();
+
+        [global::ProtoBuf.ProtoMember(4)]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string bundle_name { get; set; } = "";
+
+        [global::ProtoBuf.ProtoMember(5)]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string asset_name { get; set; } = "";
+
+        [global::ProtoBuf.ProtoMember(6)]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string group_name { get; set; } = "";
+
+        [global::ProtoBuf.ProtoMember(7)]
+        public int sort_order { get; set; }
+
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        [global::ProtoBuf.ProtoMember(8)]
+        public AvatarCustomizationUnlockType unlock_type { get; set; }
+
+        [global::ProtoBuf.ProtoMember(9, IsPacked = true)]
+        public global::System.Collections.Generic.List<AvatarCustomizationPromoType> promo_type { get; } = new global::System.Collections.Generic.List<AvatarCustomizationPromoType>();
+
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        [global::ProtoBuf.ProtoMember(10)]
+        public global::POGOProtos.Enums.BadgeType unlock_badge_type { get; set; }
+
+        [global::ProtoBuf.ProtoMember(11)]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string iap_sku { get; set; } = "";
+
+        [global::ProtoBuf.ProtoMember(12)]
+        public int unlock_badge_level { get; set; }
+
+        [global::ProtoBuf.ProtoMember(13)]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string icon_name { get; set; } = "";
+
+        [global::ProtoBuf.ProtoMember(14)]
+        public int unlock_player_level { get; set; }
 
         [global::ProtoBuf.ProtoContract()]
-        public enum Label
+        public enum AvatarCustomizationPromoType
         {
-            UNSET_LABEL = 0,
+            UNSET_PROMO_TYPE = 0,
+            SALE = 1,
+            FEATURED = 2,
+        }
+
+        [global::ProtoBuf.ProtoContract()]
+        public enum AvatarCustomizationUnlockType
+        {
+            UNSET_UNLOCK_TYPE = 0,
             DEFAULT = 1,
-            OWNED = 2,
-            FEATURED = 3,
-            NEW = 4,
-            SALE = 5,
-            PURCHASABLE = 6,
-            UNLOCKABLE = 7,
-            VIEWED = 8,
-            LOCKED_PURCHASABLE = 9,
+            MEDAL_REWARD = 2,
+            IAP_CLOTHING = 3,
+            LEVEL_REWARD = 4,
+        }
+
+        [global::ProtoBuf.ProtoContract()]
+        public enum Slot
+        {
+            UNSET_SLOT = 0,
+            HAIR = 1,
+            SHIRT = 2,
+            PANTS = 3,
+            HAT = 4,
+            SHOES = 5,
+            EYES = 6,
+            BACKPACK = 7,
+            GLOVES = 8,
+            SOCKS = 9,
+            BELT = 10,
+            GLASSES = 11,
+            NECKLACE = 12,
         }
 
     }

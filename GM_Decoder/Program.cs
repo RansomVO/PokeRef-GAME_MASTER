@@ -79,7 +79,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.Decoder
 #endif
                 }
 
-                ConsoleOutput.OutputSuccess("Finished. {decoded} files decoded.");
+                ConsoleOutput.OutputSuccess($"Finished. {decoded} files decoded.");
             }
             catch (Exception ex)
             {

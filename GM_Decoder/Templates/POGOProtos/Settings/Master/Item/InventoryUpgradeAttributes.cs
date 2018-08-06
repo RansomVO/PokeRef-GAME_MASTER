@@ -17,6 +17,7 @@ namespace POGOProtos.Settings.Master.Item
         [global::ProtoBuf.ProtoMember(1)]
         public int additional_storage { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(2)]
         public global::POGOProtos.Inventory.InventoryUpgradeType upgrade_type { get; set; }
 

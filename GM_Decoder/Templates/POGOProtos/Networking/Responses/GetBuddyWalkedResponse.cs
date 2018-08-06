@@ -17,6 +17,7 @@ namespace POGOProtos.Networking.Responses
         [global::ProtoBuf.ProtoMember(1)]
         public bool success { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(2)]
         public global::POGOProtos.Enums.PokemonFamilyId family_candy_id { get; set; }
 

@@ -18,6 +18,7 @@ namespace POGOProtos.Settings.Master
         [global::System.ComponentModel.DefaultValue("")]
         public string sku { get; set; } = "";
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(2)]
         public global::POGOProtos.Enums.HoloIapItemCategory category { get; set; }
 

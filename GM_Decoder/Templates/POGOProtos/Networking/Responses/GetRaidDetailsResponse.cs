@@ -23,6 +23,7 @@ namespace POGOProtos.Networking.Responses
         [global::ProtoBuf.ProtoMember(3)]
         public bool player_can_join_lobby { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(4)]
         public Result result { get; set; }
 

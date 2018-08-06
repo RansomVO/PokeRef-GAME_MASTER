@@ -14,6 +14,7 @@ namespace POGOProtos.Networking.Responses
         global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
             => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(1)]
         public Result result { get; set; }
 
@@ -33,6 +34,7 @@ namespace POGOProtos.Networking.Responses
             ERROR_INVALID_POKEMON = 7,
             ERROR_INSUFFICIENT_PAYMENT = 8,
             ERROR_TRADING_EXPIRED = 9,
+            ERROR_TRADING_FINISHED = 10,
         }
 
     }

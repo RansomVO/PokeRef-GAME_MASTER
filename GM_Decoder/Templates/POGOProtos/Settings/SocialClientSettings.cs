@@ -23,6 +23,12 @@ namespace POGOProtos.Settings
         [global::ProtoBuf.ProtoMember(3)]
         public int player_level_gate { get; set; }
 
+        [global::ProtoBuf.ProtoMember(4)]
+        public int max_friend_nickname_length { get; set; }
+
+        [global::ProtoBuf.ProtoMember(5)]
+        public bool enable_add_friend_via_qr_code { get; set; }
+
     }
 
 }

@@ -20,9 +20,11 @@ namespace POGOProtos.Data.Friends
         [global::ProtoBuf.ProtoMember(2)]
         public int points_earned_today { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(3)]
         public global::POGOProtos.Enums.FriendshipLevelMilestone awarded_friendship_milestone { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(4)]
         public global::POGOProtos.Enums.FriendshipLevelMilestone current_friendship_milestone { get; set; }
 
