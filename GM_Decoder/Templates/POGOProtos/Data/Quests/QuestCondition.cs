@@ -290,6 +290,7 @@ namespace POGOProtos.Data.Quests
             WITH_PLAYER_LEVEL = 17,
             WITH_WIN_BATTLE_STATUS = 18,
             WITH_NEW_FRIEND = 19,
+            WITH_DAYS_IN_A_ROW = 20,
         }
 
     }

@@ -29,9 +29,6 @@ namespace POGOProtos.Networking.Responses
         [global::ProtoBuf.ProtoMember(5)]
         public bool was_created { get; set; }
 
-        [global::ProtoBuf.ProtoMember(6)]
-        public bool has_valid_email { get; set; }
-
     }
 
 }

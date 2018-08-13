@@ -38,13 +38,13 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates
 
         public string FormName { get { return PokemonForm.GetFormName(Form, PokemonSettings.pokemon_id.ToString()); } }
 
-        public string Type1 { get { return TemplateTranslator.FixName(PokemonSettings.type.ToString().Substring(MARKER_TYPE.Length)); } }
+        public string Type1 { get { return FixName(PokemonSettings.type.ToString().Substring(MARKER_TYPE.Length)); } }
 
-        public string Type2 { get { return PokemonSettings.type_2 == PokemonType.POKEMON_TYPE_NONE ? string.Empty : TemplateTranslator.FixName(PokemonSettings.type_2.ToString().Substring(MARKER_TYPE.Length)); } }
+        public string Type2 { get { return PokemonSettings.type_2 == PokemonType.POKEMON_TYPE_NONE ? string.Empty : FixName(PokemonSettings.type_2.ToString().Substring(MARKER_TYPE.Length)); } }
 
-        public string CandyType { get { return TemplateTranslator.FixName(PokemonSettings.family_id.ToString().Substring(MARKER_CANDY.Length)); } }
+        public string CandyType { get { return FixName(PokemonSettings.family_id.ToString().Substring(MARKER_CANDY.Length)); } }
 
-        public string Rarity { get { return PokemonSettings.rarity == PokemonRarity.NORMAL  ? string.Empty : TemplateTranslator.FixName(PokemonSettings.rarity.ToString().Substring(MARKER_RARITY.Length)); } }
+        public string Rarity { get { return PokemonSettings.rarity == PokemonRarity.NORMAL  ? string.Empty : FixName(PokemonSettings.rarity.ToString().Substring(MARKER_RARITY.Length)); } }
 
         #endregion Computed Properties
 
@@ -101,7 +101,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates
                         pokemon[(int)evolution.evolution].EvolvesFromId = Id;
                         pokemon[(int)evolution.evolution].EvolvesFrom = Name;
                         pokemon[(int)evolution.evolution].CandiesToEvolve = evolution.candy_cost;
-                        pokemon[(int)evolution.evolution].EvolveSpecialItem = evolution.evolution_item_requirement == ItemId.ITEM_UNKNOWN ? null : TemplateTranslator.FixName(evolution.evolution_item_requirement.ToString().Substring(MARKER_EVOLVE_SPECIAL_ITEM.Length));
+                        pokemon[(int)evolution.evolution].EvolveSpecialItem = evolution.evolution_item_requirement == ItemId.ITEM_UNKNOWN ? null : FixName(evolution.evolution_item_requirement.ToString().Substring(MARKER_EVOLVE_SPECIAL_ITEM.Length));
                     }
                 }
             }
@@ -109,6 +109,15 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates
             // Set the Gender Ratio
             if (genderRatio != null)
                 GenderRatio = genderRatio.Ratio;
+        }
+
+        public static string GetFormName(Form formId)
+        {
+            if (formId == Form.FORM_UNSET)
+                return null;
+
+            string formIdText = formId.ToString();
+            return FixName(formIdText.Substring(formIdText.IndexOf("_") + 1));
         }
 
         public static string FixPokemonName(string rawName)
@@ -131,7 +140,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates
             if (string.Equals(rawName, "HO_OH"))
                 return "Ho-Oh";
 
-            return TemplateTranslator.FixName(rawName);
+            return FixName(rawName);
         }
     }
 }

@@ -34,6 +34,8 @@ namespace POGOProtos.Enums
         QUEST_COMPLETE_BATTLE = 21,
         QUEST_ADD_FRIEND = 22,
         QUEST_TRADE_POKEMON = 23,
+        QUEST_SEND_GIFT = 24,
+        QUEST_EVOLVE_INTO_POKEMON = 25,
     }
 
 }

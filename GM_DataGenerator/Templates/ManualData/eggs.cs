@@ -30,7 +30,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData
         {
             foreach (var egg in Egg)
                 foreach (var pokemon in egg.Pokemon)
-                    if (pokemon.id == pokemonTranslator.Id && pokemon.formIdRaw == pokemonTranslator.Form)
+                    if (pokemon.id == pokemonTranslator.Id && pokemon.FormId == pokemonTranslator.Form)
                         return egg;
 
             return null;

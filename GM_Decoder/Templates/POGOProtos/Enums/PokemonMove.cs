@@ -248,6 +248,7 @@ namespace POGOProtos.Enums
         SMACK_DOWN_FAST = 297,
         BLAST_BURN = 298,
         HYDRO_CANNON = 299,
+        LAST_RESORT = 300,
     }
 
 }

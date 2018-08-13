@@ -269,6 +269,9 @@
     <Compile Include="Templates\POGOProtos\Data\Player\DailyBonus.cs">
       <Visible>true</Visible>
     </Compile>
+    <Compile Include="Templates\POGOProtos\Data\Player\DailyCounter.cs">
+      <Visible>true</Visible>
+    </Compile>
     <Compile Include="Templates\POGOProtos\Data\Player\EquippedBadge.cs">
       <Visible>true</Visible>
     </Compile>
@@ -440,6 +443,9 @@
     <Compile Include="Templates\POGOProtos\Data\Telemetry\PasscodeRedeemTelemetry.cs">
       <Visible>true</Visible>
     </Compile>
+    <Compile Include="Templates\POGOProtos\Data\Telemetry\PokemonGoPlusTelemetry.cs">
+      <Visible>true</Visible>
+    </Compile>
     <Compile Include="Templates\POGOProtos\Data\Telemetry\PokemonInventoryTelemetry.cs">
       <Visible>true</Visible>
     </Compile>
@@ -585,6 +591,9 @@
       <Visible>true</Visible>
     </Compile>
     <Compile Include="Templates\POGOProtos\Enums\PokemonFamilyId.cs">
+      <Visible>true</Visible>
+    </Compile>
+    <Compile Include="Templates\POGOProtos\Enums\PokemonGoPlusIds.cs">
       <Visible>true</Visible>
     </Compile>
     <Compile Include="Templates\POGOProtos\Enums\PokemonId.cs">

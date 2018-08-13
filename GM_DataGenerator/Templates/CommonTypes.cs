@@ -52,31 +52,36 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates
         #region Properties
 
         [XmlIgnore]
-        public Form formIdRaw { get; set; }
+        [DefaultValue(Form.FORM_UNSET)]
+        public Form FormId { get; private set; }
 
         [XmlAttribute]
-        [DefaultValue("")]
+        [DefaultValue(null)]
         public string form
         {
-            get
-            {
-                if (_form != null)
-                    return _form;
-                return GetFormName(formIdRaw, name);
-            }
+            get { return _form; }
             set
             {
-                // Need to do this to deal with Forms that are not yet released.
-                if (formIdRaw == Form.FORM_UNSET && !string.IsNullOrWhiteSpace(value))
-                    _form = value;
+                _form = value;
+
+                if (value != null)
+                {
+                    if (string.IsNullOrEmpty(name))
+                        throw new InvalidOperationException("Attribute \"name\" must be set before the attribute \"form\".");
+
+                    string formIdText = name.ToUpper() + "_" + value.ToUpper();
+                    foreach (Form formId in Enum.GetValues(typeof(Form)))
+                    {
+                        if (string.Equals(formId.ToString().ToUpper(), formIdText))
+                        {
+                            FormId = formId;
+                            break;
+                        }
+                    }
+                }
             }
         }
-        [XmlIgnore]
         private string _form;
-
-        [XmlAttribute]
-        [DefaultValue(0)]
-        public int formId { get { return (int)formIdRaw; } set { formIdRaw = (Form)value; } }
 
         #endregion Properties
 
@@ -87,7 +92,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates
         public PokemonForm(int id, string name, Form formId) :
             base(id, name)
         {
-            formIdRaw = formId;
+            form = PokemonTranslator.GetFormName(formId);
         }
 
         /// <summary>
@@ -95,11 +100,8 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates
         /// </summary>
         /// <param name="pokemon"></param>
         public PokemonForm(PokemonForm pokemonForm) :
-            this(pokemonForm.id, pokemonForm.name, pokemonForm.formIdRaw)
-        {
-            // Deal with Forms that are not yet released.
-            form = pokemonForm.form;
-        }
+            this(pokemonForm.id, pokemonForm.name, pokemonForm.FormId)
+        { }
 
         #endregion ctor
 
