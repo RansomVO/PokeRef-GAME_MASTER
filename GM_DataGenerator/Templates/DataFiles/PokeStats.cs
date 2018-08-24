@@ -227,7 +227,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
                     new _Stats.IVScore(pokemonTranslator.PokemonSettings.stats.base_attack, pokemonTranslator.PokemonSettings.stats.base_defense, pokemonTranslator.PokemonSettings.stats.base_stamina),
                     new _Stats.Variation(pokemonTranslator.PokemonSettings.pokedex_height_m, pokemonTranslator.PokemonSettings.pokedex_height_m),
                     new _Stats.Variation(pokemonTranslator.PokemonSettings.pokedex_weight_kg, pokemonTranslator.PokemonSettings.pokedex_weight_kg),
-                    new _Stats._Rates(pokemonTranslator.PokemonSettings.encounter.base_capture_rate, pokemonTranslator.PokemonSettings.encounter.base_flee_rate, pokemonTranslator.PokemonSettings.encounter.attack_probability, pokemonTranslator.PokemonSettings.encounter.dodge_probability),
+                    new _Stats._Rates(Math.Min(pokemonTranslator.PokemonSettings.encounter.base_capture_rate, 1.0f), pokemonTranslator.PokemonSettings.encounter.base_flee_rate, pokemonTranslator.PokemonSettings.encounter.attack_probability, pokemonTranslator.PokemonSettings.encounter.dodge_probability),
                     maxStats);
             }
         }

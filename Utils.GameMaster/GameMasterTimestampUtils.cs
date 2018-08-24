@@ -16,19 +16,24 @@ namespace VanOrman.PokemonGO.GAME_MASTER
         ///     Later they started setting them to times in the future, and the amount frequently changed.
         ///     This table is data I can use to "unmangle" the TimeStamps to get the correct date.
         /// </summary>
+        /// <remarks>
+        /// All values should be in UTC.
+        ///     PDT = UTC-7 : Daylight Savings Time (2nd Sunday in March    02:00 A.M. - 1st Sunday in November 02:00 A.M.)
+        ///     PST = UTC-8 : Standard Time         (1st Sunday in November 02:00 A.M. - 2nd Sunday in March    02:00 A.M.)
+        /// </remarks>
         private static readonly Mangle[] Mangles =
         {
             // MUST be sorted descending by Hex TimeStamp.
-			new Mangle("0000016571B7C311", new DateTime(2018, 08, 12, 14, 44, 0, DateTimeKind.Local)),
-            new Mangle("0000016531856AC9", new DateTime(2018, 08, 04, 04, 34, 0, DateTimeKind.Local)),
-            new Mangle("000001650A8B5966", new DateTime(2018, 07, 14, 11, 25, 0, DateTimeKind.Local)),
-			new Mangle("00000164D105FCB9", new DateTime(2018, 07, 05, 18, 01, 0, DateTimeKind.Local)),
-			new Mangle("0000016486ED5920", new DateTime(2018, 07, 08, 16, 32, 0, DateTimeKind.Local)),
-			new Mangle("0000016477739A1E", new DateTime(2018, 06, 15, 13, 13, 0, DateTimeKind.Local)),
-            new Mangle("0000016470644D97", new DateTime(2018, 06, 19, 14, 37, 0, DateTimeKind.Local)),
-            new Mangle("0000016447AC2253", new DateTime(2018, 06, 21, 11, 32, 0, DateTimeKind.Local)),
-            new Mangle("00000164159FEF31", new DateTime(2018, 06, 08, 15, 19, 0, DateTimeKind.Local)),
-            new Mangle("0000016322DEEA14", new DateTime(2018, 04, 22, 05, 00, 0, DateTimeKind.Local)),
+            new Mangle("0000016571B7C311", new DateTime(2018, 08, 12, 21, 44, 0, DateTimeKind.Utc)),    // 2018-08-25 15:33:13.000 - 12 days, 17 hours, 49 minutes
+            new Mangle("0000016531856AC9", new DateTime(2018, 08, 04, 11, 34, 0, DateTimeKind.Utc)),    // 2018-08-13 04:22:32.000 - 08 days, 16 hours, 48 minutes
+            new Mangle("000001650A8B5966", new DateTime(2018, 07, 14, 18, 25, 0, DateTimeKind.Utc)),    // 2018-08-05 14:43:49.000 - 21 days, 20 hours, 18 minutes
+			new Mangle("00000164D105FCB9", new DateTime(2018, 07, 06, 01, 01, 0, DateTimeKind.Utc)),    // 2018-07-25 10:39:48.000 - 19 days, 09 hours, 38 minutes
+			new Mangle("0000016486ED5920", new DateTime(2018, 07, 08, 23, 32, 0, DateTimeKind.Utc)),    // 2018-07-11 01:20:59.000 - 02 days, 01 hours, 48 minutes
+			new Mangle("0000016477739A1E", new DateTime(2018, 06, 15, 20, 13, 0, DateTimeKind.Utc)),    // 2018-07-08 01:13:42.000 - 22 days, 05 hours, 00 minutes
+            new Mangle("0000016470644D97", new DateTime(2018, 06, 19, 21, 37, 0, DateTimeKind.Utc)),    // 2018-07-06 16:19:39.000 - 16 days, 18 hours, 42 minutes
+            new Mangle("0000016447AC2253", new DateTime(2018, 06, 21, 18, 32, 0, DateTimeKind.Utc)),    // 2018-06-28 18:33:41.000 - 07 days, 00 hours, 01 minutes
+            new Mangle("00000164159FEF31", new DateTime(2018, 06, 08, 22, 19, 0, DateTimeKind.Utc)),    // 2018-06-19 01:19:20.000 - 10 days, 03 hours, 00 minutes
+            new Mangle("0000016322DEEA14", new DateTime(2018, 04, 22, 12, 00, 0, DateTimeKind.Utc)),    // 2018-05-02 22:00:24.000 - 10 days, 10 hours, 00 minutes
         };
 
         private class Mangle

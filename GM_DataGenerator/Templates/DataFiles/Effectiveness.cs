@@ -141,14 +141,14 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
             List<MoveEffectiveness._Move> moves = new List<MoveEffectiveness._Move>();
             foreach (PokeConstants.PokeType moveType in Enum.GetValues(typeof(PokeConstants.PokeType)))
             {
-                if (moveType == PokeConstants.PokeType.Other)
+                if (moveType != PokeConstants.PokeType.Other)
                 {
                     MoveEffectiveness._Move move = new MoveEffectiveness._Move();
                     move.type = moveType.ToString();
 
                     List<MoveEffectiveness._Move._Pokemon> pokemon = new List<MoveEffectiveness._Move._Pokemon>();
-                    foreach (var pokeType in Enum.GetValues(typeof(PokeConstants.PokeType)))
-                        if (moveType != PokeConstants.PokeType.Other)
+                    foreach (PokeConstants.PokeType pokeType in Enum.GetValues(typeof(PokeConstants.PokeType)))
+                        if (pokeType != PokeConstants.PokeType.Other)
                             pokemon.Add(new MoveEffectiveness._Move._Pokemon(pokeType.ToString(), PokeConstants.Effectivness[(int)moveType][(int)pokeType]));
 
                     move.Pokemon = pokemon.ToArray();

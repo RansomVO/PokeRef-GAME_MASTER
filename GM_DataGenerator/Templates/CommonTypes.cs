@@ -83,6 +83,8 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates
         }
         private string _form;
 
+        public int PokemonTranslatorKey { get { return id + (1000 * (int)FormId); } }
+
         #endregion Properties
 
         #region ctor
