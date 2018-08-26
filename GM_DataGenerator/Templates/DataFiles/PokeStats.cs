@@ -214,7 +214,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
                 rarity = pokemonTranslator.Rarity;
                 shiny = _availability.shiny;
                 ditto = _availability.ditto;
-                availability =  (egg != null && string.Equals(_availability.availability, PokeConstants.Availability.HatchOnly)) ?
+                availability = (egg != null && string.Equals(_availability.availability, PokeConstants.Availability.HatchOnly)) ?
                     string.Format(PokeConstants.Availability.HatchOnlyFormat, egg.type) :
                     _availability.availability;
 
@@ -289,12 +289,33 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
                 // Now gather the data for the Pokemon in the GAME_MASTER.
                 foreach (var pokemonTranslator in pokemonTranslators)
                 {
-                    PokemonAvailability._Pokemon availability = manualDataSettings.PokemonAvailability.GetPokemon(pokemonTranslator.Name, pokemonTranslator.FormName);
-                    _Pokemon pokemon = new _Pokemon(pokemonTranslator, availability, manualDataSettings.Eggs.GetEgg(pokemonTranslator), GetMaxStats(pokemonTranslator));
-                    if (pokemonList[PokeFormulas.GetGeneration(pokemonTranslator.Id)] != null)
-                        pokemonList[PokeFormulas.GetGeneration(pokemonTranslator.Id)].Add(pokemon);
+                    int gen = PokeFormulas.GetGeneration(pokemonTranslator.Id);
 
+                    _Pokemon pokemon = new _Pokemon(pokemonTranslator,
+                        manualDataSettings.PokemonAvailability.GetPokemon(pokemonTranslator.Name, pokemonTranslator.FormName),
+                        manualDataSettings.Eggs.GetEgg(pokemonTranslator),
+                        GetMaxStats(pokemonTranslator));
                     gameMasterStatsCalculator.Update(pokemon);
+
+                    if (pokemonList[gen] != null)
+                    {
+                        pokemonList[gen].Add(pokemon);
+
+                        // Handle special case: Unown has multiple forms, but there is only one record in the GAME_MASTER
+                        if (string.Equals(pokemonTranslator.Name, "Unown", StringComparison.OrdinalIgnoreCase))
+                        {
+                            foreach (var form in manualDataSettings.PokemonAvailability.Pokemon[pokemonTranslator.Id].Form)
+                            {
+                                POGOProtos.Enums.Form formId;
+                                Enum.TryParse("UNOWN_" + form.name.ToUpper().Replace(' ', '_'), out formId);
+                                pokemonTranslator.PokemonSettings.form = formId;
+                                pokemonList[gen].Add(new _Pokemon(pokemonTranslator,
+                                    manualDataSettings.PokemonAvailability.GetPokemon(pokemonTranslator.Name, pokemonTranslator.FormName),
+                                    manualDataSettings.Eggs.GetEgg(pokemonTranslator),
+                                    GetMaxStats(pokemonTranslator)));
+                            }
+                        }
+                    }
                 }
 
                 for (int i = 1; i < PokeConstants.Regions.Length; i++)
