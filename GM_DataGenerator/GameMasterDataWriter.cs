@@ -117,7 +117,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
 
             PokeFormulas.Init(PlayerLevel);
             ManualDataSettings.RaidBosses.Init(Pokemon);
-            ManualDataSettings.FieldResearch.Init(Pokemon);
+            ManualDataSettings.Encounters.Init(Pokemon);
         }
 
         #endregion ctor
@@ -138,7 +138,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
             MoveSets.Write(Pokemon.Values, Forms, PokeMoves, ManualDataSettings, GameMasterStatsCalculator);
             PokeStats.Write(Pokemon.Values, ManualDataSettings, GameMasterStatsCalculator);
             RaidBoss.Write(ManualDataSettings, GameMasterStatsCalculator);
-            Encounter.Write(ManualDataSettings, GameMasterStatsCalculator);
+            Templates.DataFiles.Encounter.Write(ManualDataSettings, GameMasterStatsCalculator);
             Friendship.Write(Friendships, GameMasterStatsCalculator);
 
             // Must be written last so other Write() methods can update.
@@ -166,7 +166,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
                     if (itemTemplate.pokemon_settings != null)
                     {
                         PokemonTranslator pokemon = new PokemonTranslator(itemTemplate);
-                        Pokemon.Add(pokemon.Key, pokemon);
+                         Pokemon.Add(pokemon.Key, pokemon);
                     }
                     else if (itemTemplate.move_settings != null)
                     {

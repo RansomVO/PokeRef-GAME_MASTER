@@ -170,6 +170,7 @@ namespace POGOProtos.Networking.Responses
             BAD_REQUEST = 7,
             ACCESS_DENIED = 8,
             TIMEOUT_ERROR = 9,
+            RATE_LIMITED = 10,
         }
 
     }
@@ -186,6 +187,15 @@ namespace POGOProtos.Networking.Responses
 
         [global::ProtoBuf.ProtoMember(2)]
         public int min_player_level { get; set; }
+
+        [global::ProtoBuf.ProtoMember(3)]
+        public bool has_valid_email { get; set; }
+
+        [global::ProtoBuf.ProtoMember(4)]
+        public bool is_feature_enabled { get; set; }
+
+        [global::ProtoBuf.ProtoMember(5)]
+        public int time_window_for_submissions_limit_ms { get; set; }
 
     }
 
@@ -238,15 +248,28 @@ namespace POGOProtos.Networking.Responses
     }
 
     [global::ProtoBuf.ProtoContract()]
-    public partial class RemoveLoginAction : global::ProtoBuf.IExtensible
+    public partial class RemoveLoginActionResponse : global::ProtoBuf.IExtensible
     {
         private global::ProtoBuf.IExtension __pbn__extensionData;
         global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
             => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
 
-        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(1)]
-        public global::POGOProtos.Enums.IdentityProvider identity_provider { get; set; }
+        public bool success { get; set; }
+
+        [global::ProtoBuf.ProtoMember(2)]
+        public global::System.Collections.Generic.List<global::POGOProtos.Data.Login.LoginDetail> login_detail { get; } = new global::System.Collections.Generic.List<global::POGOProtos.Data.Login.LoginDetail>();
+
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        [global::ProtoBuf.ProtoMember(3)]
+        public Status status { get; set; }
+
+        [global::ProtoBuf.ProtoContract()]
+        public enum Status
+        {
+            UNSET = 0,
+            LOGIN_NOT_REMOVABLE = 1,
+        }
 
     }
 
@@ -261,9 +284,6 @@ namespace POGOProtos.Networking.Responses
         [global::ProtoBuf.ProtoMember(1)]
         public Status status { get; set; }
 
-        [global::ProtoBuf.ProtoMember(2)]
-        public global::System.Collections.Generic.List<string> message { get; } = new global::System.Collections.Generic.List<string>();
-
         [global::ProtoBuf.ProtoContract()]
         public enum Status
         {
@@ -273,6 +293,8 @@ namespace POGOProtos.Networking.Responses
             INTERNAL_ERROR = 3,
             TOO_MANY_RECENT_SUBMISSIONS = 4,
             INVALID_INPUT = 5,
+            MINOR = 6,
+            NOT_AVAILABLE = 7,
         }
 
     }
@@ -321,6 +343,35 @@ namespace POGOProtos.Networking.Responses
         [global::ProtoBuf.ProtoMember(3)]
         [global::System.ComponentModel.DefaultValue("")]
         public string random_response_bytes { get; set; } = "";
+
+    }
+
+    [global::ProtoBuf.ProtoContract()]
+    public partial class ReplaceLoginActionResponse : global::ProtoBuf.IExtensible
+    {
+        private global::ProtoBuf.IExtension __pbn__extensionData;
+        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+            => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+        [global::ProtoBuf.ProtoMember(1)]
+        public bool success { get; set; }
+
+        [global::ProtoBuf.ProtoMember(2)]
+        public global::System.Collections.Generic.List<global::POGOProtos.Data.Login.LoginDetail> login_detail { get; } = new global::System.Collections.Generic.List<global::POGOProtos.Data.Login.LoginDetail>();
+
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        [global::ProtoBuf.ProtoMember(3)]
+        public Status status { get; set; }
+
+        [global::ProtoBuf.ProtoContract()]
+        public enum Status
+        {
+            UNSET = 0,
+            AUTH_FAILURE = 1,
+            LOGIN_TAKEN = 2,
+            LOGIN_ALREADY_HAVE = 3,
+            LOGIN_NOT_REPLACEABLE = 4,
+        }
 
     }
 

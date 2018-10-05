@@ -28,6 +28,9 @@ namespace POGOProtos.Data.Friends
         [global::System.ComponentModel.DefaultValue("")]
         public string nickname { get; set; } = "";
 
+        [global::ProtoBuf.ProtoMember(5)]
+        public long open_trade_expire_ms { get; set; }
+
     }
 
 }

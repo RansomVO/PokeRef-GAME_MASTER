@@ -59,6 +59,14 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
             [DefaultValue(false)]
             public bool ditto { get; set; }
 
+            [XmlAttribute]
+            [DefaultValue("")]
+            public string sprite { get; set; }
+
+            [XmlAttribute]
+            [DefaultValue("")]
+            public string sprite_shiny { get; set; }
+
             [XmlElement]
             public PokeTypes Type { get; set; }
 
@@ -194,12 +202,14 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
 
             public _Pokemon() { }
 
-            public _Pokemon(PokemonUnreleased._Pokemon pokemon, string _rarity) :
+            public _Pokemon(PokemonUnreleased._Pokemon pokemon, PokemonAvailability._Pokemon _availability, string _rarity) :
                 base(pokemon)
             {
                 family = pokemon.family;
                 rarity = _rarity;
-                availability = PokeConstants.Availability.Unreleased;
+                availability = _availability.availability;
+                sprite = _availability.sprite;
+                sprite_shiny = _availability.sprite_shiny;
 
                 Type = pokemon.Type;
                 EvolvesFrom = pokemon.EvolvesFrom;
@@ -214,9 +224,12 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
                 rarity = pokemonTranslator.Rarity;
                 shiny = _availability.shiny;
                 ditto = _availability.ditto;
+                sprite = _availability.sprite;
+                sprite_shiny = _availability.sprite_shiny;
                 availability = (egg != null && string.Equals(_availability.availability, PokeConstants.Availability.HatchOnly)) ?
                     string.Format(PokeConstants.Availability.HatchOnlyFormat, egg.type) :
                     _availability.availability;
+
 
                 Type = new PokeTypes(pokemonTranslator.Type1, pokemonTranslator.Type2);
 
@@ -280,8 +293,8 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
                 foreach (var pokemon in manualDataSettings.PokemonUnreleased.Pokemon)
                 {
                     if (pokemonList[PokeFormulas.GetGeneration(pokemon)] != null)
-                        pokemonList[PokeFormulas.GetGeneration(pokemon)].Add(new _Pokemon(pokemon,
-                            manualDataSettings.PokemonAvailability.Pokemon[pokemon.id].rarity));
+                        pokemonList[PokeFormulas.GetGeneration(pokemon)].Add(
+                            new _Pokemon(pokemon, manualDataSettings.PokemonAvailability.GetPokemon(pokemon.name, pokemon.form), manualDataSettings.PokemonAvailability.Pokemon[pokemon.id].rarity));
 
                     gameMasterStatsCalculator.Update(pokemon);
                 }

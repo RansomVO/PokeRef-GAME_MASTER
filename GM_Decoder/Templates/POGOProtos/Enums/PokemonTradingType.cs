@@ -10,7 +10,7 @@ namespace POGOProtos.Enums
     [global::ProtoBuf.ProtoContract()]
     public enum PokemonTradingType
     {
-        UNSET_PokemonTradingType = 0,
+        UNSET_POKEMON_TRADING = 0,
         REGULAR_IN_POKEDEX = 1,
         SPECIAL_IN_POKEDEX = 2,
         REGULAR_NON_POKEDEX = 3,

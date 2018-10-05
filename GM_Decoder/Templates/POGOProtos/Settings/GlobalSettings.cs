@@ -66,20 +66,26 @@ namespace POGOProtos.Settings
         [global::ProtoBuf.ProtoMember(18)]
         public NewsGlobalSettings news_global_settings { get; set; }
 
+        [global::ProtoBuf.ProtoMember(19)]
+        public QuestGlobalSettings quest_global_settings { get; set; }
+
         [global::ProtoBuf.ProtoMember(21)]
         public TelemetryGlobalSettings telemetry_global_settings { get; set; }
 
         [global::ProtoBuf.ProtoMember(22)]
         public LoginSettings login_settings { get; set; }
 
-        [global::ProtoBuf.ProtoMember(19)]
-        public QuestGlobalSettings quest_global_settings { get; set; }
-
         [global::ProtoBuf.ProtoMember(23)]
         public SocialClientSettings social_settings { get; set; }
 
         [global::ProtoBuf.ProtoMember(24)]
         public TradingGlobalSettings trading_global_settings { get; set; }
+
+        [global::ProtoBuf.ProtoMember(25, IsPacked = true)]
+        public global::System.Collections.Generic.List<global::POGOProtos.Enums.PokemonId> additional_allowed_pokemon_ids { get; } = new global::System.Collections.Generic.List<global::POGOProtos.Enums.PokemonId>();
+
+        [global::ProtoBuf.ProtoMember(26)]
+        public UpsightLoggingSettings upsight_logging_settings { get; set; }
 
     }
 

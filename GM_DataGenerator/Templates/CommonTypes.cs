@@ -102,25 +102,14 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates
         /// </summary>
         /// <param name="pokemon"></param>
         public PokemonForm(PokemonForm pokemonForm) :
-            this(pokemonForm.id, pokemonForm.name, pokemonForm.FormId)
-        { }
+            base(pokemonForm.id, pokemonForm.name)
+        {
+            form = pokemonForm.FormId == Form.FORM_UNSET && !string.IsNullOrWhiteSpace(pokemonForm.form) ?
+                pokemonForm.form : 
+                PokemonTranslator.GetFormName(pokemonForm.FormId);
+        }
 
         #endregion ctor
-
-        public static string GetFormName(Form formId, string name)
-        {
-            if (formId == Form.FORM_UNSET)
-                return "";
-
-            int index = name.IndexOf(" (");
-            if (index > 0)
-                name = name.Substring(0, index);
-
-            return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(
-                    formId.ToString().Substring(name.Length + 1)
-                    .Replace('_', ' ')
-                    .ToLower());
-        }
     }
 
 

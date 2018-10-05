@@ -182,17 +182,6 @@ namespace POGOProtos.Networking.Requests.Messages
         global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
             => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
 
-        [global::ProtoBuf.ProtoMember(1)]
-        [global::System.ComponentModel.DefaultValue("")]
-        public string user_id { get; set; } = "";
-
-        [global::ProtoBuf.ProtoMember(2)]
-        public global::POGOProtos.Data.Player.PlayerReputation player_reputation { get; set; }
-
-        [global::ProtoBuf.ProtoMember(3)]
-        [global::System.ComponentModel.DefaultValue("")]
-        public string game_unique_id { get; set; } = "";
-
     }
 
     [global::ProtoBuf.ProtoContract()]
@@ -233,11 +222,9 @@ namespace POGOProtos.Networking.Requests.Messages
         global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
             => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
 
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(1)]
-        public bool success { get; set; }
-
-        [global::ProtoBuf.ProtoMember(2)]
-        public global::System.Collections.Generic.List<global::POGOProtos.Data.Login.LoginDetail> login_detail { get; } = new global::System.Collections.Generic.List<global::POGOProtos.Data.Login.LoginDetail>();
+        public global::POGOProtos.Enums.IdentityProvider identity_provider { get; set; }
 
     }
 
@@ -256,38 +243,15 @@ namespace POGOProtos.Networking.Requests.Messages
         [global::System.ComponentModel.DefaultValue("")]
         public string long_description { get; set; } = "";
 
-        [global::ProtoBuf.ProtoMember(3)]
-        [global::System.ComponentModel.DefaultValue("")]
-        public string image_gs_file_path { get; set; } = "";
-
         [global::ProtoBuf.ProtoMember(4)]
         public int lat_e6 { get; set; }
 
         [global::ProtoBuf.ProtoMember(5)]
         public int lng_e6 { get; set; }
 
-        [global::ProtoBuf.ProtoMember(6)]
+        [global::ProtoBuf.ProtoMember(14)]
         [global::System.ComponentModel.DefaultValue("")]
-        public string image_serving_url { get; set; } = "";
-
-        [global::ProtoBuf.ProtoMember(7)]
-        [global::System.ComponentModel.DefaultValue("")]
-        public string user_id { get; set; } = "";
-
-        [global::ProtoBuf.ProtoMember(8)]
-        [global::System.ComponentModel.DefaultValue("")]
-        public string player_language { get; set; } = "";
-
-        [global::ProtoBuf.ProtoMember(9)]
-        [global::System.ComponentModel.DefaultValue("")]
-        public string game_unique_id { get; set; } = "";
-
-        [global::ProtoBuf.ProtoMember(10)]
-        [global::System.ComponentModel.DefaultValue("")]
-        public string app_id { get; set; } = "";
-
-        [global::ProtoBuf.ProtoMember(11)]
-        public global::POGOProtos.Data.Player.PlayerReputation player_reputation { get; set; }
+        public string supporting_statement { get; set; } = "";
 
     }
 
@@ -324,6 +288,22 @@ namespace POGOProtos.Networking.Requests.Messages
 
         [global::ProtoBuf.ProtoMember(3)]
         public bool use_cache_for_random_request_bytes { get; set; }
+
+    }
+
+    [global::ProtoBuf.ProtoContract()]
+    public partial class ReplaceLoginActionProto : global::ProtoBuf.IExtensible
+    {
+        private global::ProtoBuf.IExtension __pbn__extensionData;
+        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+            => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        [global::ProtoBuf.ProtoMember(1)]
+        public global::POGOProtos.Enums.IdentityProvider existing_identity_provider { get; set; }
+
+        [global::ProtoBuf.ProtoMember(2)]
+        public AddLoginActionMessage new_login { get; set; }
 
     }
 

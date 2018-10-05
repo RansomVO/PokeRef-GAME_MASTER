@@ -90,6 +90,12 @@ namespace POGOProtos.Data.Quests
             [global::ProtoBuf.ProtoMember(3)]
             public global::POGOProtos.Data.PokemonDisplay pokemon_display { get; set; }
 
+            [global::ProtoBuf.ProtoMember(4)]
+            public bool is_hidden_ditto { get; set; }
+
+            [global::ProtoBuf.ProtoMember(5)]
+            public global::POGOProtos.Data.PokemonDisplay ditto_display { get; set; }
+
         }
 
         [global::ProtoBuf.ProtoContract()]

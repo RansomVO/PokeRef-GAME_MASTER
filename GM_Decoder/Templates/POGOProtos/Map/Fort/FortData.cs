@@ -110,6 +110,9 @@ namespace POGOProtos.Map.Fort
         [global::ProtoBuf.ProtoMember(30)]
         public bool challenge_quest_completed { get; set; }
 
+        [global::ProtoBuf.ProtoMember(31)]
+        public bool is_ex_raid_eligible { get; set; }
+
     }
 
 }

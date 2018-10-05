@@ -23,7 +23,7 @@ namespace POGOProtos.Data.Logs
         public string passcode { get; set; } = "";
 
         [global::ProtoBuf.ProtoMember(3)]
-        public global::POGOProtos.Data.RedeemPasscodeReward rewards { get; set; }
+        public global::POGOProtos.Data.Redeem.RedeemPasscodeReward rewards { get; set; }
 
         [global::ProtoBuf.ProtoContract()]
         public enum Result

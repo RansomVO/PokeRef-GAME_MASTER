@@ -41,6 +41,9 @@ namespace POGOProtos.Data.Gift
         [global::ProtoBuf.ProtoMember(8)]
         public long sent_timestamp { get; set; }
 
+        [global::ProtoBuf.ProtoMember(9)]
+        public long sent_bucket { get; set; }
+
     }
 
 }

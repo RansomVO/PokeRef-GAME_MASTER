@@ -121,6 +121,24 @@ namespace POGOProtos.Data.Logs
         public bool ShouldSerializetrading() => __pbn__Action.Is(14);
         public void Resettrading() => global::ProtoBuf.DiscriminatedUnionObject.Reset(ref __pbn__Action, 14);
 
+        [global::ProtoBuf.ProtoMember(15)]
+        public ShareExRaidPassLogEntry share_ex_raid_pass
+        {
+            get { return __pbn__Action.Is(15) ? ((ShareExRaidPassLogEntry)__pbn__Action.Object) : default(ShareExRaidPassLogEntry); }
+            set { __pbn__Action = new global::ProtoBuf.DiscriminatedUnionObject(15, value); }
+        }
+        public bool ShouldSerializeshare_ex_raid_pass() => __pbn__Action.Is(15);
+        public void Resetshare_ex_raid_pass() => global::ProtoBuf.DiscriminatedUnionObject.Reset(ref __pbn__Action, 15);
+
+        [global::ProtoBuf.ProtoMember(16)]
+        public DeclineExRaidPassLogEntry decline_ex_raid_pass
+        {
+            get { return __pbn__Action.Is(16) ? ((DeclineExRaidPassLogEntry)__pbn__Action.Object) : default(DeclineExRaidPassLogEntry); }
+            set { __pbn__Action = new global::ProtoBuf.DiscriminatedUnionObject(16, value); }
+        }
+        public bool ShouldSerializedecline_ex_raid_pass() => __pbn__Action.Is(16);
+        public void Resetdecline_ex_raid_pass() => global::ProtoBuf.DiscriminatedUnionObject.Reset(ref __pbn__Action, 16);
+
     }
 
 }

@@ -119,6 +119,9 @@ namespace POGOProtos.Networking.Responses
             [global::ProtoBuf.ProtoMember(32)]
             public global::POGOProtos.Settings.Master.LuckyPokemonSettings lucky_pokemon_settings { get; set; }
 
+            [global::ProtoBuf.ProtoMember(36)]
+            public global::POGOProtos.Settings.Master.ExRaidSettings ex_raid_settings { get; set; }
+
         }
 
         [global::ProtoBuf.ProtoContract()]

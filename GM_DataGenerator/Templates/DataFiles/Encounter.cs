@@ -42,7 +42,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
 
 		#region Writers
 
-		private const string srcFolder = @"charts\fieldresearch\";
+		private const string srcFolder = @"charts\research\encounter\";
 		private const string xmlFolder = @"encounter\";
 		public static string HtmlFileFolder { get { return Path.Combine(Utils.RootFolder, srcFolder); } }
 		private static string OutputXmlFolder { get { return Path.Combine(Utils.OutputDataFileFolder, xmlFolder); } }
@@ -56,7 +56,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
 		{
             DateTime updateDateTime = new DateTime(Math.Max(
                 gameMasterStatsCalculator.GameMasterStats.last_updated.Date.Ticks,
-                manualDataSettings.FieldResearch.last_updated.Ticks));
+                manualDataSettings.Encounters.last_updated.Ticks));
 
             if (!Directory.Exists(OutputXmlFolder))
 				Directory.CreateDirectory(OutputXmlFolder);
@@ -64,7 +64,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
 			// Write all encounter files. Keeping track if all are up-to-date.
 			bool upToDate = true;
 			List<int> written = new List<int>();
-			foreach (var category in manualDataSettings.FieldResearch.Category)
+			foreach (var category in manualDataSettings.Encounters.Category)
 				foreach (var research in category.Research)
 					if (research.Encounter != null)
 						foreach (var encounter in research.Encounter)
@@ -85,7 +85,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
 					projWriter.WriteLine("  <!-- ======================================================================= -->");
 					projWriter.WriteLine("  <ItemGroup>");
 
-					foreach (var category in manualDataSettings.FieldResearch.Category)
+					foreach (var category in manualDataSettings.Encounters.Category)
 						foreach (var research in category.Research)
 							if (research.Encounter != null)
 								foreach (var encounter in research.Encounter)
@@ -108,9 +108,10 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
 										projWriter.WriteLine(@"     <Dependencies>");
 										projWriter.WriteLine(@"       js\global.js;");
 										projWriter.WriteLine(@"       " + ProjXmlFolder + encounterFileName + ".xml;");
-										projWriter.WriteLine(@"       charts\fieldresearch\index.css;");
-										projWriter.WriteLine(@"       charts\index.css;");
-										projWriter.WriteLine(@"       index.css;");
+										projWriter.WriteLine(@"       " + srcFolder + @"index.css;");
+                                        projWriter.WriteLine(@"       charts\research\index.css;");
+                                        projWriter.WriteLine(@"       charts\index.css;");
+                                        projWriter.WriteLine(@"       index.css;");
 										projWriter.WriteLine(@"     </Dependencies>");
 										projWriter.WriteLine(@"     <OutputFileName>" + encounterFileName + ".html</OutputFileName>");
 										projWriter.WriteLine(@"    </XslTransform>");

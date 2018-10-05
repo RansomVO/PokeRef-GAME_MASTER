@@ -16,7 +16,7 @@ namespace POGOProtos.Enums
         POKEMON_CAPTURE = 3,
         NAME_SELECTION = 4,
         POKEMON_BERRY = 5,
-        USE_ITEM = 6,
+        USE_ITEM_TUTORIAL = 6,
         FIRST_TIME_EXPERIENCE_COMPLETE = 7,
         POKESTOP_TUTORIAL = 8,
         GYM_TUTORIAL = 9,

@@ -29,6 +29,24 @@ namespace POGOProtos.Settings
         [global::ProtoBuf.ProtoMember(5)]
         public bool enable_add_friend_via_qr_code { get; set; }
 
+        [global::ProtoBuf.ProtoMember(6)]
+        public bool enable_share_ex_pass { get; set; }
+
+    }
+
+    [global::ProtoBuf.ProtoContract()]
+    public partial class SocialGiftCountTelemetry : global::ProtoBuf.IExtensible
+    {
+        private global::ProtoBuf.IExtension __pbn__extensionData;
+        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+            => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+        [global::ProtoBuf.ProtoMember(1)]
+        public int unopened_gift_count { get; set; }
+
+        [global::ProtoBuf.ProtoMember(2)]
+        public int unsent_gift_count { get; set; }
+
     }
 
 }

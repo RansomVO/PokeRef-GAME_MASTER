@@ -18,13 +18,18 @@ namespace POGOProtos.Data.Quests
         [global::System.ComponentModel.DefaultValue("")]
         public string quest_id { get; set; } = "";
 
-        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(2)]
-        public global::POGOProtos.Enums.PokemonId pokemon { get; set; }
+        public global::POGOProtos.Data.PokemonData pokemon { get; set; }
 
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [global::ProtoBuf.ProtoMember(3)]
         public global::POGOProtos.Enums.EncounterType encounter_type { get; set; }
+
+        [global::ProtoBuf.ProtoMember(4)]
+        public bool is_hidden_ditto { get; set; }
+
+        [global::ProtoBuf.ProtoMember(5)]
+        public global::POGOProtos.Data.PokemonData ditto { get; set; }
 
     }
 

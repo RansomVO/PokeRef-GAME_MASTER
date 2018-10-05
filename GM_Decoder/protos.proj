@@ -14,16 +14,10 @@
     <Compile Include="Templates\POGOProtos\Data\BackgroundToken.cs">
       <Visible>true</Visible>
     </Compile>
-    <Compile Include="Templates\POGOProtos\Data\BootTime.cs">
-      <Visible>true</Visible>
-    </Compile>
     <Compile Include="Templates\POGOProtos\Data\BuddyPokemon.cs">
       <Visible>true</Visible>
     </Compile>
     <Compile Include="Templates\POGOProtos\Data\CaptureScore.cs">
-      <Visible>true</Visible>
-    </Compile>
-    <Compile Include="Templates\POGOProtos\Data\ClientTelemetryOmni.cs">
       <Visible>true</Visible>
     </Compile>
     <Compile Include="Templates\POGOProtos\Data\ClientVersion.cs">
@@ -44,9 +38,6 @@
     <Compile Include="Templates\POGOProtos\Data\FoodValue.cs">
       <Visible>true</Visible>
     </Compile>
-    <Compile Include="Templates\POGOProtos\Data\FrameRate.cs">
-      <Visible>true</Visible>
-    </Compile>
     <Compile Include="Templates\POGOProtos\Data\GetActionLogRequest.cs">
       <Visible>true</Visible>
     </Compile>
@@ -63,12 +54,6 @@
       <Visible>true</Visible>
     </Compile>
     <Compile Include="Templates\POGOProtos\Data\PokemonDisplay.cs">
-      <Visible>true</Visible>
-    </Compile>
-    <Compile Include="Templates\POGOProtos\Data\PokestopReward.cs">
-      <Visible>true</Visible>
-    </Compile>
-    <Compile Include="Templates\POGOProtos\Data\RedeemPasscodeReward.cs">
       <Visible>true</Visible>
     </Compile>
     <Compile Include="Templates\POGOProtos\Data\UncommentAnnotationTest.cs">
@@ -194,9 +179,6 @@
     <Compile Include="Templates\POGOProtos\Data\Gift\GiftBoxes.cs">
       <Visible>true</Visible>
     </Compile>
-    <Compile Include="Templates\POGOProtos\Data\Gift\GiftReceivedNotification.cs">
-      <Visible>true</Visible>
-    </Compile>
     <Compile Include="Templates\POGOProtos\Data\Gym\GymBattle.cs">
       <Visible>true</Visible>
     </Compile>
@@ -236,6 +218,9 @@
     <Compile Include="Templates\POGOProtos\Data\Logs\CompleteQuestStampCardLogEntry.cs">
       <Visible>true</Visible>
     </Compile>
+    <Compile Include="Templates\POGOProtos\Data\Logs\DeclineExRaidPassLogEntry.cs">
+      <Visible>true</Visible>
+    </Compile>
     <Compile Include="Templates\POGOProtos\Data\Logs\FortSearchLogEntry.cs">
       <Visible>true</Visible>
     </Compile>
@@ -249,6 +234,9 @@
       <Visible>true</Visible>
     </Compile>
     <Compile Include="Templates\POGOProtos\Data\Logs\SendGiftLogEntry.cs">
+      <Visible>true</Visible>
+    </Compile>
+    <Compile Include="Templates\POGOProtos\Data\Logs\ShareExRaidPassLogEntry.cs">
       <Visible>true</Visible>
     </Compile>
     <Compile Include="Templates\POGOProtos\Data\Logs\TradingLogEntry.cs">
@@ -380,6 +368,9 @@
     <Compile Include="Templates\POGOProtos\Data\Raid\RaidInfo.cs">
       <Visible>true</Visible>
     </Compile>
+    <Compile Include="Templates\POGOProtos\Data\Raid\SharedExclusiveTicketTrainerInfo.cs">
+      <Visible>true</Visible>
+    </Compile>
     <Compile Include="Templates\POGOProtos\Data\Redeem\PokeCandy.cs">
       <Visible>true</Visible>
     </Compile>
@@ -389,10 +380,16 @@
     <Compile Include="Templates\POGOProtos\Data\Redeem\RedeemedItem.cs">
       <Visible>true</Visible>
     </Compile>
+    <Compile Include="Templates\POGOProtos\Data\Redeem\RedeemPasscodeReward.cs">
+      <Visible>true</Visible>
+    </Compile>
     <Compile Include="Templates\POGOProtos\Data\Telemetry\AvatarCustomizationTelemetry.cs">
       <Visible>true</Visible>
     </Compile>
     <Compile Include="Templates\POGOProtos\Data\Telemetry\BattlePartyTelemetry.cs">
+      <Visible>true</Visible>
+    </Compile>
+    <Compile Include="Templates\POGOProtos\Data\Telemetry\BootTime.cs">
       <Visible>true</Visible>
     </Compile>
     <Compile Include="Templates\POGOProtos\Data\Telemetry\CatchPokemonTelemetry.cs">
@@ -402,6 +399,9 @@
       <Visible>true</Visible>
     </Compile>
     <Compile Include="Templates\POGOProtos\Data\Telemetry\CheckEncounterTrayInfoTelemetry.cs">
+      <Visible>true</Visible>
+    </Compile>
+    <Compile Include="Templates\POGOProtos\Data\Telemetry\ClientTelemetryOmni.cs">
       <Visible>true</Visible>
     </Compile>
     <Compile Include="Templates\POGOProtos\Data\Telemetry\DeployPokemonTelemetry.cs">
@@ -417,6 +417,9 @@
       <Visible>true</Visible>
     </Compile>
     <Compile Include="Templates\POGOProtos\Data\Telemetry\FeedPokemonTelemetry.cs">
+      <Visible>true</Visible>
+    </Compile>
+    <Compile Include="Templates\POGOProtos\Data\Telemetry\FrameRate.cs">
       <Visible>true</Visible>
     </Compile>
     <Compile Include="Templates\POGOProtos\Data\Telemetry\GenericClickTelemetry.cs">
@@ -452,6 +455,9 @@
     <Compile Include="Templates\POGOProtos\Data\Telemetry\PokemonTelemetry.cs">
       <Visible>true</Visible>
     </Compile>
+    <Compile Include="Templates\POGOProtos\Data\Telemetry\PokestopReward.cs">
+      <Visible>true</Visible>
+    </Compile>
     <Compile Include="Templates\POGOProtos\Data\Telemetry\ProfilePageTelemetry.cs">
       <Visible>true</Visible>
     </Compile>
@@ -465,6 +471,12 @@
       <Visible>true</Visible>
     </Compile>
     <Compile Include="Templates\POGOProtos\Data\Telemetry\ReleasePokemonTelemetry.cs">
+      <Visible>true</Visible>
+    </Compile>
+    <Compile Include="Templates\POGOProtos\Data\Telemetry\RpcResponseTelemetry.cs">
+      <Visible>true</Visible>
+    </Compile>
+    <Compile Include="Templates\POGOProtos\Data\Telemetry\RpcResponseTime.cs">
       <Visible>true</Visible>
     </Compile>
     <Compile Include="Templates\POGOProtos\Data\Telemetry\ShoppingPageTelemetry.cs">
@@ -509,13 +521,7 @@
     <Compile Include="Templates\POGOProtos\Enums\ActivityType.cs">
       <Visible>true</Visible>
     </Compile>
-    <Compile Include="Templates\POGOProtos\Enums\AvatarCustomizationTelemetryIds.cs">
-      <Visible>true</Visible>
-    </Compile>
     <Compile Include="Templates\POGOProtos\Enums\BadgeType.cs">
-      <Visible>true</Visible>
-    </Compile>
-    <Compile Include="Templates\POGOProtos\Enums\BattlePartyTelemetryIds.cs">
       <Visible>true</Visible>
     </Compile>
     <Compile Include="Templates\POGOProtos\Enums\BuddySize.cs">
@@ -545,9 +551,6 @@
     <Compile Include="Templates\POGOProtos\Enums\Gender.cs">
       <Visible>true</Visible>
     </Compile>
-    <Compile Include="Templates\POGOProtos\Enums\GenericClickTelemetryIds.cs">
-      <Visible>true</Visible>
-    </Compile>
     <Compile Include="Templates\POGOProtos\Enums\GymBadgeType.cs">
       <Visible>true</Visible>
     </Compile>
@@ -561,18 +564,6 @@
       <Visible>true</Visible>
     </Compile>
     <Compile Include="Templates\POGOProtos\Enums\ItemEffect.cs">
-      <Visible>true</Visible>
-    </Compile>
-    <Compile Include="Templates\POGOProtos\Enums\ItemUseTelemetryIds.cs">
-      <Visible>true</Visible>
-    </Compile>
-    <Compile Include="Templates\POGOProtos\Enums\LoginActionTelemetryIds.cs">
-      <Visible>true</Visible>
-    </Compile>
-    <Compile Include="Templates\POGOProtos\Enums\MapEventsTelemetryIds.cs">
-      <Visible>true</Visible>
-    </Compile>
-    <Compile Include="Templates\POGOProtos\Enums\NewsPageTelemetryIds.cs">
       <Visible>true</Visible>
     </Compile>
     <Compile Include="Templates\POGOProtos\Enums\NotificationCategory.cs">
@@ -599,9 +590,6 @@
     <Compile Include="Templates\POGOProtos\Enums\PokemonId.cs">
       <Visible>true</Visible>
     </Compile>
-    <Compile Include="Templates\POGOProtos\Enums\PokemonInventoryTelemetryIds.cs">
-      <Visible>true</Visible>
-    </Compile>
     <Compile Include="Templates\POGOProtos\Enums\PokemonMove.cs">
       <Visible>true</Visible>
     </Compile>
@@ -617,31 +605,22 @@
     <Compile Include="Templates\POGOProtos\Enums\PokemonType.cs">
       <Visible>true</Visible>
     </Compile>
-    <Compile Include="Templates\POGOProtos\Enums\ProfilePageTelemetryIds.cs">
-      <Visible>true</Visible>
-    </Compile>
-    <Compile Include="Templates\POGOProtos\Enums\PushNotificationTelemetryIds.cs">
-      <Visible>true</Visible>
-    </Compile>
     <Compile Include="Templates\POGOProtos\Enums\QuestType.cs">
       <Visible>true</Visible>
     </Compile>
     <Compile Include="Templates\POGOProtos\Enums\RaidLevel.cs">
       <Visible>true</Visible>
     </Compile>
-    <Compile Include="Templates\POGOProtos\Enums\RaidTelemetryIds.cs">
-      <Visible>true</Visible>
-    </Compile>
-    <Compile Include="Templates\POGOProtos\Enums\ShoppingPageTelemetryIds.cs">
+    <Compile Include="Templates\POGOProtos\Enums\ShareExRaidPassResult.cs">
       <Visible>true</Visible>
     </Compile>
     <Compile Include="Templates\POGOProtos\Enums\SocialAction.cs">
       <Visible>true</Visible>
     </Compile>
-    <Compile Include="Templates\POGOProtos\Enums\SocialTelemetryIds.cs">
+    <Compile Include="Templates\POGOProtos\Enums\TeamColor.cs">
       <Visible>true</Visible>
     </Compile>
-    <Compile Include="Templates\POGOProtos\Enums\TeamColor.cs">
+    <Compile Include="Templates\POGOProtos\Enums\TelemetryIds.cs">
       <Visible>true</Visible>
     </Compile>
     <Compile Include="Templates\POGOProtos\Enums\TutorialState.cs">
@@ -651,9 +630,6 @@
       <Visible>true</Visible>
     </Compile>
     <Compile Include="Templates\POGOProtos\Enums\WeatherCondition.cs">
-      <Visible>true</Visible>
-    </Compile>
-    <Compile Include="Templates\POGOProtos\Enums\WebTelemetryIds.cs">
       <Visible>true</Visible>
     </Compile>
     <Compile Include="Templates\POGOProtos\Inventory\AppliedItem.cs">
@@ -812,9 +788,6 @@
     <Compile Include="Templates\POGOProtos\Networking\Platform\Ditto\LocationUpdateEventParams.cs">
       <Visible>true</Visible>
     </Compile>
-    <Compile Include="Templates\POGOProtos\Networking\Platform\Ditto\PasscodeEventParams.cs">
-      <Visible>true</Visible>
-    </Compile>
     <Compile Include="Templates\POGOProtos\Networking\Platform\Ditto\RpcResponseEventParams.cs">
       <Visible>true</Visible>
     </Compile>
@@ -917,6 +890,9 @@
     <Compile Include="Templates\POGOProtos\Networking\Requests\Messages\CheckSendGiftMessage.cs">
       <Visible>true</Visible>
     </Compile>
+    <Compile Include="Templates\POGOProtos\Networking\Requests\Messages\CheckShareExRaidPassMessage.cs">
+      <Visible>true</Visible>
+    </Compile>
     <Compile Include="Templates\POGOProtos\Networking\Requests\Messages\ClaimCodenameMessage.cs">
       <Visible>true</Visible>
     </Compile>
@@ -933,6 +909,9 @@
       <Visible>true</Visible>
     </Compile>
     <Compile Include="Templates\POGOProtos\Networking\Requests\Messages\ConfirmTradingMessage.cs">
+      <Visible>true</Visible>
+    </Compile>
+    <Compile Include="Templates\POGOProtos\Networking\Requests\Messages\DeclineExRaidPassMessage.cs">
       <Visible>true</Visible>
     </Compile>
     <Compile Include="Templates\POGOProtos\Networking\Requests\Messages\DeleteGiftMessage.cs">
@@ -1017,6 +996,9 @@
       <Visible>true</Visible>
     </Compile>
     <Compile Include="Templates\POGOProtos\Networking\Requests\Messages\GetNewQuestsMessage.cs">
+      <Visible>true</Visible>
+    </Compile>
+    <Compile Include="Templates\POGOProtos\Networking\Requests\Messages\GetPlayerDayMessage.cs">
       <Visible>true</Visible>
     </Compile>
     <Compile Include="Templates\POGOProtos\Networking\Requests\Messages\GetPlayerMessage.cs">
@@ -1125,6 +1107,9 @@
       <Visible>true</Visible>
     </Compile>
     <Compile Include="Templates\POGOProtos\Networking\Requests\Messages\SfidaRegistrationMessage.cs">
+      <Visible>true</Visible>
+    </Compile>
+    <Compile Include="Templates\POGOProtos\Networking\Requests\Messages\ShareExRaidPassMessage.cs">
       <Visible>true</Visible>
     </Compile>
     <Compile Include="Templates\POGOProtos\Networking\Requests\Messages\StartGymBattleMessage.cs">
@@ -1280,6 +1265,9 @@
     <Compile Include="Templates\POGOProtos\Networking\Responses\CheckSendGiftResponse.cs">
       <Visible>true</Visible>
     </Compile>
+    <Compile Include="Templates\POGOProtos\Networking\Responses\CheckShareExRaidPassResponse.cs">
+      <Visible>true</Visible>
+    </Compile>
     <Compile Include="Templates\POGOProtos\Networking\Responses\ClaimCodenameResponse.cs">
       <Visible>true</Visible>
     </Compile>
@@ -1296,6 +1284,9 @@
       <Visible>true</Visible>
     </Compile>
     <Compile Include="Templates\POGOProtos\Networking\Responses\ConfirmTradingResponse.cs">
+      <Visible>true</Visible>
+    </Compile>
+    <Compile Include="Templates\POGOProtos\Networking\Responses\DeclineExRaidPassResponse.cs">
       <Visible>true</Visible>
     </Compile>
     <Compile Include="Templates\POGOProtos\Networking\Responses\DeleteGiftResponse.cs">
@@ -1380,6 +1371,9 @@
       <Visible>true</Visible>
     </Compile>
     <Compile Include="Templates\POGOProtos\Networking\Responses\GetNewQuestsResponse.cs">
+      <Visible>true</Visible>
+    </Compile>
+    <Compile Include="Templates\POGOProtos\Networking\Responses\GetPlayerDayResponse.cs">
       <Visible>true</Visible>
     </Compile>
     <Compile Include="Templates\POGOProtos\Networking\Responses\GetPlayerProfileResponse.cs">
@@ -1488,6 +1482,9 @@
       <Visible>true</Visible>
     </Compile>
     <Compile Include="Templates\POGOProtos\Networking\Responses\SfidaRegistrationResponse.cs">
+      <Visible>true</Visible>
+    </Compile>
+    <Compile Include="Templates\POGOProtos\Networking\Responses\ShareExRaidPassResponse.cs">
       <Visible>true</Visible>
     </Compile>
     <Compile Include="Templates\POGOProtos\Networking\Responses\StartGymBattleResponse.cs">
@@ -1682,6 +1679,9 @@
     <Compile Include="Templates\POGOProtos\Settings\TranslationSettings.cs">
       <Visible>true</Visible>
     </Compile>
+    <Compile Include="Templates\POGOProtos\Settings\UpsightLoggingSettings.cs">
+      <Visible>true</Visible>
+    </Compile>
     <Compile Include="Templates\POGOProtos\Settings\Master\AvatarCustomizationSettings.cs">
       <Visible>true</Visible>
     </Compile>
@@ -1698,6 +1698,9 @@
       <Visible>true</Visible>
     </Compile>
     <Compile Include="Templates\POGOProtos\Settings\Master\EventBadgeSettings.cs">
+      <Visible>true</Visible>
+    </Compile>
+    <Compile Include="Templates\POGOProtos\Settings\Master\ExRaidSettings.cs">
       <Visible>true</Visible>
     </Compile>
     <Compile Include="Templates\POGOProtos\Settings\Master\FormSettings.cs">

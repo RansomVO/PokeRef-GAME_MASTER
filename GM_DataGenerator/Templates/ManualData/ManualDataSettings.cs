@@ -41,9 +41,9 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData
         public RaidBosses RaidBosses { get; set; }
 
         /// <summary>
-        /// Encounters
+        /// FieldResearch
         /// </summary>
-        public FieldResearch FieldResearch { get; set; }
+        public FieldResearch Encounters { get; set; }
 
         /// <summary>
         /// Ranges used to determine how display output.
@@ -66,7 +66,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData
             PokemonUnreleased = (PokemonUnreleased)ReadXmlConfig(Path.Combine(inputFolder, @"infrequent\pokemon.unreleased_gens.xml"), typeof(PokemonUnreleased));
             Eggs = (Eggs)ReadXmlConfig(Path.Combine(inputFolder, "eggs.xml"), typeof(Eggs));
             RaidBosses = (RaidBosses)ReadXmlConfig(Path.Combine(inputFolder, "raidbosses.xml"), typeof(RaidBosses));
-            FieldResearch = (FieldResearch)ReadXmlConfig(Path.Combine(inputFolder, "fieldresearch.xml"), typeof(FieldResearch));
+            Encounters = (FieldResearch)ReadXmlConfig(Path.Combine(inputFolder, "encounters.xml"), typeof(FieldResearch));
             Ranges = (Ranges)ReadXmlConfig(Path.Combine(inputFolder, @"infrequent\ranges.xml"), typeof(Ranges));
             SpecialMoves = (SpecialMoves)ReadXmlConfig(Path.Combine(inputFolder, @"infrequent\special.moves.xml"), typeof(SpecialMoves));
 

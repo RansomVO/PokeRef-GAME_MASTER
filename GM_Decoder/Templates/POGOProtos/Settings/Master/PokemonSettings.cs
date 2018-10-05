@@ -127,6 +127,12 @@ namespace POGOProtos.Settings.Master
         [global::ProtoBuf.ProtoMember(35)]
         public global::POGOProtos.Enums.Form parent_form { get; set; }
 
+        [global::ProtoBuf.ProtoMember(37)]
+        public bool is_transferable { get; set; }
+
+        [global::ProtoBuf.ProtoMember(38)]
+        public bool is_deployable { get; set; }
+
     }
 
 }

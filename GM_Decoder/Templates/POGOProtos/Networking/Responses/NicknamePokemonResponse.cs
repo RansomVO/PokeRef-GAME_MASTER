@@ -27,6 +27,7 @@ namespace POGOProtos.Networking.Responses
             ERROR_POKEMON_NOT_FOUND = 3,
             ERROR_POKEMON_IS_EGG = 4,
             ERROR_FILTERED_NICKNAME = 5,
+            ERROR_EXCEEDED_CHANGE_LIMIT = 6,
         }
 
     }

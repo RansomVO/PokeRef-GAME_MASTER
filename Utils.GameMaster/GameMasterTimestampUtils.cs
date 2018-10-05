@@ -18,12 +18,15 @@ namespace VanOrman.PokemonGO.GAME_MASTER
         /// </summary>
         /// <remarks>
         /// All values should be in UTC.
-        ///     PDT = UTC-7 : Daylight Savings Time (2nd Sunday in March    02:00 A.M. - 1st Sunday in November 02:00 A.M.)
-        ///     PST = UTC-8 : Standard Time         (1st Sunday in November 02:00 A.M. - 2nd Sunday in March    02:00 A.M.)
+        ///     UTC = PDT+7 : Daylight Savings Time (2nd Sunday in March    02:00 A.M. - 1st Sunday in November 02:00 A.M.)
+        ///     UTC = PST+8 : Standard Time         (1st Sunday in November 02:00 A.M. - 2nd Sunday in March    02:00 A.M.)
         /// </remarks>
         private static readonly Mangle[] Mangles =
         {
             // MUST be sorted descending by Hex TimeStamp.
+            new Mangle("0000016652E7D261", new DateTime(2018, 09, 13, 22, 29, 0, DateTimeKind.Utc)),    // 2018-10-08 09:00:16.000 - 24 days, 19 hours, 38 minutes
+            new Mangle("0000016630E4F72A", new DateTime(2018, 09, 26, 21, 43, 0, DateTimeKind.Utc)),    // 2018-10-01 18:30:04.000 - 04 days, 16 hours, 53 minutes
+            new Mangle("00000166210182D7", new DateTime(2018, 09, 15, 22, 38, 0, DateTimeKind.Utc)),    // 2018-09-28 16:27:19.000 - 12 days, 17 hours, 49 minutes
             new Mangle("0000016571B7C311", new DateTime(2018, 08, 12, 21, 44, 0, DateTimeKind.Utc)),    // 2018-08-25 15:33:13.000 - 12 days, 17 hours, 49 minutes
             new Mangle("0000016531856AC9", new DateTime(2018, 08, 04, 11, 34, 0, DateTimeKind.Utc)),    // 2018-08-13 04:22:32.000 - 08 days, 16 hours, 48 minutes
             new Mangle("000001650A8B5966", new DateTime(2018, 07, 14, 18, 25, 0, DateTimeKind.Utc)),    // 2018-08-05 14:43:49.000 - 21 days, 20 hours, 18 minutes

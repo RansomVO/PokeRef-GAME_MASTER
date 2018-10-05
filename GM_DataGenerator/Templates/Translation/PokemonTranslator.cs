@@ -36,7 +36,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates
 
         public Form Form { get { return PokemonSettings.form; } }
 
-        public string FormName { get { return PokemonForm.GetFormName(Form, PokemonSettings.pokemon_id.ToString()); } }
+        public string FormName { get { return GetFormName(Form, PokemonSettings.pokemon_id.ToString()); } }
 
         public string Type1 { get { return FixName(PokemonSettings.type.ToString().Substring(MARKER_TYPE.Length)); } }
 
@@ -119,6 +119,22 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates
             string formIdText = formId.ToString();
             return FixName(formIdText.Substring(formIdText.IndexOf("_") + 1));
         }
+
+        public static string GetFormName(Form formId, string name)
+        {
+            if (formId == Form.FORM_UNSET)
+                return "";
+
+            int index = name.IndexOf(" (");
+            if (index > 0)
+                name = name.Substring(0, index);
+
+            return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(
+                    formId.ToString().Substring(name.Length + 1)
+                    .Replace('_', ' ')
+                    .ToLower());
+        }
+
 
         public static string FixPokemonName(string rawName)
         {

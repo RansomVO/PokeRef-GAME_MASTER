@@ -92,6 +92,10 @@ namespace POGOProtos.Data.Quests
         [global::ProtoBuf.ProtoMember(117)]
         public global::POGOProtos.Data.Player.DailyCounter daily_counter { get; set; }
 
+        [global::ProtoBuf.ProtoMember(118)]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string reward_pokemon_icon_url { get; set; } = "";
+
         [global::ProtoBuf.ProtoContract()]
         public partial class MultiPartQuest : global::ProtoBuf.IExtensible
         {

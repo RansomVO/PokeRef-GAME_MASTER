@@ -77,6 +77,14 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData
             [DefaultValue(false)]
             public bool ditto { get; set; }
 
+            [XmlAttribute]
+            [DefaultValue("")]
+            public string sprite { get; set; }
+
+            [XmlAttribute]
+            [DefaultValue("")]
+            public string sprite_shiny { get; set; }
+
             [XmlElement]
             public _Form[] Form { get; set; }
 
@@ -97,6 +105,8 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData
                     rarity = pokemon.rarity;
                     shiny = pokemon.shiny;
                     ditto = pokemon.ditto;
+                    sprite = pokemon.sprite;
+                    sprite_shiny = pokemon.sprite_shiny;
                 }
                 else
                 {
@@ -105,6 +115,8 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData
                     rarity = form.rarity;
                     shiny = form.shiny;
                     ditto = form.ditto;
+                    sprite = form.sprite;
+                    sprite_shiny = form.sprite_shiny;
                 }
             }
 
@@ -136,6 +148,14 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData
                 [XmlAttribute]
                 [DefaultValue(false)]
                 public bool ditto { get; set; }
+
+                [XmlAttribute]
+                [DefaultValue("")]
+                public string sprite { get; set; }
+
+                [XmlAttribute]
+                [DefaultValue("")]
+                public string sprite_shiny { get; set; }
             }
 
             #endregion Internal classes

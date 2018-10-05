@@ -72,6 +72,9 @@ namespace POGOProtos.Data.Trading
         [global::System.ComponentModel.DefaultValue("")]
         public string nickname { get; set; } = "";
 
+        [global::ProtoBuf.ProtoMember(20)]
+        public bool favorite { get; set; }
+
     }
 
 }

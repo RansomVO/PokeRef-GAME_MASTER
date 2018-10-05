@@ -23,6 +23,9 @@ namespace POGOProtos.Data.Player
         [global::ProtoBuf.ProtoMember(3, IsPacked = true)]
         public global::System.Collections.Generic.List<CheatReputation> cheat_reputation { get; } = new global::System.Collections.Generic.List<CheatReputation>();
 
+        [global::ProtoBuf.ProtoMember(4)]
+        public bool is_minor { get; set; }
+
         [global::ProtoBuf.ProtoContract()]
         public enum CheatReputation
         {

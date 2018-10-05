@@ -27,6 +27,10 @@ namespace POGOProtos.Data.Quests
         [global::System.ComponentModel.DefaultValue("")]
         public string id { get; set; } = "";
 
+        [global::ProtoBuf.ProtoMember(5)]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string icon_url { get; set; } = "";
+
     }
 
 }

@@ -47,6 +47,9 @@ namespace POGOProtos.Data.Player
         [global::ProtoBuf.ProtoMember(10)]
         public long experience { get; set; }
 
+        [global::ProtoBuf.ProtoMember(11)]
+        public bool has_shared_ex_pass { get; set; }
+
     }
 
 }
