@@ -15,7 +15,7 @@ namespace TimeStampDecoder
     {
         #region Properties
 
-        private bool HEX { get { return _checkBoxHEX.Checked; } set { _checkBoxHEX.Checked = value; } }
+        public bool HEX { get { return _checkBoxHEX.Checked; } set { _checkBoxHEX.Checked = value; } }
 
         public ulong Value
         {
@@ -35,10 +35,12 @@ namespace TimeStampDecoder
             }
         }
 
+        public override string Text { get { return _textBox.Text; } set { _textBox.Text = value; } }
+
         #endregion Properties
 
         #region Events
-        
+
         public event EventHandler ValueChanged;
         public void OnValueChanged()
         {

@@ -249,6 +249,7 @@ namespace POGOProtos.Enums
         BLAST_BURN = 298,
         HYDRO_CANNON = 299,
         LAST_RESORT = 300,
+        METEOR_MASH = 301,
     }
 
 }

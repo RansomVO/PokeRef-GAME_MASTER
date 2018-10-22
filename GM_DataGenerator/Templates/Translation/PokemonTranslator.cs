@@ -156,6 +156,13 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates
             if (string.Equals(rawName, "HO_OH"))
                 return "Ho-Oh";
 
+            if (string.Equals(rawName, "MIME_JR"))
+                return "Mime Jr.";
+
+            if (string.Equals(rawName, "PORYGON_Z"))
+                return "Porygon-Z";
+
+
             return FixName(rawName);
         }
     }

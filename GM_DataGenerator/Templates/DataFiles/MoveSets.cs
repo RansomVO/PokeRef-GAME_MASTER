@@ -165,7 +165,6 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
                 manualDataSettings.SpecialMoves.last_updated.Date.Ticks));
 
             bool update = false;
-            List<MoveSets._Pokemon>[] pokemonMoveSetList = new List<MoveSets._Pokemon>[PokeConstants.Regions.Length + 1];
             for (int gen = 1; gen < PokeConstants.Regions.Length; gen++)
             {
                 string filePath = Path.Combine(Utils.OutputDataFileFolder, "movesets.gen" + gen + ".xml");
@@ -173,12 +172,16 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
                 if (!File.Exists(filePath) || lastUpdated < updateDateTime)
                 {
                     update = true;
-                    pokemonMoveSetList[gen] = new List<MoveSets._Pokemon>();
+                    break;
                 }
             }
 
             if (update)
             {
+                List<MoveSets._Pokemon>[] pokemonMoveSetList = new List<MoveSets._Pokemon>[PokeConstants.Regions.Length + 1];
+                for (int gen = 1; gen < PokeConstants.Regions.Length; gen++)
+                    pokemonMoveSetList[gen] = new List<MoveSets._Pokemon>();
+
                 foreach (var pokemonTranslator in pokemonTranslators)
                 {
                     // Need to deal with the following cases:
@@ -214,32 +217,28 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
                         }
                     }
 
-                    int gen = PokeFormulas.GetGeneration(pokemonTranslator);
-                    if (pokemonMoveSetList[gen] != null)
-                    {
-                        List<_Pokemon._MoveSet> moveSets = new List<_Pokemon._MoveSet>();
+                    List<_Pokemon._MoveSet> moveSets = new List<_Pokemon._MoveSet>();
 
-                        moveSets.AddRange(GetMoveSets(pokemonTranslator, moves, false, false));
-                        moveSets.AddRange(GetMoveSets(pokemonTranslator, moves, true, false));
-                        moveSets.AddRange(GetMoveSets(pokemonTranslator, moves, false, true));
-                        moveSets.AddRange(GetMoveSets(pokemonTranslator, moves, true, true));
+                    moveSets.AddRange(GetMoveSets(pokemonTranslator, moves, false, false));
+                    moveSets.AddRange(GetMoveSets(pokemonTranslator, moves, true, false));
+                    moveSets.AddRange(GetMoveSets(pokemonTranslator, moves, false, true));
+                    moveSets.AddRange(GetMoveSets(pokemonTranslator, moves, true, true));
 
-                        double maxDPS = 0;
-                        foreach (var moveSet in moveSets)
-                            if (!moveSet.FastAttack.legacy && !moveSet.ChargedAttack.legacy)
-                                maxDPS = Math.Max(maxDPS, moveSet.true_dps);
+                    double maxDPS = 0;
+                    foreach (var moveSet in moveSets)
+                        if (!moveSet.FastAttack.legacy && !moveSet.ChargedAttack.legacy)
+                            maxDPS = Math.Max(maxDPS, moveSet.true_dps);
 
-                        foreach (var moveSet in moveSets)
-                            moveSet.comparison = (int)Math.Ceiling(moveSet.true_dps / maxDPS * 100);
+                    foreach (var moveSet in moveSets)
+                        moveSet.comparison = (int)Math.Ceiling(moveSet.true_dps / maxDPS * 100);
 
-                        _Pokemon pokemon = new _Pokemon(pokemonTranslator, moveSets.ToArray());
-                        pokemonMoveSetList[gen].Add(pokemon);
-                        gameMasterStatsCalculator.Update(pokemon);
-                    }
+                    _Pokemon _pokemon = new _Pokemon(pokemonTranslator, moveSets.ToArray());
+                    pokemonMoveSetList[PokeFormulas.GetGeneration(pokemonTranslator)].Add(_pokemon);
+                    gameMasterStatsCalculator.Update(_pokemon);
                 }
 
                 for (int gen = 1; gen < PokeConstants.Regions.Length; gen++)
-                    if (pokemonMoveSetList[gen] != null && pokemonMoveSetList[gen].Count > 1)
+                    if (pokemonMoveSetList[gen].Count > 1)
                         Utils.WriteXML(new MoveSets(gen, pokemonMoveSetList[gen].ToArray(), updateDateTime), Path.Combine(Utils.OutputDataFileFolder, "movesets.gen" + gen + ".xml"));
             }
         }

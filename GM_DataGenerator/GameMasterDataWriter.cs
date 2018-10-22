@@ -138,7 +138,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
             MoveSets.Write(Pokemon.Values, Forms, PokeMoves, ManualDataSettings, GameMasterStatsCalculator);
             PokeStats.Write(Pokemon.Values, ManualDataSettings, GameMasterStatsCalculator);
             RaidBoss.Write(ManualDataSettings, GameMasterStatsCalculator);
-            Templates.DataFiles.Encounter.Write(ManualDataSettings, GameMasterStatsCalculator);
+            Encounter.Write(ManualDataSettings, GameMasterStatsCalculator);
             Friendship.Write(Friendships, GameMasterStatsCalculator);
 
             // Must be written last so other Write() methods can update.

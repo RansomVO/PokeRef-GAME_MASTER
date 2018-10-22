@@ -45,7 +45,6 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
         public void Read(string inputPath)
         {
             // For each GAME_MASTER file in PokeRef, in order of timestamp:
-            var qzx = GetFileList(inputPath);
             foreach (var file in GetFileList(inputPath))
             {
                 GameMasterTemplate gameMasterTemplate = new GameMasterTemplate(file);
