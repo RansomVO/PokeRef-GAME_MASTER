@@ -52,8 +52,8 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
             public string availability { get; set; }
 
             [XmlAttribute]
-            [DefaultValue(false)]
-            public bool shiny { get; set; }
+            [DefaultValue("")]
+            public string shiny { get; set; }
 
             [XmlAttribute]
             [DefaultValue(false)]
@@ -202,20 +202,20 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
 
             public _Pokemon() { }
 
-            public _Pokemon(PokemonUnreleased._Pokemon pokemon, PokemonAvailability._Pokemon _availability, string _rarity) :
+            public _Pokemon(PokemonUnreleased._Pokemon pokemon, PokemonAvailability._Pokemon _availability, PokemonSprites._Pokemon sprites, string _rarity) :
                 base(pokemon)
             {
                 family = pokemon.family;
                 rarity = _rarity;
                 availability = _availability.availability;
-                sprite = _availability.sprite;
-                sprite_shiny = _availability.sprite_shiny;
+                sprite = sprites.sprite;
+                sprite_shiny = sprites.sprite_shiny;
 
                 Type = pokemon.Type;
                 EvolvesFrom = pokemon.EvolvesFrom;
             }
 
-            public _Pokemon(PokemonTranslator pokemonTranslator, PokemonAvailability._Pokemon _availability, Eggs._Egg egg, _Stats._MaxStats maxStats) :
+            public _Pokemon(PokemonTranslator pokemonTranslator, PokemonAvailability._Pokemon _availability, PokemonSprites._Pokemon sprites, Traits traits, _Stats._MaxStats maxStats) :
                 base(pokemonTranslator.Id, pokemonTranslator.Name, pokemonTranslator.Form)
             {
                 family = pokemonTranslator.CandyType;
@@ -223,13 +223,13 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
                 gender_ratio = pokemonTranslator.GenderRatio;
                 rarity = pokemonTranslator.Rarity;
                 shiny = _availability.shiny;
-                ditto = _availability.ditto;
-                sprite = _availability.sprite;
-                sprite_shiny = _availability.sprite_shiny;
+                ditto = traits.CanBeDitto(pokemonTranslator);
+                sprite = sprites.sprite;
+                sprite_shiny = sprites.sprite_shiny;
+                var egg = traits.GetEgg(pokemonTranslator);
                 availability = (egg != null && string.Equals(_availability.availability, PokeConstants.Availability.HatchOnly)) ?
                     string.Format(PokeConstants.Availability.HatchOnlyFormat, egg.type) :
                     _availability.availability;
-
 
                 Type = new PokeTypes(pokemonTranslator.Type1, pokemonTranslator.Type2);
 
@@ -294,7 +294,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
                 {
                     if (pokemonList[PokeFormulas.GetGeneration(pokemon)] != null)
                         pokemonList[PokeFormulas.GetGeneration(pokemon)].Add(
-                            new _Pokemon(pokemon, manualDataSettings.PokemonAvailability.GetPokemon(pokemon.name, pokemon.form), manualDataSettings.PokemonAvailability.Pokemon[pokemon.id].rarity));
+                            new _Pokemon(pokemon, manualDataSettings.PokemonAvailability.GetPokemon(pokemon.name, pokemon.form), manualDataSettings.PokemonSprites.GetPokemon(pokemon.name, pokemon.form), manualDataSettings.PokemonAvailability.Pokemon[pokemon.id].rarity));
 
                     gameMasterStatsCalculator.Update(pokemon);
                 }
@@ -306,7 +306,8 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
 
                     _Pokemon pokemon = new _Pokemon(pokemonTranslator,
                         manualDataSettings.PokemonAvailability.GetPokemon(pokemonTranslator.Name, pokemonTranslator.FormName),
-                        manualDataSettings.Eggs.GetEgg(pokemonTranslator),
+                        manualDataSettings.PokemonSprites.GetPokemon(pokemonTranslator.Name, pokemonTranslator.FormName),
+                        manualDataSettings.Traits,
                         GetMaxStats(pokemonTranslator));
                     gameMasterStatsCalculator.Update(pokemon);
 
@@ -324,7 +325,8 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
                                 pokemonTranslator.PokemonSettings.form = formId;
                                 pokemonList[gen].Add(new _Pokemon(pokemonTranslator,
                                     manualDataSettings.PokemonAvailability.GetPokemon(pokemonTranslator.Name, pokemonTranslator.FormName),
-                                    manualDataSettings.Eggs.GetEgg(pokemonTranslator),
+                                    manualDataSettings.PokemonSprites.GetPokemon(pokemonTranslator.Name, pokemonTranslator.FormName),
+                                    manualDataSettings.Traits,
                                     GetMaxStats(pokemonTranslator)));
                             }
                         }

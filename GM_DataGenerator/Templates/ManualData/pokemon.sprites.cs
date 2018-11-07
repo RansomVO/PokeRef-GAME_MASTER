@@ -8,7 +8,7 @@ using VanOrman.Utils;
 namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData
 {
     [Serializable]
-    public class PokemonAvailability
+    public class PokemonSprites
     {
         #region Helper Data
 
@@ -46,32 +46,13 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData
         {
             #region Properties
 
-            [XmlIgnore]
-            public DateTime? Date
-            {
-                get
-                {
-                    if (string.IsNullOrWhiteSpace(date))
-                        return null;
-
-                    return DateTime.Parse(date);
-                }
-                set { date = value == null ? "" : ((DateTime)value).ToString(PokeConstants.DateFormat); }
-            }
-
             [XmlAttribute]
-            public string date { get; set; }
-
-            [XmlAttribute]
-            public string availability { get; set; }
+            [DefaultValue("")]
+            public string sprite { get; set; }
 
             [XmlAttribute]
             [DefaultValue("")]
-            public string rarity { get; set; }
-
-            [XmlAttribute]
-            [DefaultValue("")]
-            public string shiny { get; set; }
+            public string sprite_shiny { get; set; }
 
             [XmlElement]
             public _Form[] Form { get; set; }
@@ -86,9 +67,8 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData
             {
                 id = pokemon.id;
                 name = pokemon.name;
-                date = form.date;
-                availability = form.availability;
-                shiny = form.shiny;
+                sprite = form.sprite;
+                sprite_shiny = form.sprite_shiny;
             }
 
             #endregion ctor
@@ -102,14 +82,12 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData
                 public string name { get; set; }
 
                 [XmlAttribute]
-                public string date { get; set; }
-
-                [XmlAttribute]
-                public string availability { get; set; }
+                [DefaultValue("")]
+                public string sprite { get; set; }
 
                 [XmlAttribute]
                 [DefaultValue("")]
-                public string shiny { get; set; }
+                public string sprite_shiny { get; set; }
             }
 
             #endregion Internal classes
@@ -125,47 +103,45 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData
             {
                 if (_pokemonLookup.ContainsKey(pokemon.name))
                 {
-                    ConsoleOutput.OutputError($"_datafiles.manual\\infrequent\\pokemon.availability.xml contains duplicate: \"{pokemon.name}\"");
+                    ConsoleOutput.OutputError($"_datafiles.manual\\infrequent\\pokemon.sprites.xml contains duplicate Pokemon: \"{pokemon.name}\"");
                     continue;
                 }
 
-                _pokemonLookup.Add(pokemon.name, pokemon);
-                if (pokemon.Form != null)
-                {
-                    foreach (var form in pokemon.Form)
-                    {
-                        string key = GetPokemonLookupKey(pokemon.name, form.name);
+				_pokemonLookup.Add(pokemon.name, pokemon);
+				if (pokemon.Form != null)
+				{
+					foreach (var form in pokemon.Form)
+					{
+						string key = GetPokemonLookupKey(pokemon.name, form.name);
                         if (_pokemonLookup.ContainsKey(key))
                         {
-                            ConsoleOutput.OutputError($"_datafiles.manual\\infrequent\\pokemon.availability.xml contains duplicate Form: \"{pokemon.name}: {form.name}\"");
+                            ConsoleOutput.OutputError($"_datafiles.manual\\infrequent\\pokemon.sprites.xml contains duplicate Form: \"{pokemon.name}: {form.name}\"");
                             continue;
                         }
 
-                        _pokemonLookup.Add(key, new _Pokemon(pokemon, form));
-                    }
-                }
-            }
-        }
+						_pokemonLookup.Add(key, new _Pokemon(pokemon, form));
+					}
+				}
+			}
+		}
 
-        public static string GetPokemonLookupKey(string pokemonName, string form)
-        {
-            string result = pokemonName;
+		public static string GetPokemonLookupKey(string pokemonName, string form)
+		{
+			string result = pokemonName;
 
-            if (!string.IsNullOrEmpty(form))
-            {
-                result += " (" + form + ")";
-            }
+			if (!string.IsNullOrEmpty(form))
+				result += " (" + form + ")";
 
-            return result;
-        }
+			return result;
+		}
 
         public _Pokemon GetPokemon(string name, string form)
         {
-            string key = GetPokemonLookupKey(name, form);
+			string key = GetPokemonLookupKey(name, form);
 
-            if (!_pokemonLookup.ContainsKey(key))
+			if (!_pokemonLookup.ContainsKey(key))
             {
-                ConsoleOutput.OutputError($"_datafiles.manual\\infrequent\\pokemon.availability.xml missing: \"{key}\"");
+                ConsoleOutput.OutputError($"_datafiles.manual\\infrequent\\pokemon.sprites.xml missing: \"{key}\"");
                 return null;
             }
 

@@ -70,10 +70,11 @@
     <Compile Include="Templates\DataFiles\Encounter.cs" />
     <Compile Include="Templates\DataFiles\Settings.cs" />
     <Compile Include="Templates\GameMasterTemplate.cs" />
+    <Compile Include="Templates\ManualData\pokemon.sprites.cs" />
     <Compile Include="Templates\ManualData\pokemon.unreleased.cs" />
     <Compile Include="Templates\CommonTypes.cs" />
     <Compile Include="Templates\ManualData\ManualDataSettings.cs" />
-    <Compile Include="Templates\ManualData\eggs.cs" />
+    <Compile Include="Templates\ManualData\traits.cs" />
     <Compile Include="Templates\ManualData\encounters.cs" />
     <Compile Include="Templates\ManualData\raidbosses.cs" />
     <Compile Include="Templates\ManualData\special.moves.cs" />

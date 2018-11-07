@@ -26,14 +26,19 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData
         public PokemonAvailability PokemonAvailability { get; set; }
 
         /// <summary>
+        /// URLs for the images for Pokemon.
+        /// </summary>
+        public PokemonSprites PokemonSprites { get; set; }
+
+        /// <summary>
         /// Basic information about unreleased Pokemon.
         /// </summary>
         public PokemonUnreleased PokemonUnreleased { get; set; }
 
         /// <summary>
-        /// Pokemon can hatch from eggs.
+        /// Additional traits about Pokemon, such as whether it can be a Ditto and whether it can hatch from an egg.
         /// </summary>
-        public Eggs Eggs { get; set; }
+        public Traits Traits { get; set; }
 
         /// <summary>
         /// RaidBosses
@@ -63,8 +68,9 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData
         public ManualDataSettings(string inputFolder)
         {
             PokemonAvailability = (PokemonAvailability)ReadXmlConfig(Path.Combine(inputFolder, @"infrequent\pokemon.availability.xml"), typeof(PokemonAvailability));
+            PokemonSprites = (PokemonSprites)ReadXmlConfig(Path.Combine(inputFolder, @"infrequent\pokemon.sprites.xml"), typeof(PokemonSprites));
             PokemonUnreleased = (PokemonUnreleased)ReadXmlConfig(Path.Combine(inputFolder, @"infrequent\pokemon.unreleased_gens.xml"), typeof(PokemonUnreleased));
-            Eggs = (Eggs)ReadXmlConfig(Path.Combine(inputFolder, "eggs.xml"), typeof(Eggs));
+            Traits = (Traits)ReadXmlConfig(Path.Combine(inputFolder, "traits.xml"), typeof(Traits));
             RaidBosses = (RaidBosses)ReadXmlConfig(Path.Combine(inputFolder, "raidbosses.xml"), typeof(RaidBosses));
             Encounters = (FieldResearch)ReadXmlConfig(Path.Combine(inputFolder, "encounters.xml"), typeof(FieldResearch));
             Ranges = (Ranges)ReadXmlConfig(Path.Combine(inputFolder, @"infrequent\ranges.xml"), typeof(Ranges));
@@ -73,9 +79,24 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData
             // Perform checks.
             StringBuilder stringBuilder = new StringBuilder();
             foreach (var pokemon in PokemonAvailability.Pokemon)
-                if (pokemon.id != 0 && pokemon.date == null &&
-                    !pokemon.availability.Contains(PokeConstants.Availability.Unreleased))
+            {
+                bool add = false;
+                if (pokemon.Form != null)
+                {
+                    foreach (var form in pokemon.Form)
+                        if (form.date == null && !form.availability.Contains(PokeConstants.Availability.Unreleased))
+                        {
+                            add = true;
+                            break;
+                        }
+                }
+                else if (pokemon.id != 0 && pokemon.date == null &&
+                        !pokemon.availability.Contains(PokeConstants.Availability.Unreleased))
+                    add = true;
+
+                if (add)
                     stringBuilder.AppendLine("  • " + pokemon.id.ToString() + " - " + pokemon.name);
+            }
 
             if (stringBuilder.Length > 0)
                 ConsoleOutput.OutputError($"Update the release date in _datafiles.manual\\infrequent\\pokemon.availability.xml for the following Pokemon:\r\n{stringBuilder.ToString()}");

@@ -46,9 +46,10 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
                 GameMasterStats.PokemonCount[0].available++;
                 GameMasterStats.PokemonCount[gen].available++;
 
-                if (pokemon.availability.IndexOf(PokeConstants.Availability.Regional, StringComparison.OrdinalIgnoreCase) == -1 ||
+                if (pokemon.availability != null && (
+                    pokemon.availability.IndexOf(PokeConstants.Availability.Regional, StringComparison.OrdinalIgnoreCase) == -1 ||
                     pokemon.availability.IndexOf(PokeConstants.Availability.Region.UnitedStates, StringComparison.OrdinalIgnoreCase) != -1 ||
-                    pokemon.availability.IndexOf(PokeConstants.Availability.Region.Americas, StringComparison.OrdinalIgnoreCase) != -1)
+                    pokemon.availability.IndexOf(PokeConstants.Availability.Region.Americas, StringComparison.OrdinalIgnoreCase) != -1))
                 {
                     GameMasterStats.PokemonCount[0].available_wa++;
                     GameMasterStats.PokemonCount[gen].available_wa++;
