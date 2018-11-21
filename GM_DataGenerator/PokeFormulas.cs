@@ -136,7 +136,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
             new int[] { 4, 387, 493 },
             new int[] { 5, 494, 649 },
             new int[] { 6, 650, 721 },
-            new int[] { 7, 722, 807 },
+            new int[] { 7, 722, 809 },
         };
 
         #endregion Data

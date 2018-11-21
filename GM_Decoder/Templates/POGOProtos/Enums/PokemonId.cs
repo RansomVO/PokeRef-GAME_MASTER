@@ -504,6 +504,8 @@ namespace POGOProtos.Enums
         DARKRAI = 491,
         SHAYMIN = 492,
         ARCEUS = 493,
+        MELTAN = 808,
+        MELMETAL = 809,
     }
 
 }

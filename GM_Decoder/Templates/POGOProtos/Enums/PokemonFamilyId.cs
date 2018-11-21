@@ -270,6 +270,7 @@ namespace POGOProtos.Enums
         FAMILY_DARKRAI = 491,
         FAMILY_SHAYMIN = 492,
         FAMILY_ARCEUS = 493,
+        FAMILY_MELTAN = 808,
     }
 
 }
