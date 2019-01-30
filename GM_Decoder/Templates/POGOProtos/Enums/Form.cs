@@ -128,6 +128,9 @@ namespace POGOProtos.Enums
         ARCEUS_DRAGON = 115,
         ARCEUS_DARK = 116,
         ARCEUS_FAIRY = 117,
+        BURMY_PLANT = 118,
+        BURMY_SANDY = 119,
+        BURMY_TRASH = 120,
     }
 
 }

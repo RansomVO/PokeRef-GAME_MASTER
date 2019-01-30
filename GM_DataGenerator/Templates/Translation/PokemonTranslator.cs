@@ -9,6 +9,7 @@ using static POGOProtos.Networking.Responses.DownloadItemTemplatesResponse;
 using POGOProtos.Enums;
 using POGOProtos.Inventory.Item;
 using System.Globalization;
+using VanOrman.Utils;
 
 namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates
 {
@@ -128,13 +129,19 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates
             int index = name.IndexOf(" (");
             if (index > 0)
                 name = name.Substring(0, index);
-
-            return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(
-                    formId.ToString().Substring(name.Length + 1)
-                    .Replace('_', ' ')
-                    .ToLower());
+            try
+            {
+                return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(
+                        formId.ToString().Substring(name.Length + 1)
+                        .Replace('_', ' ')
+                        .ToLower());
+            }
+            catch (Exception ex)
+            {
+                ConsoleOutput.OutputException(ex, $"ERROR: Unknown Form: \"{formId.ToString()}\" ({name})\r\n\tNeed to update POGOProtos\\Enums\\Form.proto, then run GM_protogen.");
+                throw;
+            }
         }
-
 
         public static string FixPokemonName(string rawName)
         {
