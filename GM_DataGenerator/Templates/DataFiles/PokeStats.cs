@@ -274,68 +274,61 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
                 manualDataSettings.PokemonAvailability.last_updated.Date.Ticks));
 
             // Create an array of lists to hold each generation.
-            bool update = false;
             List<PokeStats._Pokemon>[] pokemonList = new List<PokeStats._Pokemon>[PokeConstants.Regions.Length + 1];
+            for (int i = 1; i < PokeConstants.Regions.Length; i++)
+                pokemonList[i] = new List<PokeStats._Pokemon>();
+
+            // Need to provide basic info for Unreleased Pokemon.
+            foreach (var pokemon in manualDataSettings.PokemonUnreleased.Pokemon)
+            {
+                if (pokemonList[PokeFormulas.GetGeneration(pokemon)] != null)
+                    pokemonList[PokeFormulas.GetGeneration(pokemon)].Add(
+                        new _Pokemon(pokemon, manualDataSettings.PokemonAvailability.GetPokemon(pokemon.name, pokemon.form), manualDataSettings.PokemonSprites.GetPokemon(pokemon.name, pokemon.form), manualDataSettings.PokemonAvailability.Pokemon[pokemon.id].rarity));
+
+                gameMasterStatsCalculator.Update(pokemon);
+            }
+
+            // Now gather the data for the Pokemon in the GAME_MASTER.
+            foreach (var pokemonTranslator in pokemonTranslators)
+            {
+                int gen = PokeFormulas.GetGeneration(pokemonTranslator.Id);
+
+                _Pokemon pokemon = new _Pokemon(pokemonTranslator,
+                    manualDataSettings.PokemonAvailability.GetPokemon(pokemonTranslator.Name, pokemonTranslator.FormName),
+                    manualDataSettings.PokemonSprites.GetPokemon(pokemonTranslator.Name, pokemonTranslator.FormName),
+                    manualDataSettings.Traits,
+                    GetMaxStats(pokemonTranslator));
+                gameMasterStatsCalculator.Update(pokemon);
+
+                if (pokemonList[gen] != null)
+                {
+                    pokemonList[gen].Add(pokemon);
+
+                    // Handle cases where there are multiple forms, but only one record in the GAME_MASTER
+                    if (string.Equals(pokemonTranslator.Name, "Unown", StringComparison.OrdinalIgnoreCase)
+                        || string.Equals(pokemonTranslator.Name, "Spinda", StringComparison.OrdinalIgnoreCase))
+                    {
+                        foreach (var form in manualDataSettings.PokemonAvailability.Pokemon[pokemonTranslator.Id].Form)
+                        {
+                            POGOProtos.Enums.Form formId;
+                            Enum.TryParse(pokemonTranslator.Name.ToUpper() + "_" + form.name.ToUpper().Replace(' ', '_'), out formId);
+                            pokemonTranslator.PokemonSettings.form = formId;
+                            pokemonList[gen].Add(new _Pokemon(pokemonTranslator,
+                                manualDataSettings.PokemonAvailability.GetPokemon(pokemonTranslator.Name, pokemonTranslator.FormName),
+                                manualDataSettings.PokemonSprites.GetPokemon(pokemonTranslator.Name, pokemonTranslator.FormName),
+                                manualDataSettings.Traits,
+                                GetMaxStats(pokemonTranslator)));
+                        }
+                    }
+                }
+            }
+
             for (int i = 1; i < PokeConstants.Regions.Length; i++)
             {
                 string filePath = Path.Combine(Utils.OutputDataFileFolder, "pokestats.gen" + i + ".xml");
                 DateTime lastUpdated = Utils.GetLastUpdated(filePath);
                 if (!File.Exists(filePath) || lastUpdated < updateDateTime)
-                {
-                    update = true;
-                    pokemonList[i] = new List<PokeStats._Pokemon>();
-                }
-            }
-
-            if (update)
-            {
-                // Need to provide basic info for Unreleased Pokemon.
-                foreach (var pokemon in manualDataSettings.PokemonUnreleased.Pokemon)
-                {
-                    if (pokemonList[PokeFormulas.GetGeneration(pokemon)] != null)
-                        pokemonList[PokeFormulas.GetGeneration(pokemon)].Add(
-                            new _Pokemon(pokemon, manualDataSettings.PokemonAvailability.GetPokemon(pokemon.name, pokemon.form), manualDataSettings.PokemonSprites.GetPokemon(pokemon.name, pokemon.form), manualDataSettings.PokemonAvailability.Pokemon[pokemon.id].rarity));
-
-                    gameMasterStatsCalculator.Update(pokemon);
-                }
-
-                // Now gather the data for the Pokemon in the GAME_MASTER.
-                foreach (var pokemonTranslator in pokemonTranslators)
-                {
-                    int gen = PokeFormulas.GetGeneration(pokemonTranslator.Id);
-
-                    _Pokemon pokemon = new _Pokemon(pokemonTranslator,
-                        manualDataSettings.PokemonAvailability.GetPokemon(pokemonTranslator.Name, pokemonTranslator.FormName),
-                        manualDataSettings.PokemonSprites.GetPokemon(pokemonTranslator.Name, pokemonTranslator.FormName),
-                        manualDataSettings.Traits,
-                        GetMaxStats(pokemonTranslator));
-                    gameMasterStatsCalculator.Update(pokemon);
-
-                    if (pokemonList[gen] != null)
-                    {
-                        pokemonList[gen].Add(pokemon);
-
-                        // Handle special case: Unown has multiple forms, but there is only one record in the GAME_MASTER
-                        if (string.Equals(pokemonTranslator.Name, "Unown", StringComparison.OrdinalIgnoreCase))
-                        {
-                            foreach (var form in manualDataSettings.PokemonAvailability.Pokemon[pokemonTranslator.Id].Form)
-                            {
-                                POGOProtos.Enums.Form formId;
-                                Enum.TryParse("UNOWN_" + form.name.ToUpper().Replace(' ', '_'), out formId);
-                                pokemonTranslator.PokemonSettings.form = formId;
-                                pokemonList[gen].Add(new _Pokemon(pokemonTranslator,
-                                    manualDataSettings.PokemonAvailability.GetPokemon(pokemonTranslator.Name, pokemonTranslator.FormName),
-                                    manualDataSettings.PokemonSprites.GetPokemon(pokemonTranslator.Name, pokemonTranslator.FormName),
-                                    manualDataSettings.Traits,
-                                    GetMaxStats(pokemonTranslator)));
-                            }
-                        }
-                    }
-                }
-
-                for (int i = 1; i < PokeConstants.Regions.Length; i++)
-                    if (pokemonList[i] != null)
-                        Utils.WriteXML(new PokeStats(i, pokemonList[i].ToArray(), updateDateTime), Path.Combine(Utils.OutputDataFileFolder, "pokestats.gen" + i + ".xml"));
+                    Utils.WriteXML(new PokeStats(i, pokemonList[i].ToArray(), updateDateTime), Path.Combine(Utils.OutputDataFileFolder, "pokestats.gen" + i + ".xml"));
             }
         }
 
