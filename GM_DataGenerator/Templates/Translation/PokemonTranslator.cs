@@ -45,7 +45,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates
 
         public string CandyType { get { return FixName(PokemonSettings.family_id.ToString().Substring(MARKER_CANDY.Length)); } }
 
-        public string Rarity { get { return PokemonSettings.rarity == PokemonRarity.NORMAL  ? string.Empty : FixName(PokemonSettings.rarity.ToString().Substring(MARKER_RARITY.Length)); } }
+        public string Rarity { get { return PokemonSettings.rarity == PokemonRarity.NORMAL ? string.Empty : FixName(PokemonSettings.rarity.ToString().Substring(MARKER_RARITY.Length)); } }
 
         #endregion Computed Properties
 
@@ -56,6 +56,12 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates
         public int EvolvesFromId { get; private set; }
 
         public string EvolvesFrom { get; private set; }
+
+        // TODO QZX: Currently, it appears PokemonSettings.parent_form is always FORM_UNSET.
+        //  If this ever changes, it would be cool to leverage it.
+        public Form EvolvesFromForm { get; private set; }
+
+        public string EvolvesFromFormName { get { return GetFormName(EvolvesFromForm, EvolvesFrom); } }
 
         public int CandiesToEvolve { get; private set; }
 
@@ -92,19 +98,21 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates
                     if (!PokemonSettings.cinematic_moves.Contains(move))
                         LegacyChargedMoves.Add(move);
 
-            // Set EvolvesFrom on the pokemon that evolve from me.
-            if (PokemonSettings.evolution_branch != null)
+            // Collect EvolvesFrom info.
+            if (PokemonSettings.parent_pokemon_id != PokemonId.MISSINGNO)
             {
-                foreach (var evolution in PokemonSettings.evolution_branch)
-                {
-                    if (pokemon.ContainsKey((int)evolution.evolution))
+                EvolvesFromId = (int)PokemonSettings.parent_pokemon_id;
+                var parent = pokemon[EvolvesFromId];
+                EvolvesFrom = parent.Name;
+                EvolvesFromForm = PokemonSettings.parent_form;
+                foreach (var evolution in parent.PokemonSettings.evolution_branch)
+                    if (evolution.evolution == PokemonSettings.pokemon_id)
                     {
-                        pokemon[(int)evolution.evolution].EvolvesFromId = Id;
-                        pokemon[(int)evolution.evolution].EvolvesFrom = Name;
-                        pokemon[(int)evolution.evolution].CandiesToEvolve = evolution.candy_cost;
-                        pokemon[(int)evolution.evolution].EvolveSpecialItem = evolution.evolution_item_requirement == ItemId.ITEM_UNKNOWN ? null : FixName(evolution.evolution_item_requirement.ToString().Substring(MARKER_EVOLVE_SPECIAL_ITEM.Length));
+                        CandiesToEvolve = evolution.candy_cost;
+                        EvolveSpecialItem = evolution.evolution_item_requirement == ItemId.ITEM_UNKNOWN ? null : FixName(evolution.evolution_item_requirement.ToString().Substring(MARKER_EVOLVE_SPECIAL_ITEM.Length));
+
+                        break;
                     }
-                }
             }
 
             // Set the Gender Ratio
