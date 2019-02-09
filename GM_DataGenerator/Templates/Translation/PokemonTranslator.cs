@@ -109,7 +109,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates
                     if (evolution.evolution == PokemonSettings.pokemon_id)
                     {
                         CandiesToEvolve = evolution.candy_cost;
-                        EvolveSpecialItem = evolution.evolution_item_requirement == ItemId.ITEM_UNKNOWN ? null : FixName(evolution.evolution_item_requirement.ToString().Substring(MARKER_EVOLVE_SPECIAL_ITEM.Length));
+                        EvolveSpecialItem = evolution.evolution_item_requirement == ItemId.ITEM_UNKNOWN ? null : FixItemId(evolution.evolution_item_requirement.ToString().Substring(MARKER_EVOLVE_SPECIAL_ITEM.Length));
 
                         break;
                     }

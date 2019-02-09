@@ -96,5 +96,18 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates
 
             return stringBuilder.ToString().Trim();
         }
+
+        public static string FixItemId(string rawName)
+        {
+            if (string.IsNullOrWhiteSpace(rawName))
+                return string.Empty;
+
+            StringBuilder stringBuilder = new StringBuilder();
+
+            foreach (var section in rawName.Split(' ', '_'))
+                stringBuilder.Append(char.ToUpper(section[0]) + section.Substring(1).ToLower());
+
+            return stringBuilder.ToString().Trim();
+        }
     }
 }

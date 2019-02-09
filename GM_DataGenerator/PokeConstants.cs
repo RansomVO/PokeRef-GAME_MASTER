@@ -6,7 +6,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
 {
     static class PokeConstants
     {
-        public readonly static DateTime LastModified = DateTime.Parse("2018-06-14");
+        public readonly static DateTime LastModified = DateTime.Parse("2019-02-09");
 
         #region const Values
 
@@ -58,6 +58,18 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
             public const string Legendary = "Legendary";
             public const string Mythic = "Mythic";
             public const string UltraBeast = "Ultra Beast";
+        }
+
+        public static class Region
+        {
+            public const string Gen1 = "Kanto";
+            public const string Gen2 = "Johto";
+            public const string Gen3 = "Hoenn";
+            public const string Gen4 = "Sinnoh";
+            public const string Gen5 = "Unova";
+            public const string Gen6 = "Kalos";
+            public const string Gen7 = "Alola";
+            public const string Gen8 = "Unknown";
         }
 
         public static class NumericChars

@@ -23,6 +23,9 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
         public _Weathers Weathers { get; set; }
 
         [XmlElement]
+        public _Regions Regions { get; set; }
+
+        [XmlElement]
         public _Availability Availability { get; set; }
 
         [XmlElement]
@@ -89,6 +92,34 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
                     PokeConstants.Weather.PartlyCloudy,
                 };
             }
+        }
+
+        [Serializable]
+        public class _Regions
+        {
+            [XmlAttribute]
+            public string Gen1 { get { return PokeConstants.Region.Gen1; } set { } }
+
+            [XmlAttribute]
+            public string Gen2 { get { return PokeConstants.Region.Gen2; } set { } }
+
+            [XmlAttribute]
+            public string Gen3 { get { return PokeConstants.Region.Gen3; } set { } }
+
+            [XmlAttribute]
+            public string Gen4 { get { return PokeConstants.Region.Gen4; } set { } }
+
+            [XmlAttribute]
+            public string Gen5 { get { return PokeConstants.Region.Gen5; } set { } }
+
+            [XmlAttribute]
+            public string Gen6 { get { return PokeConstants.Region.Gen6; } set { } }
+
+            [XmlAttribute]
+            public string Gen7 { get { return PokeConstants.Region.Gen7; } set { } }
+
+            [XmlAttribute]
+            public string Gen8 { get { return PokeConstants.Region.Gen8; } set { } }
         }
 
         [Serializable]
@@ -405,6 +436,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
             Gender = new _Gender();
             Types = new _Types();
             Weathers = new _Weathers();
+            Regions = new _Regions();
             Availability = new _Availability();
             Rarity = new _Rarity();
             IV_Evaluation = new _IV_Evaluation();

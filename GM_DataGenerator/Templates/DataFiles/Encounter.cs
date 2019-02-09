@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Xml.Serialization;
 using VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData;
-using static VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData.FieldResearch._Category._Research;
+using static VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData.FieldResearch._Research;
 
 namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
 {
@@ -64,17 +64,12 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
 			// Write all encounter files. Keeping track if all are up-to-date.
 			bool upToDate = true;
 			List<int> written = new List<int>();
-			foreach (var category in manualDataSettings.Encounters.Category)
-				foreach (var research in category.Research)
-					if (research.Encounter != null)
-						foreach (var encounter in research.Encounter)
-							if (!written.Contains(encounter.id))
-							{
-								written.Add(encounter.id);
-								upToDate = WriteEncounter(encounter, updateDateTime) && upToDate;
-							}
+            foreach (var category in manualDataSettings.Encounters.Category)
+                upToDate = Write(category.Research, updateDateTime, written) && upToDate;
+            foreach (var _event in manualDataSettings.Encounters.Event)
+                upToDate = Write(_event.Research, updateDateTime, written) && upToDate;
 
-			if (!upToDate)
+            if (!upToDate)
 			{
 				using (TextWriter projWriter = new StreamWriter(ProjFilePath))
 				{
@@ -85,60 +80,88 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
 					projWriter.WriteLine("  <!-- ======================================================================= -->");
 					projWriter.WriteLine("  <ItemGroup>");
 
-					foreach (var category in manualDataSettings.Encounters.Category)
-						foreach (var research in category.Research)
-							if (research.Encounter != null)
-								foreach (var encounter in research.Encounter)
-									if (written.Contains(encounter.id))
-									{
-										written.Remove(encounter.id);
+                    foreach (var category in manualDataSettings.Encounters.Category)
+                        Write(projWriter, category.Research, written);
+                    foreach (var _event in manualDataSettings.Encounters.Event)
+                        Write(projWriter, _event.Research, written);
 
-										string encounterFileName = GetFileNameBase(encounter);
-										projWriter.WriteLine("    <!-- #region " + encounter.name + " -->");
-
-										// Add .xml as part of _datafiles
-										projWriter.WriteLine("    <FixIntermediateFile Include=\"" + ProjXmlFolder + encounterFileName + ".xml\">");
-										projWriter.WriteLine(@"      <Visible>true</Visible>");
-										projWriter.WriteLine(@"    </FixIntermediateFile>");
-
-										// Add .html.xml as DependentUpon .xsl
-										projWriter.WriteLine("    <XslTransform  Include=\"" + srcFolder + encounterFileName + ".html.xml\">");
-										projWriter.WriteLine(@"     <Visible>true</Visible>");
-										projWriter.WriteLine(@"     <DependentUpon>encounter.xsl</DependentUpon>");
-										projWriter.WriteLine(@"     <Dependencies>");
-										projWriter.WriteLine(@"       js\global.js;");
-										projWriter.WriteLine(@"       " + ProjXmlFolder + encounterFileName + ".xml;");
-										projWriter.WriteLine(@"       " + srcFolder + @"index.css;");
-                                        projWriter.WriteLine(@"       charts\research\index.css;");
-                                        projWriter.WriteLine(@"       charts\index.css;");
-                                        projWriter.WriteLine(@"       index.css;");
-										projWriter.WriteLine(@"     </Dependencies>");
-										projWriter.WriteLine(@"     <OutputFileName>" + encounterFileName + ".html</OutputFileName>");
-										projWriter.WriteLine(@"    </XslTransform>");
-
-										projWriter.WriteLine("    <!-- #endregion " + encounter.name + " -->");
-									}
-
-					projWriter.WriteLine("  </ItemGroup>");
+                    projWriter.WriteLine("  </ItemGroup>");
 					projWriter.WriteLine("</Project>");
 				}
 			}
 		}
 
-		/// <summary>
-		/// Write out a single RaidBoss XML file if necessary, then return the text that should be included in the .proj file.
-		/// </summary>
-		/// <param name="raidboss"></param>
-		/// <returns>The text that should be included in the .proj file</returns>
-		private static bool WriteEncounter(_Encounter encounter, DateTime updateDateTime)
+        /// <summary>
+        /// Write out all of the Encounters for a set of Research Tasks.
+        /// </summary>
+        /// <param name="manualDataSettings"></param>
+        /// <param name="gameMasterStatsCalculator"></param>
+        public static bool Write(IEnumerable<FieldResearch._Research> _research, DateTime updateDateTime, List<int> written)
+        {
+            bool upToDate = true;
+            foreach (var research in _research)
+                if (research.Pokemon != null)
+                    foreach (var pokemon in research.Pokemon)
+                        if (!written.Contains(pokemon.id))
+                        {
+                            upToDate = WriteEncounter(pokemon, updateDateTime) && upToDate;
+                            written.Add(pokemon.id);
+                        }
+
+            return upToDate;
+        }
+
+        public static void Write(TextWriter projWriter, IEnumerable<FieldResearch._Research> _research, List<int> written)
+        {
+            foreach (var research in _research)
+                if (research.Pokemon != null)
+                    foreach (var pokemon in research.Pokemon)
+                        if (written.Contains(pokemon.id))
+                        {
+                            written.Remove(pokemon.id);
+
+                            string encounterFileName = GetFileNameBase(pokemon);
+                            projWriter.WriteLine("    <!-- #region " + pokemon.name + " -->");
+
+                            // Add .xml as part of _datafiles
+                            projWriter.WriteLine("    <FixIntermediateFile Include=\"" + ProjXmlFolder + encounterFileName + ".xml\">");
+                            projWriter.WriteLine(@"      <Visible>true</Visible>");
+                            projWriter.WriteLine(@"    </FixIntermediateFile>");
+
+                            // Add .html.xml as DependentUpon .xsl
+                            projWriter.WriteLine("    <XslTransform  Include=\"" + srcFolder + encounterFileName + ".html.xml\">");
+                            projWriter.WriteLine(@"     <Visible>true</Visible>");
+                            projWriter.WriteLine(@"     <DependentUpon>encounter.xsl</DependentUpon>");
+                            projWriter.WriteLine(@"     <Dependencies>");
+                            projWriter.WriteLine(@"       js\global.js;");
+                            projWriter.WriteLine(@"       " + ProjXmlFolder + encounterFileName + ".xml;");
+                            projWriter.WriteLine(@"       " + srcFolder + @"index.css;");
+                            projWriter.WriteLine(@"       charts\research\index.css;");
+                            projWriter.WriteLine(@"       charts\index.css;");
+                            projWriter.WriteLine(@"       index.css;");
+                            projWriter.WriteLine(@"     </Dependencies>");
+                            projWriter.WriteLine(@"     <OutputFileName>" + encounterFileName + ".html</OutputFileName>");
+                            projWriter.WriteLine(@"    </XslTransform>");
+
+                            projWriter.WriteLine("    <!-- #endregion " + pokemon.name + " -->");
+                        }
+
+        }
+
+        /// <summary>
+        /// Write out a single RaidBoss XML file if necessary, then return the text that should be included in the .proj file.
+        /// </summary>
+        /// <param name="raidboss"></param>
+        /// <returns>The text that should be included in the .proj file</returns>
+        private static bool WriteEncounter(_Pokemon pokemon, DateTime updateDateTime)
 		{
 			bool upToDate = true;
-			string encounterFileName = GetFileNameBase(encounter);
+			string encounterFileName = GetFileNameBase(pokemon);
 			string filePath = Path.Combine(OutputXmlFolder, encounterFileName + ".xml");
 			DateTime lastUpdated = Utils.GetLastUpdated(filePath);
 			if (!File.Exists(filePath) || lastUpdated < updateDateTime)
 			{
-				Utils.WriteXML(new Encounter(encounter, Utils.GetEncounterPossibilities(encounter.PokemonTranslator, 15), updateDateTime), filePath);
+				Utils.WriteXML(new Encounter(pokemon, Utils.GetEncounterPossibilities(pokemon.PokemonTranslator, 15), updateDateTime), filePath);
 				upToDate = false;
 			}
 
@@ -152,7 +175,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
 					htmlWriter.WriteLine("  <!ENTITY Constants SYSTEM \"/_datafiles/constants.xml\">");
 					htmlWriter.WriteLine("  <!ENTITY Settings SYSTEM \"/_datafiles/settings.xml\">");
 					htmlWriter.WriteLine("  <!ENTITY Images SYSTEM \"/_datafiles.manual/infrequent/images.xml\">");
-                    htmlWriter.WriteLine("  <!ENTITY PokeStats SYSTEM \"/_datafiles/pokestats.gen" + PokeFormulas.GetGeneration(encounter.id) + ".xml\">");
+                    htmlWriter.WriteLine("  <!ENTITY PokeStats SYSTEM \"/_datafiles/pokestats.gen" + PokeFormulas.GetGeneration(pokemon.id) + ".xml\">");
                     htmlWriter.WriteLine("  <!ENTITY Encounter SYSTEM \"/_datafiles/encounter/" + encounterFileName + ".xml\">");
 					htmlWriter.WriteLine("]>");
 					htmlWriter.WriteLine("<?xml-stylesheet type=\"text/xsl\" href=\"encounter.xsl\" output=\"" + encounterFileName + ".html\"?>");
