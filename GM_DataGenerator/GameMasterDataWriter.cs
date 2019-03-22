@@ -118,6 +118,8 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
             PokeFormulas.Init(PlayerLevel);
             ManualDataSettings.RaidBosses.Init(Pokemon);
             ManualDataSettings.Encounters.Init(Pokemon);
+            ManualDataSettings.SpecialResearch.Init(Pokemon);
+            ManualDataSettings.EventResearch.Init(Pokemon);
         }
 
         #endregion ctor

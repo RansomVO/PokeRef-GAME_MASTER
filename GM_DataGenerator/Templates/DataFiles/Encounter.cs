@@ -4,99 +4,104 @@ using System.ComponentModel;
 using System.IO;
 using System.Xml.Serialization;
 using VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData;
-using static VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData.FieldResearch._Research;
 
 namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
 {
-	[Serializable]
-	public class Encounter
-	{
-		#region Properties
+    [Serializable]
+    public class Encounter
+    {
+        #region Properties
 
-		[XmlAttribute(DataType = "date")]
-		public DateTime last_updated { get; set; }
+        [XmlAttribute(DataType = "date")]
+        public DateTime last_updated { get; set; }
 
-		[XmlElement]
-		public Pokemon Pokemon { get; set; }
+        [XmlElement]
+        public Pokemon Pokemon { get; set; }
 
-		[XmlElement]
-		public Common.PossibilitySet Regular { get; set; }
+        [XmlElement]
+        public Common.PossibilitySet Regular { get; set; }
 
-		[XmlIgnore]
-		public PokemonTranslator PokemonTranslator { get; set; }
+        [XmlIgnore]
+        public PokemonTranslator PokemonTranslator { get; set; }
 
-		#endregion Properties
+        #endregion Properties
 
-		#region ctor
+        #region ctor
 
-		public Encounter() { }
+        public Encounter() { }
 
-		public Encounter(Pokemon pokemon, Common.PossibilitySet.Possibility[] possibilities, DateTime updateDateTime)
-		{
-			last_updated = updateDateTime;
-			Pokemon = new Pokemon(pokemon);
-			Regular = new Common.PossibilitySet(possibilities);
-		}
+        public Encounter(Pokemon pokemon, Common.PossibilitySet.Possibility[] possibilities, DateTime updateDateTime)
+        {
+            last_updated = updateDateTime;
+            Pokemon = new Pokemon(pokemon);
+            Regular = new Common.PossibilitySet(possibilities);
+        }
 
-		#endregion ctor
+        #endregion ctor
 
-		#region Writers
+        #region Writers
 
-		private const string srcFolder = @"charts\research\encounter\";
-		private const string xmlFolder = @"encounter\";
-		public static string HtmlFileFolder { get { return Path.Combine(Utils.RootFolder, srcFolder); } }
-		private static string OutputXmlFolder { get { return Path.Combine(Utils.OutputDataFileFolder, xmlFolder); } }
-		private static string ProjXmlFolder { get { return Path.Combine(Utils.DataFileFolder, xmlFolder); } }
-		private static string ProjFilePath { get { return Path.Combine(Utils.RootFolder, "encounters.proj"); } }
+        private const string srcFolder = @"charts\research\encounter\";
+        private const string xmlFolder = @"encounter\";
+        public static string HtmlFileFolder { get { return Path.Combine(Utils.RootFolder, srcFolder); } }
+        private static string OutputXmlFolder { get { return Path.Combine(Utils.OutputDataFileFolder, xmlFolder); } }
+        private static string ProjXmlFolder { get { return Path.Combine(Utils.DataFileFolder, xmlFolder); } }
+        private static string ProjFilePath { get { return Path.Combine(Utils.RootFolder, "encounters.proj"); } }
 
-		/// <summary>
-		/// Write out data for Encounters
-		/// </summary>
-		public static void Write(ManualDataSettings manualDataSettings, GameMasterStatsCalculator gameMasterStatsCalculator)
-		{
+        /// <summary>
+        /// Write out data for Encounters
+        /// </summary>
+        public static void Write(ManualDataSettings manualDataSettings, GameMasterStatsCalculator gameMasterStatsCalculator)
+        {
             DateTime updateDateTime = new DateTime(Math.Max(
                 gameMasterStatsCalculator.GameMasterStats.last_updated.Date.Ticks,
                 manualDataSettings.Encounters.last_updated.Ticks));
 
             if (!Directory.Exists(OutputXmlFolder))
-				Directory.CreateDirectory(OutputXmlFolder);
+                Directory.CreateDirectory(OutputXmlFolder);
 
-			// Write all encounter files. Keeping track if all are up-to-date.
-			bool upToDate = true;
-			List<int> written = new List<int>();
+            // Write all encounter files. Keeping track if all are up-to-date.
+            bool upToDate = true;
+            List<int> written = new List<int>();
             foreach (var category in manualDataSettings.Encounters.Category)
                 upToDate = Write(category.Research, updateDateTime, written) && upToDate;
-            foreach (var _event in manualDataSettings.Encounters.Event)
-                upToDate = Write(_event.Research, updateDateTime, written) && upToDate;
+            foreach (var specialResearch in manualDataSettings.SpecialResearch.Event)
+                foreach (var stage in specialResearch.Stage)
+                    upToDate = Write(stage.Research, updateDateTime, written) && upToDate;
+            foreach (var eventResearch in manualDataSettings.EventResearch.Event)
+                upToDate = Write(eventResearch.Research, updateDateTime, written) && upToDate;
 
             if (!upToDate)
-			{
-				using (TextWriter projWriter = new StreamWriter(ProjFilePath))
-				{
-					projWriter.WriteLine("<Project xmlns=\"http://schemas.microsoft.com/developer/msbuild/2003\">");
-					projWriter.WriteLine("  <!-- ======================================================================= -->");
-					projWriter.WriteLine("  <!-- ============= This file is generated by GM_DataGenerator. ============= -->");
-					projWriter.WriteLine("  <!-- ===================== (last_updated=\"" + updateDateTime.ToString(PokeConstants.DateFormat) + "\") ===================== --> ");
-					projWriter.WriteLine("  <!-- ======================================================================= -->");
-					projWriter.WriteLine("  <ItemGroup>");
+            {
+                using (TextWriter projWriter = new StreamWriter(ProjFilePath))
+                {
+                    projWriter.WriteLine("<Project xmlns=\"http://schemas.microsoft.com/developer/msbuild/2003\">");
+                    projWriter.WriteLine("  <!-- ======================================================================= -->");
+                    projWriter.WriteLine("  <!-- ============= This file is generated by GM_DataGenerator. ============= -->");
+                    projWriter.WriteLine("  <!-- ===================== (last_updated=\"" + updateDateTime.ToString(PokeConstants.DateFormat) + "\") ===================== --> ");
+                    projWriter.WriteLine("  <!-- ======================================================================= -->");
+                    projWriter.WriteLine("  <ItemGroup>");
 
                     foreach (var category in manualDataSettings.Encounters.Category)
                         Write(projWriter, category.Research, written);
-                    foreach (var _event in manualDataSettings.Encounters.Event)
-                        Write(projWriter, _event.Research, written);
+                    foreach (var specialResearch in manualDataSettings.SpecialResearch.Event)
+                        foreach (var stage in specialResearch.Stage)
+                            Write(projWriter, stage.Research, written);
+                    foreach (var eventResearch in manualDataSettings.EventResearch.Event)
+                        Write(projWriter, eventResearch.Research, written);
 
                     projWriter.WriteLine("  </ItemGroup>");
-					projWriter.WriteLine("</Project>");
-				}
-			}
-		}
+                    projWriter.WriteLine("</Project>");
+                }
+            }
+        }
 
         /// <summary>
         /// Write out all of the Encounters for a set of Research Tasks.
         /// </summary>
         /// <param name="manualDataSettings"></param>
         /// <param name="gameMasterStatsCalculator"></param>
-        public static bool Write(IEnumerable<FieldResearch._Research> _research, DateTime updateDateTime, List<int> written)
+        public static bool Write(IEnumerable<FieldResearch.Research> _research, DateTime updateDateTime, List<int> written)
         {
             bool upToDate = true;
             foreach (var research in _research)
@@ -111,7 +116,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
             return upToDate;
         }
 
-        public static void Write(TextWriter projWriter, IEnumerable<FieldResearch._Research> _research, List<int> written)
+        public static void Write(TextWriter projWriter, IEnumerable<FieldResearch.Research> _research, List<int> written)
         {
             foreach (var research in _research)
                 if (research.Pokemon != null)
@@ -153,52 +158,52 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
         /// </summary>
         /// <param name="raidboss"></param>
         /// <returns>The text that should be included in the .proj file</returns>
-        private static bool WriteEncounter(_Pokemon pokemon, DateTime updateDateTime)
-		{
-			bool upToDate = true;
-			string encounterFileName = GetFileNameBase(pokemon);
-			string filePath = Path.Combine(OutputXmlFolder, encounterFileName + ".xml");
-			DateTime lastUpdated = Utils.GetLastUpdated(filePath);
-			if (!File.Exists(filePath) || lastUpdated < updateDateTime)
-			{
-				Utils.WriteXML(new Encounter(pokemon, Utils.GetEncounterPossibilities(pokemon.PokemonTranslator, 15), updateDateTime), filePath);
-				upToDate = false;
-			}
+        private static bool WriteEncounter(FieldResearch.RewardEncounter pokemon, DateTime updateDateTime)
+        {
+            bool upToDate = true;
+            string encounterFileName = GetFileNameBase(pokemon);
+            string filePath = Path.Combine(OutputXmlFolder, encounterFileName + ".xml");
+            DateTime lastUpdated = Utils.GetLastUpdated(filePath);
+            if (!File.Exists(filePath) || lastUpdated < updateDateTime)
+            {
+                Utils.WriteXML(new Encounter(pokemon, Utils.GetEncounterPossibilities(pokemon.PokemonTranslator, 15), updateDateTime), filePath);
+                upToDate = false;
+            }
 
-			string htmlFilePath = Path.Combine(HtmlFileFolder, encounterFileName + ".html.xml");
-			if (!File.Exists(htmlFilePath))
-			{
-				using (TextWriter htmlWriter = new StreamWriter(htmlFilePath))
-				{
-					htmlWriter.WriteLine("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
-					htmlWriter.WriteLine("<!DOCTYPE Root [");
-					htmlWriter.WriteLine("  <!ENTITY Constants SYSTEM \"/_datafiles/constants.xml\">");
-					htmlWriter.WriteLine("  <!ENTITY Settings SYSTEM \"/_datafiles/settings.xml\">");
-					htmlWriter.WriteLine("  <!ENTITY Images SYSTEM \"/_datafiles.manual/infrequent/images.xml\">");
+            string htmlFilePath = Path.Combine(HtmlFileFolder, encounterFileName + ".html.xml");
+            if (!File.Exists(htmlFilePath))
+            {
+                using (TextWriter htmlWriter = new StreamWriter(htmlFilePath))
+                {
+                    htmlWriter.WriteLine("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
+                    htmlWriter.WriteLine("<!DOCTYPE Root [");
+                    htmlWriter.WriteLine("  <!ENTITY Constants SYSTEM \"/_datafiles/constants.xml\">");
+                    htmlWriter.WriteLine("  <!ENTITY Settings SYSTEM \"/_datafiles/settings.xml\">");
+                    htmlWriter.WriteLine("  <!ENTITY Images SYSTEM \"/_datafiles.manual/infrequent/images.xml\">");
                     htmlWriter.WriteLine("  <!ENTITY PokeStats SYSTEM \"/_datafiles/pokestats.gen" + PokeFormulas.GetGeneration(pokemon.id) + ".xml\">");
                     htmlWriter.WriteLine("  <!ENTITY Encounter SYSTEM \"/_datafiles/encounter/" + encounterFileName + ".xml\">");
-					htmlWriter.WriteLine("]>");
-					htmlWriter.WriteLine("<?xml-stylesheet type=\"text/xsl\" href=\"encounter.xsl\" output=\"" + encounterFileName + ".html\"?>");
-					htmlWriter.WriteLine("<Root xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">");
-					htmlWriter.WriteLine("  &Constants; ");
-					htmlWriter.WriteLine("  &Settings;");
-					htmlWriter.WriteLine("  &Images;");
+                    htmlWriter.WriteLine("]>");
+                    htmlWriter.WriteLine("<?xml-stylesheet type=\"text/xsl\" href=\"encounter.xsl\" output=\"" + encounterFileName + ".html\"?>");
+                    htmlWriter.WriteLine("<Root xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">");
+                    htmlWriter.WriteLine("  &Constants; ");
+                    htmlWriter.WriteLine("  &Settings;");
+                    htmlWriter.WriteLine("  &Images;");
                     htmlWriter.WriteLine("  &PokeStats;");
                     htmlWriter.WriteLine("  &Encounter;");
-					htmlWriter.WriteLine("</Root> ");
-				}
+                    htmlWriter.WriteLine("</Root> ");
+                }
 
-				upToDate = false;
-			}
+                upToDate = false;
+            }
 
-			return upToDate;
-		}
+            return upToDate;
+        }
 
-		private static string GetFileNameBase(Pokemon encounter)
-		{
-			return "encounter." + encounter.name.ToLower();
-		}
+        private static string GetFileNameBase(Pokemon encounter)
+        {
+            return "encounter." + encounter.name.ToLower();
+        }
 
-		#endregion Writers
-	}
+        #endregion Writers
+    }
 }

@@ -99,25 +99,31 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates
                         LegacyChargedMoves.Add(move);
 
             // Collect EvolvesFrom info.
-            if (PokemonSettings.parent_pokemon_id != PokemonId.MISSINGNO)
-            {
-                EvolvesFromId = (int)PokemonSettings.parent_pokemon_id;
-                var parent = pokemon[EvolvesFromId];
-                EvolvesFrom = parent.Name;
-                EvolvesFromForm = PokemonSettings.parent_form;
-                foreach (var evolution in parent.PokemonSettings.evolution_branch)
-                    if (evolution.evolution == PokemonSettings.pokemon_id)
-                    {
-                        CandiesToEvolve = evolution.candy_cost;
-                        EvolveSpecialItem = evolution.evolution_item_requirement == ItemId.ITEM_UNKNOWN ? null : FixItemId(evolution.evolution_item_requirement.ToString().Substring(MARKER_EVOLVE_SPECIAL_ITEM.Length));
-
-                        break;
-                    }
-            }
+            foreach (var evolution in PokemonSettings.evolution_branch)
+                pokemon[(int)evolution.evolution].AssignEvolutionProperties(this);
+            if (EvolvesFromId == 0 && PokemonSettings.parent_pokemon_id != PokemonId.MISSINGNO)
+                AssignEvolutionProperties(pokemon[(int)PokemonSettings.parent_pokemon_id]);
 
             // Set the Gender Ratio
             if (genderRatio != null)
                 GenderRatio = genderRatio.Ratio;
+        }
+
+        private void AssignEvolutionProperties(PokemonTranslator parent)
+        {
+            EvolvesFromId = parent.Id;
+            EvolvesFrom = parent.Name;
+            EvolvesFromForm = PokemonSettings.parent_form;
+            foreach (var evolution in parent.PokemonSettings.evolution_branch)
+                if (evolution.evolution == PokemonSettings.pokemon_id)
+                {
+                    CandiesToEvolve = evolution.candy_cost;
+                    EvolveSpecialItem = evolution.evolution_item_requirement == ItemId.ITEM_UNKNOWN ?
+                        null :
+                        FixItemId(evolution.evolution_item_requirement.ToString().Substring(MARKER_EVOLVE_SPECIAL_ITEM.Length));
+
+                    break;
+                }
         }
 
         public static string GetFormName(Form formId)
