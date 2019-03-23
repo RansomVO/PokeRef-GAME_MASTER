@@ -82,9 +82,9 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData
             PokemonUnreleased = (PokemonUnreleased)ReadXmlConfig(Path.Combine(inputFolder, @"infrequent\pokemon.unreleased_gens.xml"), typeof(PokemonUnreleased));
             Traits = (Traits)ReadXmlConfig(Path.Combine(inputFolder, @"traits.xml"), typeof(Traits));
             RaidBosses = (RaidBosses)ReadXmlConfig(Path.Combine(inputFolder, @"raidbosses.xml"), typeof(RaidBosses));
-            Encounters = (FieldResearch)ReadXmlConfig(Path.Combine(inputFolder, @"encounters.xml"), typeof(FieldResearch));
+            Encounters = (FieldResearch)ReadXmlConfig(Path.Combine(inputFolder, @"research.encounters.xml"), typeof(FieldResearch));
+            EventResearch = (EventResearch)ReadXmlConfig(Path.Combine(inputFolder, @"research.event.xml"), typeof(EventResearch));
             SpecialResearch = (SpecialResearch)ReadXmlConfig(Path.Combine(inputFolder, @"infrequent\research.special.xml"), typeof(SpecialResearch));
-            EventResearch = (EventResearch)ReadXmlConfig(Path.Combine(inputFolder, @"infrequent\research.event.xml"), typeof(EventResearch));
             Ranges = (Ranges)ReadXmlConfig(Path.Combine(inputFolder, @"infrequent\ranges.xml"), typeof(Ranges));
             SpecialMoves = (SpecialMoves)ReadXmlConfig(Path.Combine(inputFolder, @"infrequent\special.moves.xml"), typeof(SpecialMoves));
 
