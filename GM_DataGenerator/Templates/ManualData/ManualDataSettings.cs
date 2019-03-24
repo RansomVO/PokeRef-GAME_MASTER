@@ -86,7 +86,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData
             EventResearch = (EventResearch)ReadXmlConfig(Path.Combine(inputFolder, @"research.event.xml"), typeof(EventResearch));
             SpecialResearch = (SpecialResearch)ReadXmlConfig(Path.Combine(inputFolder, @"infrequent\research.special.xml"), typeof(SpecialResearch));
             Ranges = (Ranges)ReadXmlConfig(Path.Combine(inputFolder, @"infrequent\ranges.xml"), typeof(Ranges));
-            SpecialMoves = (SpecialMoves)ReadXmlConfig(Path.Combine(inputFolder, @"infrequent\special.moves.xml"), typeof(SpecialMoves));
+            SpecialMoves = (SpecialMoves)ReadXmlConfig(Path.Combine(inputFolder, @"infrequent\moves.special.xml"), typeof(SpecialMoves));
 
             // Perform checks.
             StringBuilder stringBuilder = new StringBuilder();
