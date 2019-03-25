@@ -67,7 +67,12 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
                 upToDate = Write(category.Research, updateDateTime, written) && upToDate;
             foreach (var specialResearch in manualDataSettings.SpecialResearch.Event)
                 foreach (var stage in specialResearch.Stage)
+                {
                     upToDate = Write(stage.Research, updateDateTime, written) && upToDate;
+                    if (stage.Rewards.Pokemon != null)
+                        foreach (var pokemon in stage.Rewards.Pokemon)
+                            upToDate = Write(pokemon, updateDateTime, written) && upToDate;
+                }
             foreach (var eventResearch in manualDataSettings.EventResearch.Event)
                 upToDate = Write(eventResearch.Research, updateDateTime, written) && upToDate;
 
@@ -86,7 +91,12 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
                         Write(projWriter, category.Research, written);
                     foreach (var specialResearch in manualDataSettings.SpecialResearch.Event)
                         foreach (var stage in specialResearch.Stage)
+                        {
                             Write(projWriter, stage.Research, written);
+                            if (stage.Rewards.Pokemon != null)
+                                foreach (var pokemon in stage.Rewards.Pokemon)
+                                    Write(projWriter, pokemon, written);
+                        }
                     foreach (var eventResearch in manualDataSettings.EventResearch.Event)
                         Write(projWriter, eventResearch.Research, written);
 
@@ -99,19 +109,36 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
         /// <summary>
         /// Write out all of the Encounters for a set of Research Tasks.
         /// </summary>
-        /// <param name="manualDataSettings"></param>
-        /// <param name="gameMasterStatsCalculator"></param>
+        /// <param name="_research"></param>
+        /// <param name="updateDateTime"></param>
+        /// <param name="written"></param>
+        /// <returns></returns>
         public static bool Write(IEnumerable<FieldResearch.Research> _research, DateTime updateDateTime, List<int> written)
         {
             bool upToDate = true;
             foreach (var research in _research)
                 if (research.Pokemon != null)
                     foreach (var pokemon in research.Pokemon)
-                        if (!written.Contains(pokemon.id))
-                        {
-                            upToDate = WriteEncounter(pokemon, updateDateTime) && upToDate;
-                            written.Add(pokemon.id);
-                        }
+                        upToDate = Write(pokemon, updateDateTime, written) && upToDate;
+
+            return upToDate;
+        }
+
+        /// <summary>
+        /// Write out an Encounter chart for the specified Pokemon, if it hasn't already been written.
+        /// </summary>
+        /// <param name="_research"></param>
+        /// <param name="updateDateTime"></param>
+        /// <param name="written"></param>
+        /// <returns></returns>
+        public static bool Write(FieldResearch.RewardEncounter pokemon, DateTime updateDateTime, List<int> written)
+        {
+            bool upToDate = true;
+            if (!written.Contains(pokemon.id))
+            {
+                upToDate = WriteEncounter(pokemon, updateDateTime) && upToDate;
+                written.Add(pokemon.id);
+            }
 
             return upToDate;
         }
@@ -121,38 +148,41 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
             foreach (var research in _research)
                 if (research.Pokemon != null)
                     foreach (var pokemon in research.Pokemon)
-                        if (written.Contains(pokemon.id))
-                        {
-                            written.Remove(pokemon.id);
-
-                            string encounterFileName = GetFileNameBase(pokemon);
-                            projWriter.WriteLine("    <!-- #region " + pokemon.name + " -->");
-
-                            // Add .xml as part of _datafiles
-                            projWriter.WriteLine("    <FixIntermediateFile Include=\"" + ProjXmlFolder + encounterFileName + ".xml\">");
-                            projWriter.WriteLine(@"      <Visible>true</Visible>");
-                            projWriter.WriteLine(@"    </FixIntermediateFile>");
-
-                            // Add .html.xml as DependentUpon .xsl
-                            projWriter.WriteLine("    <XslTransform  Include=\"" + srcFolder + encounterFileName + ".html.xml\">");
-                            projWriter.WriteLine(@"     <Visible>true</Visible>");
-                            projWriter.WriteLine(@"     <DependentUpon>encounter.xsl</DependentUpon>");
-                            projWriter.WriteLine(@"     <Dependencies>");
-                            projWriter.WriteLine(@"       js\global.js;");
-                            projWriter.WriteLine(@"       " + ProjXmlFolder + encounterFileName + ".xml;");
-                            projWriter.WriteLine(@"       " + srcFolder + @"index.css;");
-                            projWriter.WriteLine(@"       charts\research\index.css;");
-                            projWriter.WriteLine(@"       charts\index.css;");
-                            projWriter.WriteLine(@"       index.css;");
-                            projWriter.WriteLine(@"     </Dependencies>");
-                            projWriter.WriteLine(@"     <OutputFileName>" + encounterFileName + ".html</OutputFileName>");
-                            projWriter.WriteLine(@"    </XslTransform>");
-
-                            projWriter.WriteLine("    <!-- #endregion " + pokemon.name + " -->");
-                        }
-
+                        Write(projWriter, pokemon, written);
         }
 
+        public static void Write(TextWriter projWriter, FieldResearch.RewardEncounter pokemon, List<int> written)
+        {
+            if (written.Contains(pokemon.id))
+            {
+                written.Remove(pokemon.id);
+
+                string encounterFileName = GetFileNameBase(pokemon);
+                projWriter.WriteLine("    <!-- #region " + pokemon.name + " -->");
+
+                // Add .xml as part of _datafiles
+                projWriter.WriteLine("    <FixIntermediateFile Include=\"" + ProjXmlFolder + encounterFileName + ".xml\">");
+                projWriter.WriteLine(@"      <Visible>true</Visible>");
+                projWriter.WriteLine(@"    </FixIntermediateFile>");
+
+                // Add .html.xml as DependentUpon .xsl
+                projWriter.WriteLine("    <XslTransform  Include=\"" + srcFolder + encounterFileName + ".html.xml\">");
+                projWriter.WriteLine(@"     <Visible>true</Visible>");
+                projWriter.WriteLine(@"     <DependentUpon>encounter.xsl</DependentUpon>");
+                projWriter.WriteLine(@"     <Dependencies>");
+                projWriter.WriteLine(@"       js\global.js;");
+                projWriter.WriteLine(@"       " + ProjXmlFolder + encounterFileName + ".xml;");
+                projWriter.WriteLine(@"       " + srcFolder + @"index.css;");
+                projWriter.WriteLine(@"       charts\research\index.css;");
+                projWriter.WriteLine(@"       charts\index.css;");
+                projWriter.WriteLine(@"       index.css;");
+                projWriter.WriteLine(@"     </Dependencies>");
+                projWriter.WriteLine(@"     <OutputFileName>" + encounterFileName + ".html</OutputFileName>");
+                projWriter.WriteLine(@"    </XslTransform>");
+
+                projWriter.WriteLine("    <!-- #endregion " + pokemon.name + " -->");
+            }
+        }
         /// <summary>
         /// Write out a single RaidBoss XML file if necessary, then return the text that should be included in the .proj file.
         /// </summary>

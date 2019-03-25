@@ -55,6 +55,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData
                 {
                     foreach (var research in Research)
                         research.Init(pokemonTranslators);
+                    Rewards.Init(pokemonTranslators);
                 }
 
                 #region Internal classes
@@ -70,10 +71,6 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData
 
                     public void Init(Dictionary<int, PokemonTranslator> pokemonTranslators)
                     {
-                        if (Pokemon != null)
-                            foreach (var encounter in Pokemon)
-                                encounter.PokemonTranslator = pokemonTranslators[encounter.id];
-
                         if (Pokemon != null)
                             foreach (var encounter in Pokemon)
                                 encounter.PokemonTranslator = pokemonTranslators[encounter.id];

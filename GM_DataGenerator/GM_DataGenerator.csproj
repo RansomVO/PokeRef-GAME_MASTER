@@ -77,7 +77,7 @@
     <Compile Include="Templates\CommonTypes.cs" />
     <Compile Include="Templates\ManualData\ManualDataSettings.cs" />
     <Compile Include="Templates\ManualData\traits.cs" />
-    <Compile Include="Templates\ManualData\research.cs" />
+    <Compile Include="Templates\ManualData\research.field.cs" />
     <Compile Include="Templates\ManualData\raidbosses.cs" />
     <Compile Include="Templates\ManualData\special.moves.cs" />
     <Compile Include="Templates\ManualData\ranges.cs" />
