@@ -24,6 +24,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER
         private static readonly Mangle[] Mangles =
         {
             // MUST be sorted descending by Hex TimeStamp.
+            new Mangle("00000169E07452DD", new DateTime(2019, 04, 01, 03, 55, 0, DateTimeKind.Utc)),    // 2019-04-02 23:48:34.000 - 01 days, 19 hours, 53 minutes
             new Mangle("00000168CACECCE6", new DateTime(2019, 02, 01, 14, 37, 0, DateTimeKind.Utc)),    // 2019-02-08 01:52:57.000 - 06 days, 11 hours, 15 minutes
             new Mangle("00000168C0989967", new DateTime(2019, 01, 30, 14, 20, 0, DateTimeKind.Utc)),    // 2019-02-06 02:17:33.000 - 06 days, 11 hours, 57 minutes
             new Mangle("00000168C0989967", new DateTime(2018, 11, 15, 02, 54, 0, DateTimeKind.Utc)),    // 2018-12-09 16:51:54.000 - 24 days, 13 hours, 57 minutes
