@@ -209,6 +209,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
                     htmlWriter.WriteLine("<!DOCTYPE Root [");
                     htmlWriter.WriteLine("  <!ENTITY Constants SYSTEM \"/_datafiles/constants.xml\">");
                     htmlWriter.WriteLine("  <!ENTITY Settings SYSTEM \"/_datafiles/settings.xml\">");
+                    htmlWriter.WriteLine("  <!ENTITY Mappings SYSTEM \"/_datafiles.manual/infrequent/mappings.xml\">");
                     htmlWriter.WriteLine("  <!ENTITY Images SYSTEM \"/_datafiles.manual/infrequent/images.xml\">");
                     htmlWriter.WriteLine("  <!ENTITY PokeStats SYSTEM \"/_datafiles/pokestats.gen" + PokeFormulas.GetGeneration(pokemon.id) + ".xml\">");
                     htmlWriter.WriteLine("  <!ENTITY Encounter SYSTEM \"/_datafiles/encounter/" + encounterFileName + ".xml\">");
@@ -217,6 +218,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
                     htmlWriter.WriteLine("<Root xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">");
                     htmlWriter.WriteLine("  &Constants; ");
                     htmlWriter.WriteLine("  &Settings;");
+                    htmlWriter.WriteLine("  &Mappings;");
                     htmlWriter.WriteLine("  &Images;");
                     htmlWriter.WriteLine("  &PokeStats;");
                     htmlWriter.WriteLine("  &Encounter;");
