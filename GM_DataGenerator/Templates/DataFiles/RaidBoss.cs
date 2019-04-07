@@ -19,9 +19,9 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
             0,  // Dummy to make indexing work
             600,
             1800,
-            3000,
-            7500,
-            12500,
+            3600,   // Changed from  3000
+            9000,   // Changed from  7500
+            15000,  // Changed from 12500
         };
 
         #endregion Data
@@ -168,7 +168,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
                     htmlWriter.WriteLine("<!DOCTYPE Root [");
                     htmlWriter.WriteLine("  <!ENTITY Constants SYSTEM \"/_datafiles/constants.xml\">");
                     htmlWriter.WriteLine("  <!ENTITY Settings SYSTEM \"/_datafiles/settings.xml\">");
-                    htmlWriter.WriteLine("  <!ENTITY Mappings SYSTEM \"/_datafiles.manual/infrequent/mappings.xml\">");
+                    htmlWriter.WriteLine("  <!ENTITY PokeSprites SYSTEM \"/_datafiles.manual/infrequent/pokemon.sprites.xml\">");
                     htmlWriter.WriteLine("  <!ENTITY Images SYSTEM \"/_datafiles.manual/infrequent/images.xml\">");
                     htmlWriter.WriteLine("  <!ENTITY PokeStats SYSTEM \"/_datafiles/pokestats.gen" + PokeFormulas.GetGeneration(raidboss.id) + ".xml\">");
                     htmlWriter.WriteLine("  <!ENTITY RaidBoss SYSTEM \"/_datafiles/raidboss/" + raidbossFileName + ".xml\">");
@@ -177,7 +177,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
                     htmlWriter.WriteLine("<Root xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">");
                     htmlWriter.WriteLine("  &Constants; ");
                     htmlWriter.WriteLine("  &Settings;");
-                    htmlWriter.WriteLine("  &Mappings;");
+                    htmlWriter.WriteLine("  &PokeSprites;");
                     htmlWriter.WriteLine("  &Images;");
                     htmlWriter.WriteLine("  &PokeStats;");
                     htmlWriter.WriteLine("  &RaidBoss;");
