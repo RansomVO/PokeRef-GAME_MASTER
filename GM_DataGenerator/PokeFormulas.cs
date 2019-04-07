@@ -123,31 +123,11 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
 
         #region Get Generation
 
-        #region Data
-
-        private const int GENERATIONS_INDEX_GEN = 0;    // Index of the Generation
-        private const int GENERATIONS_INDEX_ID_MIN = 1; // Index of the Min ID in the Generation
-        private const int GENERATIONS_INDEX_ID_MAX = 2; // Index of the Max ID in the Generation
-        private static readonly int[][] GENERATIONS =
-        {
-            new int[] { 1, 1, 151 },
-            new int[] { 2, 152, 251 },
-            new int[] { 3, 252, 386 },
-            new int[] { 4, 387, 493 },
-            new int[] { 5, 494, 649 },
-            new int[] { 6, 650, 721 },
-            new int[] { 7, 722, 809 },
-        };
-
-        #endregion Data
-
         public static int GetGeneration(int pokemonId)
         {
-            foreach (var generation in GENERATIONS)
-            {
-                if (generation[GENERATIONS_INDEX_ID_MIN] <= pokemonId && pokemonId <= generation[GENERATIONS_INDEX_ID_MAX])
-                    return generation[GENERATIONS_INDEX_GEN];
-            }
+            for (int i = 1; i < PokeConstants.GenerationRanges.Length; i++)
+                if (PokeConstants.GenerationRanges[i][0] <= pokemonId && pokemonId <= PokeConstants.GenerationRanges[i][1])
+                    return i;
 
             throw new ArgumentOutOfRangeException("pokemon");
         }

@@ -26,11 +26,6 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData
         public PokemonAvailability PokemonAvailability { get; set; }
 
         /// <summary>
-        /// URLs for the images for Pokemon.
-        /// </summary>
-        public PokemonSprites PokemonSprites { get; set; }
-
-        /// <summary>
         /// Basic information about unreleased Pokemon.
         /// </summary>
         public PokemonUnreleased PokemonUnreleased { get; set; }
@@ -78,7 +73,6 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData
         public ManualDataSettings(string inputFolder)
         {
             PokemonAvailability = (PokemonAvailability)ReadXmlConfig(Path.Combine(inputFolder, @"infrequent\pokemon.availability.xml"), typeof(PokemonAvailability));
-            PokemonSprites = (PokemonSprites)ReadXmlConfig(Path.Combine(inputFolder, @"infrequent\pokemon.sprites.xml"), typeof(PokemonSprites));
             PokemonUnreleased = (PokemonUnreleased)ReadXmlConfig(Path.Combine(inputFolder, @"infrequent\pokemon.unreleased_gens.xml"), typeof(PokemonUnreleased));
             Traits = (Traits)ReadXmlConfig(Path.Combine(inputFolder, @"traits.xml"), typeof(Traits));
             RaidBosses = (RaidBosses)ReadXmlConfig(Path.Combine(inputFolder, @"raidbosses.xml"), typeof(RaidBosses));

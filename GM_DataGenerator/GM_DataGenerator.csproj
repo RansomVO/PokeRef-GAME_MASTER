@@ -72,7 +72,6 @@
     <Compile Include="Templates\GameMasterTemplate.cs" />
     <Compile Include="Templates\ManualData\research.event.cs" />
     <Compile Include="Templates\ManualData\research.special.cs" />
-    <Compile Include="Templates\ManualData\pokemon.sprites.cs" />
     <Compile Include="Templates\ManualData\pokemon.unreleased.cs" />
     <Compile Include="Templates\CommonTypes.cs" />
     <Compile Include="Templates\ManualData\ManualDataSettings.cs" />

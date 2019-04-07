@@ -6,7 +6,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
 {
     static class PokeConstants
     {
-        public readonly static DateTime LastModified = DateTime.Parse("2019-02-09");
+        public readonly static DateTime LastModified = DateTime.Parse("2019-04-06");
 
         #region const Values
 
@@ -17,8 +17,6 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
         public const string DateTimeFormat = DateFormat + " HH:mm:ss.fff";
 
         #endregion const Values
-
-        #region enums
 
         #region constants.xml
 
@@ -168,6 +166,8 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
 
         #endregion constants.xml
 
+        #region enums
+
         public enum PokeType
         {
             Other = -1,
@@ -215,16 +215,35 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
 
         #region Regions
 
+        #region Data
+
+        public static readonly int[][] GenerationRanges =
+        {
+            null,   // dummy so indexing matches
+            new int[] { 1, 151 },
+            new int[] { 152, 251 },
+            new int[] { 252, 386 },
+            new int[] { 387, 493 },
+            new int[] { 494, 649 },
+            new int[] { 650, 721 },
+            new int[] { 722, 807 },
+            new int[] { 808, 809 },
+        };
+
+        #endregion Data
+
+
         public static string[] Regions = new[]
         {
-            "",         // dummy so indexing matches
-            "Kanto",    // Gen1
-            "Johto",    // Gen2
-            "Hoenn",    // Gen3
-            "Sinnoh",   // Gen4
-            "Unova",    // Gen5
-            "Kalos",    // Gen6
-            "Alola",    // Gen7
+            string.Empty,   // dummy so indexing matches
+            Region.Gen1,
+            Region.Gen2,
+            Region.Gen3,
+            Region.Gen4,
+            Region.Gen5,
+            Region.Gen6,
+            Region.Gen7,
+            Region.Gen8,
         };
 
         #endregion Regions

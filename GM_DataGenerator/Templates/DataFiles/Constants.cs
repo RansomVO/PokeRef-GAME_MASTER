@@ -97,29 +97,55 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
         [Serializable]
         public class _Regions
         {
-            [XmlAttribute]
-            public string Gen1 { get { return PokeConstants.Region.Gen1; } set { } }
+            [XmlElement]
+            public _Region[] Region { get; set; }
 
-            [XmlAttribute]
-            public string Gen2 { get { return PokeConstants.Region.Gen2; } set { } }
+            #region Internal classes
 
-            [XmlAttribute]
-            public string Gen3 { get { return PokeConstants.Region.Gen3; } set { } }
+            [Serializable]
+            public class _Region
+            {
+                [XmlAttribute]
+                public int gen { get; set; }
 
-            [XmlAttribute]
-            public string Gen4 { get { return PokeConstants.Region.Gen4; } set { } }
+                [XmlAttribute]
+                public string name { get; set; }
 
-            [XmlAttribute]
-            public string Gen5 { get { return PokeConstants.Region.Gen5; } set { } }
+                [XmlAttribute]
+                public int rangeMin { get; set; }
 
-            [XmlAttribute]
-            public string Gen6 { get { return PokeConstants.Region.Gen6; } set { } }
+                [XmlAttribute]
+                public int rangeMax { get; set; }
 
-            [XmlAttribute]
-            public string Gen7 { get { return PokeConstants.Region.Gen7; } set { } }
+                public _Region()
+                { }
 
-            [XmlAttribute]
-            public string Gen8 { get { return PokeConstants.Region.Gen8; } set { } }
+                public _Region(int _gen)
+                {
+                    gen = _gen;
+                    name = PokeConstants.Regions[gen];
+                    rangeMin = PokeConstants.GenerationRanges[gen][0];
+                    rangeMax = PokeConstants.GenerationRanges[gen][1];
+                }
+            }
+
+            public _Regions()
+            {
+                Region = new[]
+                {
+                    null,
+                    new _Region(1),
+                    new _Region(2),
+                    new _Region(3),
+                    new _Region(4),
+                    new _Region(5),
+                    new _Region(6),
+                    new _Region(7),
+                    new _Region(8),
+                };
+            }
+
+            #endregion Internal classes
         }
 
         [Serializable]
