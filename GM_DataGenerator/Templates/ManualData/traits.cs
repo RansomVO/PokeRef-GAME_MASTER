@@ -32,7 +32,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData
                     public string type { get; set; }
 
                     [XmlElement]
-                    public PokemonForm[] Pokemon { get; set; }
+                    public Pokemon[] Pokemon { get; set; }
                 }
 
                 #endregion Internal classes
@@ -42,7 +42,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData
         public class _Ditto
         {
             [XmlElement]
-            public PokemonForm[] Pokemon { get; set; }
+            public Pokemon[] Pokemon { get; set; }
         }
 
         #endregion Internal classes

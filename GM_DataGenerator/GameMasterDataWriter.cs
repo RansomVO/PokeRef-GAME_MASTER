@@ -9,6 +9,7 @@ using VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData;
 using VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles;
 
 using VanOrman.Utils;
+using POGOProtos.Settings.Master;
 
 namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
 {
@@ -168,7 +169,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
                     if (itemTemplate.pokemon_settings != null)
                     {
                         PokemonTranslator pokemon = new PokemonTranslator(itemTemplate);
-                         Pokemon.Add(pokemon.Key, pokemon);
+                        Pokemon.Add(pokemon.Key, pokemon);
                     }
                     else if (itemTemplate.move_settings != null)
                     {
@@ -199,7 +200,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
                     }
                     else if (itemTemplate.friendship_milestone_settings != null)
                     {
-						Friendships.Add(new FriendshipTranslator(itemTemplate));
+                        Friendships.Add(new FriendshipTranslator(itemTemplate));
                     }
 
                     #region Data I am currently not using.

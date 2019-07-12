@@ -30,7 +30,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
         #region Internal classes
 
         [Serializable]
-        public class _Pokemon : PokemonForm
+        public class _Pokemon : Pokemon
         {
             #region Properties
 
@@ -230,7 +230,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
                 Type = new PokeTypes(pokemonTranslator.Type1, pokemonTranslator.Type2);
 
                 if (pokemonTranslator.EvolvesFromId > 0)
-                    EvolvesFrom = new EvolvesFrom(pokemonTranslator.EvolvesFromId, pokemonTranslator.EvolvesFrom, pokemonTranslator.CandiesToEvolve, pokemonTranslator.EvolveSpecialItem);
+                    EvolvesFrom = new EvolvesFrom(pokemonTranslator);
 
                 Stats = new _Stats(
                     new _Stats.IVScore(pokemonTranslator.PokemonSettings.stats.base_attack, pokemonTranslator.PokemonSettings.stats.base_defense, pokemonTranslator.PokemonSettings.stats.base_stamina),

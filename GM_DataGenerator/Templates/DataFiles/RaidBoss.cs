@@ -36,7 +36,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
         public int raid_cp { get; set; }
 
         [XmlElement]
-        public PokemonForm Pokemon { get; set; }
+        public Pokemon Pokemon { get; set; }
 
         [XmlElement]
         public Common.PossibilitySet Regular { get; set; }
@@ -53,7 +53,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
         public RaidBoss(RaidBosses._RaidBoss raidboss, Common.IVScore baseIV, Common.PossibilitySet.Possibility[] regular, Common.PossibilitySet.Possibility[] boosted, DateTime updateDateTime)
         {
             last_updated = updateDateTime;
-            Pokemon = new PokemonForm(raidboss.id, raidboss.name, raidboss.FormId);
+            Pokemon = new Pokemon(raidboss.id, raidboss.name, raidboss.FormId);
             raid_cp = (int)Math.Floor((baseIV.attack + 15) * Math.Sqrt(baseIV.defense + 15) * Math.Sqrt(RaidHPBoost[raidboss.tier]) / 10);
             Regular = new Common.PossibilitySet(regular);
             Boosted = new Common.PossibilitySet(boosted);
@@ -190,9 +190,9 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
 			return upToDate;
         }
 
-        private static string GetFileNameBase(PokemonForm raidboss)
+        private static string GetFileNameBase(Pokemon raidboss)
         {
-            return "raidboss." + raidboss.name.ToLower() + (raidboss.FormId == Form.FORM_UNSET ? "" : "." + raidboss.form.ToLower());
+            return "raidboss." + raidboss.FileNameBase;
         }
 
         #endregion Writers

@@ -10,6 +10,7 @@ using POGOProtos.Enums;
 using POGOProtos.Inventory.Item;
 using System.Globalization;
 using VanOrman.Utils;
+using POGOProtos.Settings.Master.Pokemon;
 
 namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates
 {
@@ -79,6 +80,60 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates
             : base(itemTemplate.template_id)
         {
             PokemonSettings = itemTemplate.pokemon_settings;
+        }
+
+        public PokemonTranslator(PokemonTranslator pokemonTranslator, Form form)
+            : base(pokemonTranslator.TemplateId)
+        {
+            PokemonSettings = new PokemonSettings();
+            PokemonSettings.pokemon_id = pokemonTranslator.PokemonSettings.pokemon_id;
+            PokemonSettings.model_scale = pokemonTranslator.PokemonSettings.model_scale;
+            PokemonSettings.type = pokemonTranslator.PokemonSettings.type;
+            PokemonSettings.type_2 = pokemonTranslator.PokemonSettings.type_2;
+            PokemonSettings.camera = pokemonTranslator.PokemonSettings.camera;
+            PokemonSettings.encounter = pokemonTranslator.PokemonSettings.encounter;
+            PokemonSettings.stats = pokemonTranslator.PokemonSettings.stats;
+            foreach (var var in pokemonTranslator.PokemonSettings.quick_moves)
+                PokemonSettings.quick_moves.Add(var);
+            foreach (var var in pokemonTranslator.PokemonSettings.cinematic_moves)
+                PokemonSettings.cinematic_moves.Add(var);
+            PokemonSettings.animation_time = pokemonTranslator.PokemonSettings.animation_time;
+            foreach (var var in pokemonTranslator.PokemonSettings.evolution_ids)
+                PokemonSettings.evolution_ids.Add(var);
+            PokemonSettings.evolution_pips = pokemonTranslator.PokemonSettings.evolution_pips;
+            PokemonSettings.rarity = pokemonTranslator.PokemonSettings.rarity;
+            PokemonSettings.pokedex_height_m = pokemonTranslator.PokemonSettings.pokedex_height_m;
+            PokemonSettings.pokedex_weight_kg = pokemonTranslator.PokemonSettings.pokedex_weight_kg;
+            PokemonSettings.parent_pokemon_id = pokemonTranslator.PokemonSettings.parent_pokemon_id;
+            PokemonSettings.height_std_dev = pokemonTranslator.PokemonSettings.height_std_dev;
+            PokemonSettings.weight_std_dev = pokemonTranslator.PokemonSettings.weight_std_dev;
+            PokemonSettings.km_distance_to_hatch = pokemonTranslator.PokemonSettings.km_distance_to_hatch;
+            PokemonSettings.family_id = pokemonTranslator.PokemonSettings.family_id;
+            PokemonSettings.candy_to_evolve = pokemonTranslator.PokemonSettings.candy_to_evolve;
+            PokemonSettings.km_buddy_distance = pokemonTranslator.PokemonSettings.km_buddy_distance;
+            PokemonSettings.buddy_size = pokemonTranslator.PokemonSettings.buddy_size;
+            PokemonSettings.model_height = pokemonTranslator.PokemonSettings.model_height;
+            foreach (var var in pokemonTranslator.PokemonSettings.evolution_branch)
+            {
+                EvolutionBranch evolutionBranch = new EvolutionBranch();
+                evolutionBranch.candy_cost = var.candy_cost;
+                evolutionBranch.evolution = var.evolution;
+                evolutionBranch.evolution_item_requirement = var.evolution_item_requirement;
+                evolutionBranch.form = var.form;
+                evolutionBranch.km_buddy_distance_requirement = var.km_buddy_distance_requirement;
+                PokemonSettings.evolution_branch.Add(evolutionBranch);
+            }
+            PokemonSettings.model_scale_v2 = pokemonTranslator.PokemonSettings.model_scale_v2;
+            PokemonSettings.form = form;
+            PokemonSettings.event_quick_move = pokemonTranslator.PokemonSettings.event_quick_move;
+            PokemonSettings.event_cinematic_move = pokemonTranslator.PokemonSettings.event_cinematic_move;
+            PokemonSettings.buddy_offset_male = pokemonTranslator.PokemonSettings.buddy_offset_male;
+            PokemonSettings.buddy_offset_female = pokemonTranslator.PokemonSettings.buddy_offset_female;
+            PokemonSettings.buddy_scale = pokemonTranslator.PokemonSettings.buddy_scale;
+            PokemonSettings.buddy_portrait_offset = pokemonTranslator.PokemonSettings.buddy_portrait_offset;
+            PokemonSettings.parent_form = pokemonTranslator.PokemonSettings.parent_form;
+            PokemonSettings.is_transferable = pokemonTranslator.PokemonSettings.is_transferable;
+            PokemonSettings.is_deployable = pokemonTranslator.PokemonSettings.is_deployable;
         }
 
         #endregion ctor

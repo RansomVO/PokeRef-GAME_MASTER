@@ -21,36 +21,6 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates
         [XmlAttribute]
         public string name { get; set; }
 
-        #endregion Properties
-
-        #region ctor
-
-        public Pokemon() { }
-
-        public Pokemon(int _id, string _name)
-        {
-            id = _id;
-            name = _name;
-        }
-
-        /// <summary>
-        /// This is for use when creating a Pokmeon from a class derived from Pokemon.
-        /// </summary>
-        /// <param name="pokemon"></param>
-        public Pokemon(Pokemon pokemon)
-        {
-            id = pokemon.id;
-            name = pokemon.name;
-        }
-
-        #endregion ctor
-    }
-
-    [Serializable]
-    public class PokemonForm : Pokemon
-    {
-        #region Properties
-
         [XmlIgnore]
         [DefaultValue(Form.FORM_UNSET)]
         public Form FormId { get; private set; }
@@ -69,7 +39,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates
                     if (string.IsNullOrEmpty(name))
                         throw new InvalidOperationException("Attribute \"name\" must be set before the attribute \"form\".");
 
-                    string formIdText = name.ToUpper() + "_" + value.ToUpper();
+                    string formIdText = name.ToUpper() + "_" + value.ToUpper().Replace(' ', '_');
                     foreach (Form formId in Enum.GetValues(typeof(Form)))
                     {
                         if (string.Equals(formId.ToString().ToUpper(), formIdText))
@@ -83,33 +53,41 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates
         }
         private string _form;
 
-        public int PokemonTranslatorKey { get { return id + (1000 * (int)FormId); } }
+        public int Key { get { return id + (1000 * (int)FormId); } }
 
         #endregion Properties
 
         #region ctor
 
-        public PokemonForm() { }
+        public Pokemon() { }
 
-        public PokemonForm(int id, string name, Form formId) :
-            base(id, name)
+        public Pokemon(int _id, string _name)
+        {
+            id = _id;
+            name = _name;
+        }
+
+        public Pokemon(int id, string name, Form formId) :
+            this(id, name)
         {
             form = PokemonTranslator.GetFormName(formId);
         }
 
         /// <summary>
-        /// This is for use when creating a PokemonForm from a class derived from PokemonForm.
+        /// This is for use when creating a Pokemon from a class derived from Pokemon.
         /// </summary>
         /// <param name="pokemon"></param>
-        public PokemonForm(PokemonForm pokemonForm) :
-            base(pokemonForm.id, pokemonForm.name)
+        public Pokemon(Pokemon pokemon) :
+            this(pokemon.id, pokemon.name)
         {
-            form = pokemonForm.FormId == Form.FORM_UNSET && !string.IsNullOrWhiteSpace(pokemonForm.form) ?
-                pokemonForm.form : 
-                PokemonTranslator.GetFormName(pokemonForm.FormId);
+            form = pokemon.FormId == Form.FORM_UNSET && !string.IsNullOrWhiteSpace(pokemon.form) ?
+                pokemon.form :
+                PokemonTranslator.GetFormName(pokemon.FormId);
         }
 
         #endregion ctor
+
+        public string FileNameBase { get { return name.ToLower() + (FormId == Form.FORM_UNSET ? "" : "." + form.ToLower().Replace(' ', '_')); } }
     }
 
 
@@ -125,13 +103,16 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates
 
         public EvolvesFrom() { }
 
-        public EvolvesFrom(int _id, string _name, int _candies, string _special)
+        public EvolvesFrom(int id, string name, Form formId, int _candies, string _special) :
+            base(id, name, formId)
         {
-            id = _id;
-            name = _name;
             candies = _candies;
             special = _special;
         }
+        public EvolvesFrom(PokemonTranslator pokemonTranslator) :
+            this(pokemonTranslator.EvolvesFromId, pokemonTranslator.EvolvesFrom, pokemonTranslator.Form, pokemonTranslator.CandiesToEvolve, pokemonTranslator.EvolveSpecialItem)
+        { }
+
     }
 
     [Serializable]

@@ -61,6 +61,8 @@ namespace VanOrman.PokemonGO.GAME_MASTER.Decoder
                         continue;
                     }
 
+                    GameMasterTimestampUtils.Init(folder);
+
                     foreach (var filePath in Directory.EnumerateFiles(folder, filePattern))
 #if true
                         if (Path.GetExtension(filePath).Length == 0 && (!createOnly || !File.Exists(filePath + ".json")))

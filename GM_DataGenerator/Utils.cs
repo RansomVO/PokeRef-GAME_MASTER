@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
+
 using VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates;
 using VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles;
 
@@ -16,6 +17,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
         public static void Init(string rootFolder)
         {
             RootFolder = rootFolder;
+            GameMasterTimestampUtils.Init(GAME_MASTER_Folder);
         }
 
         #region Properties
@@ -25,7 +27,10 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator
 		public static string DataFileFolder { get { return @"_datafiles\"; } }
 
 		public static string OutputDataFileFolder { get { return Path.Combine(RootFolder, DataFileFolder); } }
+
         public static string InputManualDataFileFolder { get { return Path.Combine(RootFolder, @"_datafiles.manual\"); } }
+
+        public static string GAME_MASTER_Folder { get { return Path.Combine(RootFolder, @"_GAME_MASTER\"); } }
 
         #endregion Properties
 

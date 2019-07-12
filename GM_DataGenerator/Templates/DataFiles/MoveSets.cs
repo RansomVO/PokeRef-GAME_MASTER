@@ -28,7 +28,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.DataFiles
         #region Internal classes
 
         [Serializable]
-        public class _Pokemon : PokemonForm
+        public class _Pokemon : Pokemon
         {
             #region Properties
 

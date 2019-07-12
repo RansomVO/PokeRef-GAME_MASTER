@@ -17,13 +17,13 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData
         public void Init(Dictionary<int, PokemonTranslator> pokemonTranslators)
         {
             foreach (var raidboss in RaidBoss)
-                raidboss.PokemonTranslator = pokemonTranslators[raidboss.PokemonTranslatorKey];
+                raidboss.PokemonTranslator = pokemonTranslators[raidboss.Key];
         }
 
         #region Internal classes
 
         [Serializable]
-        public class _RaidBoss : PokemonForm
+        public class _RaidBoss : Pokemon
         {
             [XmlAttribute]
             public int tier { get; set; }

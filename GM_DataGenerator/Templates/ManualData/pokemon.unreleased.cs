@@ -15,7 +15,7 @@ namespace VanOrman.PokemonGO.GAME_MASTER.DataGenerator.Templates.ManualData
         public _Pokemon[] Pokemon { get; set; }
 
         [Serializable]
-        public class _Pokemon : PokemonForm
+        public class _Pokemon : Pokemon
         {
             [XmlAttribute]
             public string family { get; set; }
